@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="PRIX - PRoteome InformatiX" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/ci.gif" />
+    <meta
+      property="og:description"
+      content="PRoteome InformatiX by Bioinformatics & Intelligent Systems Lab"
+    />
+    <title>PRIX - PRoteome InformatiX</title>
+    <link href="/css/home.css" rel="stylesheet" />
+    <link rel="icon" href="/images/ci.gif" type="image/gif" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  </head>
+
+  <body>
+  <header th:replace="~{fragment :: header2}"></header>
+
+    <main>
+      <div class="main-group">
+        <aside>
+          <div class="main-slide">
+            <img src="/images/subtit02.gif" alt="" />
+          </div>
+
+          <div class="content-indexes">
+            <br />
+            <br />
+            <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              MODPlus
+            </span>
+            <br />
+            <br />
+            <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              DBond
+            </span>
+            <br />
+            <br />
+            <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              ACTG
+            </span>
+            <br />
+            <br />
+            <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              Pattern Match
+            </span>
+          </div>
+        </aside>
+        <article>
+          <div class="main-article">
+            <div class="main-title">
+              <div class="title">
+                <h3 class="drakBR">MS/MS ANALYSIS</h3>
+                <br />
+              </div>
+            </div>
+
+            <div class="main-contents">
+              <img src="/images/p_st1.GIF" width="4px" height="9px" />
+              <a th:href="@{/}" href="index.html" class="thmenu">
+                <span class="blue-up">MODPlus</span>
+              </a>
+              <span class="drakBR">
+                - advanced version of MOD
+                <sup>i</sup>
+              </span>
+
+              <br />
+              <br />
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+  </body>
+  <footer th:replace="~{fragment :: footer}"></footer>
+</html>

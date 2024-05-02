@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="PRIX - PRoteome InformatiX" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/ci.gif" />
+    <meta
+      property="og:description"
+      content="PRoteome InformatiX by Bioinformatics & Intelligent Systems Lab"
+    />
+    <title>PRIX - PRoteome InformatiX</title>
+    <link href="/css/home.css" rel="stylesheet" />
+    <link rel="icon" href="/images/ci.gif" type="image/gif" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  </head>
+
+  <body>
+  <header th:replace="~{fragment :: header0}"></header>
+    <main>
+      <div class="main-contents">
+        <div class="main-title">
+          <div class="title">
+            <h3 class="drakBR">ADMINISTRATOR LOGIN</h3>
+          </div>
+        </div>
+        <div class="outer-box">
+          <div class="container" style="background: #fff; width: 400px">
+            <div class="box">
+              <div>
+                <div class="inner-box">
+                  <div class="input-box">
+                    <div class="input-name">E-mail</div>
+                    <div class="input-form">
+                      <input type="text" size="30" />
+                    </div>
+                  </div>
+                  <div class="input-box">
+                    <div class="input-name">Password</div>
+                    <div class="input-form">
+                      <input type="password" size="30" />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="btn-box">
+                  <input class="btn" type="submit" value="Login" />
+                  <script>
+                    function goToAgree() {
+                      window.location.href = "/login/agree";
+                    }
+                  </script>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <footer th:replace="~{fragment :: footer}"></footer>
+</html>
