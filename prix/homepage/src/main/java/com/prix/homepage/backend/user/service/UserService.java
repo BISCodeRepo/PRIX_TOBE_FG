@@ -14,27 +14,27 @@ public class UserService {
 
     private final TempUserRepository tempUserRepository;
 
-    // Spring Security를 사용한 로그인 구현 시 사용
-    // private final BCryptPasswordEncoder encoder;
+    public User login(RequestLoginDto requestLoginDto) {
+        if(requestLoginDto.getLoginId().isEmpty()) {
+            throw new RuntimeException ("id가 비어있습니다.");
+        }
+        if(requestLoginDto.getPassword().isEmpty()) {
+            throw new RuntimeException ("비밀번호가 비어있습니다.");
+        }
+        if(requestLoginDto.getLoginId().startsWith(" ")) {
+            throw new RuntimeException ("잘못된 형식의 아이디입니다.");
+        }
 
-    /**
-     *  로그인 기능
-     *  화면에서 LoginRequest(loginId, password)을 입력받아 loginId와 password가 일치하면 User return
-     *  loginId가 존재하지 않거나 password가 일치하지 않으면 null return
-     */
-    public User login(RequestLoginDto req) {
-        Optional<User> optionalUser = tempUserRepository.findByLoginId(req.getLoginId());
+        Optional<User> optionalUser = tempUserRepository.findByLoginId(requestLoginDto.getLoginId());
 
-        // loginId와 일치하는 User가 없으면 null return
-        if(optionalUser.isPresent()) {
-            return null;
+        if(!optionalUser.isPresent()) {
+            throw new RuntimeException ("사용자를 찾을 수 없습니다.");
         }
 
         User user = optionalUser.get();
 
-        // 찾아온 User의 password와 입력된 password가 다르면 null return
-        if(!user.getPassword().equals(req.getPassword())) {
-            return null;
+        if(!user.getPassword().equals(requestLoginDto.getPassword())) {
+            throw new RuntimeException ("비밀번호가 틀렸습니다.");
         }
 
         return user;
