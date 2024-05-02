@@ -1,4 +1,4 @@
-package com.prix.homepage.domain.form;
+package com.prix.homepage.backend.user.domain;
 
 import lombok.Data;
 

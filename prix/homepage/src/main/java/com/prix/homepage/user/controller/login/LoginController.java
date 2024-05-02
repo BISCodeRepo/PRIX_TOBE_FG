@@ -1,6 +1,6 @@
 package com.prix.homepage.user.controller.login;
 
-import com.prix.homepage.domain.form.LoginForm;
+import com.prix.homepage.backend.user.domain.LoginForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
