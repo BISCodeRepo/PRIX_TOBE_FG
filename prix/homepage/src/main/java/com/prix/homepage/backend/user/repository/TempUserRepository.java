@@ -33,8 +33,8 @@ public class TempUserRepository {
         }
     }
 
-    public boolean save(User user) {
-        return true;
+    public User save(User user) {
+        return user;
     }
 }
 

@@ -29,10 +29,6 @@ public class ApiLoginController {
 
         User user = userService.login(requestLoginDto);
 
-        if(user == null) {
-            return "로그인 아이디 또는 비밀번호가 틀렸습니다.";
-        }
-
         // 사용자의 역할 확인
         if (!user.getRole().equals(role)) {
             return "사용자의 역할이 다릅니다.";
@@ -44,5 +40,13 @@ public class ApiLoginController {
         String jwtToken = JwtUtil.createToken(user.getLoginId(), user.getRole(), secretKey, expireTimeMs);
 
         return jwtToken;
+    }
+
+    @PostMapping("/user/signup")
+    public String userSignUp(@RequestBody RequestLoginDto requestLoginDto) {
+
+        userService.signUp(requestLoginDto);
+
+        return "회원가입이 완료되었습니다.";
     }
 }

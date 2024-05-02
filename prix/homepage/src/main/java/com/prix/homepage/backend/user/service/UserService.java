@@ -40,5 +40,27 @@ public class UserService {
         return user;
     }
 
+    public User signUp(RequestLoginDto requestLoginDto) {
+        if(requestLoginDto.getLoginId().isEmpty()) {
+            throw new RuntimeException ("id가 비어있습니다.");
+        }
+        if(requestLoginDto.getPassword().isEmpty()) {
+            throw new RuntimeException ("비밀번호가 비어있습니다.");
+        }
+        if(requestLoginDto.getLoginId().startsWith(" ")) {
+            throw new RuntimeException ("잘못된 형식의 아이디입니다.");
+        }
+
+        Optional<User> optionalUser = tempUserRepository.findByLoginId(requestLoginDto.getLoginId());
+
+        if(optionalUser.isPresent()) {
+            throw new RuntimeException ("이미 존재하는 id 입니다.");
+        }
+
+        User user = tempUserRepository.save(User.builder().build());
+
+        return user;
+    }
+
 
 }
