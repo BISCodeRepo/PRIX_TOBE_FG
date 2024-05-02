@@ -1,4 +1,4 @@
-package com.prix.homepage.user.controller.login;
+package com.prix.homepage.frontend.controller.login;
 
 import com.prix.homepage.backend.user.domain.LoginForm;
 import lombok.extern.slf4j.Slf4j;

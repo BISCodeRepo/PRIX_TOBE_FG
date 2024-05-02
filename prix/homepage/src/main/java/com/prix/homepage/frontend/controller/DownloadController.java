@@ -1,15 +1,15 @@
-package com.prix.homepage.liversearch.controller;
+package com.prix.homepage.frontend.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/live-search")
-public class LiveSearchController {
+@RequestMapping("/download")
+public class DownloadController {
 
     @GetMapping
-    public String liveSearch(){
-        return "livesearch";
+    public String download(){
+        return "download";
     }
 }

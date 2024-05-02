@@ -1,4 +1,4 @@
-package com.prix.homepage.publications.controller;
+package com.prix.homepage.frontend.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
