@@ -1,15 +1,15 @@
-package com.prix.homepage.user.controller.publication;
+package com.prix.homepage.download.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/publication")
-public class PublicationController {
+@RequestMapping("/download")
+public class DownloadController {
 
     @GetMapping
-    public String publication(){
-        return "publications";
+    public String download(){
+        return "download";
     }
 }

@@ -29,7 +29,7 @@ public class LoginController {
     }
 
     @GetMapping("/admin")
-    public String loginAdmin(){
+    public String loginAgdmin(){
         return "admin_login";
     }
 
