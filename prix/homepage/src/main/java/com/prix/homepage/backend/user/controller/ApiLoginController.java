@@ -2,44 +2,40 @@ package com.prix.homepage.backend.user.controller;
 
 import com.prix.homepage.backend.basic.controller.JwtUtil;
 import com.prix.homepage.backend.user.domain.User;
-import com.prix.homepage.backend.user.domain.UserRole;
 import com.prix.homepage.backend.user.dto.RequestLoginDto;
 import com.prix.homepage.backend.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/login")
 public class ApiLoginController {
 
+    // UserService 의존성 주입을 위한 필드 선언
     @Autowired
     private final UserService userService;
 
+    // ApiLoginController 생성자
     @Autowired
     public ApiLoginController(UserService userService) {
         this.userService = userService;
     }
 
-    @ApiOperation(value = "테스트", notes = "스웨거 동작 테스트입니다.")
-    @GetMapping("/test")
-    public String test() {
-        return "Hello this is test";
-    }
+    /**
+     사용자 로그인 메소드
 
+     @param requestLoginDto 로그인 요청 DTO
+     @param level 사용자의 역할 레벨
+     @return JWT 토큰 또는 오류 메시지
+     */
     @ApiOperation(value = "로그인", notes = "사용자 혹은 관리자의 로그인을 합니다. 값 유효성 검사를 포함합니다.")
     @PostMapping("/user/login")
-    public String userLogin( @RequestBody RequestLoginDto requestLoginDto, @RequestParam int level) {
+    public String userLogin(@RequestBody RequestLoginDto requestLoginDto, @RequestParam int level) {
+        // 사용자 로그인 처리
+        User user = userService.login(requestLoginDto, level);
 
-        User user = userService.login(requestLoginDto);
-
-        // 사용자의 역할 확인
-        if (!(user.getLevel() == level)) {
-            return "사용자의 역할이 다릅니다.";
-        }
-
+        // JWT 토큰 생성
         String secretKey = "secret-key-1234125";
         long expireTimeMs = 1000 * 60 * 60;
 
@@ -48,18 +44,18 @@ public class ApiLoginController {
         return jwtToken;
     }
 
+    /**
+     사용자 회원가입 메소드
+
+     @param requestLoginDto 회원가입 요청 DTO
+     @return 성공 메시지
+     */
     @ApiOperation(value = "회원가입", notes = "사용자의 회원가입을 합니다. 값 유효성 검사를 포함합니다.")
     @PostMapping("/user/signup")
     public String userSignUp(@RequestBody RequestLoginDto requestLoginDto) {
-
+        // 사용자 회원가입 처리
         userService.signUp(requestLoginDto);
 
-        return "회원가입이 완료되었습니다.";
-    }
-
-    @ApiOperation(value = "테스트", notes = "사용자의 회원가입을 합니다. 값 유효성 검사를 포함합니다.")
-    @GetMapping("/user/test")
-    public List<User> getAllUsers() {
-        return userService.getUserTest();
+        return "Signup completed successfully.";
     }
 }
