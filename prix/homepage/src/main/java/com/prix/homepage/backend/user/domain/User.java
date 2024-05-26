@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import nonapi.io.github.classgraph.json.Id;
 
 @Builder
 @Getter
@@ -15,8 +14,10 @@ public class User {
 
     private Long id;
 
-    private String loginId;
+    private String userid;
+    private String email;
     private String password;
-    private String nickname;
-    private UserRole role;
+    private String name;
+    private String affiliation;
+    private int level;
 }

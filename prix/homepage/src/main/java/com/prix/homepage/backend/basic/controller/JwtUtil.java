@@ -9,10 +9,10 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    public static String createToken(String loginId, UserRole userRole, String key, long expireTimeMs) {
+    public static String createToken(String email, int level, String key, long expireTimeMs) {
         Claims claims = Jwts.claims();
-        claims.put("loginId", loginId);
-        claims.put("userRole", userRole);
+        claims.put("email", email);
+        claims.put("level", level);
 
         return Jwts.builder()
                 .setClaims(claims)

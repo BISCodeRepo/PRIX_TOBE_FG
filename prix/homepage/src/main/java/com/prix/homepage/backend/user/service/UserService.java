@@ -2,10 +2,13 @@ package com.prix.homepage.backend.user.service;
 
 import com.prix.homepage.backend.user.domain.User;
 import com.prix.homepage.backend.user.dto.RequestLoginDto;
+import com.prix.homepage.backend.user.mapper.UserMapper;
 import com.prix.homepage.backend.user.repository.TempUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,6 +16,9 @@ import java.util.Optional;
 public class UserService {
 
     private final TempUserRepository tempUserRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public User login(RequestLoginDto requestLoginDto) {
         if(requestLoginDto.getLoginId().isEmpty()) {
@@ -60,6 +66,10 @@ public class UserService {
         User user = tempUserRepository.save(User.builder().build());
 
         return user;
+    }
+
+    public List<User> getUserTest() {
+        return userMapper.findAll();
     }
 
 

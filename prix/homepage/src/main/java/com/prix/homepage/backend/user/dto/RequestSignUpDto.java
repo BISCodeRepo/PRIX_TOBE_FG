@@ -18,20 +18,18 @@ public class RequestSignUpDto {
     // 비밀번호 암호화 X
     public User toEntity() {
         return User.builder()
-                .loginId(this.loginId)
+                .email(this.loginId)
                 .password(this.password)
-                .nickname(this.nickname)
-                .role(UserRole.USER)
+                .name(this.nickname)
                 .build();
     }
 
     // 비밀번호 암호화
     public User toEntity(String encodedPassword) {
         return User.builder()
-                .loginId(this.loginId)
+                .email(this.loginId)
                 .password(encodedPassword)
-                .nickname(this.nickname)
-                .role(UserRole.USER)
+                .name(this.nickname)
                 .build();
     }
 }

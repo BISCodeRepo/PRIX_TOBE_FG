@@ -13,19 +13,17 @@ public class TempUserRepository {
         if (loginId.equals("user1")) {
             return Optional.ofNullable(User.builder()
                     .id(1L)
-                    .loginId("user1")
+                    .email("user1")
                     .password("asdf")
-                    .nickname("nickname")
-                    .role(UserRole.USER)
+                    .name("nickname")
                     .build());
         }
         else if (loginId.equals("admin")) {
             return Optional.ofNullable(User.builder()
                     .id(2L)
-                    .loginId("admin")
+                    .email("admin")
                     .password("asdf")
-                    .nickname("nickname")
-                    .role(UserRole.ADMIN)
+                    .name("nickname")
                     .build());
         }
         else {
