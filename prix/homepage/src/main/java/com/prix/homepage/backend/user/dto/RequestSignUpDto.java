@@ -1,7 +1,6 @@
 package com.prix.homepage.backend.user.dto;
 
 import com.prix.homepage.backend.user.domain.User;
-import com.prix.homepage.backend.user.domain.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

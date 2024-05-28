@@ -1,6 +1,5 @@
 package com.prix.homepage.backend.basic.controller;
 
-import com.prix.homepage.backend.user.domain.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

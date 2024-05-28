@@ -1,7 +1,6 @@
 package com.prix.homepage.frontend.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -24,7 +23,12 @@ public class HomeController {
 
     @GetMapping("/policy")
     public String policy(){
-        return "help";
+        return "policy";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "modplus";
     }
 
 }

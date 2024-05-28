@@ -1,7 +1,6 @@
 package com.prix.homepage.backend.user.repository;
 
 import com.prix.homepage.backend.user.domain.User;
-import com.prix.homepage.backend.user.domain.UserRole;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

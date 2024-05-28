@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Variable Modifications</title>
+    <link th:href="@{/css/home.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        function loadVariableMods() {
+            var userId = [[${id}]];
+            var engine = [[${engine}]];
+
+            $.ajax({
+                url: '/api/livesearch/user-modification/count',
+                type: 'GET',
+                data: {
+                    userId: userId,
+                    variable: 1,
+                    engine: engine
+                },
+                success: function(variableModCount) {
+                    $('input[name="variable_mod"]').val(variableModCount);
+                },
+                error: function() {
+                    console.error('Failed to fetch variable modifications count.');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            loadVariableMods();
+        });
+    </script>
+</head>
+<body>
+<input name="variable_mod" type="text" size="10" th:value="0" disabled />&nbsp;&nbsp;
+<input name="add_variable_mod" type="button" class="btnOrgSmall" value=" + " th:onclick="'window.open(\'var_ptms_list?var=1&engine=' + ${engine} + '\', \'\', \'resizable=1, width=900, height=600, scrollbars=yes\')'" />
+</body>
+</html>
