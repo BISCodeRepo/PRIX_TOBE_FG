@@ -50,7 +50,7 @@
           <font color="#0033FF" size="3"><b>MODPlus</b>&nbsp;&nbsp;&nbsp;</font>ms/ms search ( <font color="#000000">version <span th:text="${userSetting.version}"></span></font> )
         </td>
         <td align="right" valign="bottom" style="padding-right:5px;">
-          <table border="0" cellspacing="0" cellpadding="0" th:if="${userName != 'anonymous'}">
+          <table border="0" cellspacing="0" cellpadding="0" th:if="${id != 4}">
             <tr>
               <td><img src="/images/top_icon_01.gif" width="2" height="9"> &nbsp;<a href="history.jsp" class="menu">History</a> &nbsp; &nbsp;</td>
               <td><img src="/images/top_icon_01.gif" width="2" height="9"> &nbsp;<a href="/login.jsp?action=logout" class="menu">Logout</a> &nbsp; &nbsp;</td>
@@ -136,7 +136,11 @@
               <option value="1">Enzyme 1</option>
               <option value="2">Enzyme 2</option>
             </select>
-            &nbsp;&nbsp;<input name="add_enzyme" type="button" class="btnBlueSmall" value=" + " />&nbsp;&nbsp;<font size="2" color="blue">Login to add a new enzyme rule</font>
+            &nbsp;&nbsp;<input name="add_enzyme" type="button" class="btnBlueSmall" value=" + " />&nbsp;&nbsp;
+            <span th:if="${id == 4}">
+              <font size="2" color="blue">Login to add a new enzyme rule</font>
+            </span>
+
           </td>
         </tr>
         <tr>

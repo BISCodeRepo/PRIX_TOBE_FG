@@ -39,7 +39,7 @@
         }
 
         function doSubmit() {
-            document.mod_list.action = "/modifications/delete";
+            document.mod_list.action = "/modplus/var_ptms_list";
             document.mod_list.method = "post";
             document.mod_list.submit();
         }
@@ -79,7 +79,7 @@
         <tbody>
         <tr>
             <td>
-                <input name="buttonAddUnimod" type="button" th:onclick="'window.open(\'unimod_ptms_list.jsp?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=1, width=900, height=600, scrollbars=yes\')'" value="Add from Unimod" />
+                <input name="buttonAddUnimod" type="button" th:onclick="'window.open(\'unimod_ptms_list?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=1, width=900, height=600, scrollbars=yes\')'" value="Add from Unimod" />
                 <input name="buttonAddUser" type="button" th:if="${id != null && id != 4}" th:onclick="'window.open(\'user_ptms_list.jsp?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=0, width=800, height=600, scrollbars=yes\')'" value="Add from User list" />
                 <input type="button" value="Remove from search list" id="btnRemove"/>
             </td>
@@ -203,20 +203,22 @@
             </th>
         </tr>
         </thead>
-        <tbody th:if="${modifications}">
-        <tr th:each="mod : ${modifications}" onMouseOver="this.style.backgroundColor='#f7f7f7'" onMouseOut="this.style.backgroundColor='#ffffff'">
-            <td class="grayTD">
-                <input name="mod" type="checkbox" class="CHECK" th:value="${mod.id}" onclick="uncheck(this);" />
-            </td>
-            <td class="grayTD" th:text="${mod.name}"></td>
-            <td class="grayTD" th:text="${mod.mass_diff}"></td>
-            <td class="grayTD" th:text="${mod.residue}"></td>
-            <td class="grayTD" th:text="${mod.position}"></td>
-        </tr>
+        <tbody th:unless="${#lists.isEmpty(modifications)}">
+            <tr th:each="modi : ${modifications}" onMouseOver="this.style.backgroundColor='#f7f7f7'" onMouseOut="this.style.backgroundColor='#ffffff'">
+                <td class="grayTD">
+                    <input name="mod" type="checkbox" class="CHECK" th:value="${modi.id}" onclick="uncheck(this);" />
+                </td>
+                <td class="grayTD" th:text="${modi.name}"></td>
+                <td class="grayTD" th:text="${modi.massDiff}"></td>
+                <td class="grayTD" th:text="${modi.residue}"></td>
+                <td class="grayTD" th:text="${modi.position}"></td>
+            </tr>
+        </tbody>
         <tr th:if="${#lists.isEmpty(modifications)}">
             <td class="grayTD" colspan="5">No modifications found.</td>
         </tr>
-        </tbody>
+
+
     </table>
 </form>
 </body>
