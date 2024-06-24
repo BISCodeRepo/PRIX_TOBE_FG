@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragment :: head}"></head>
+<head>
+  <title>MODPlus Search</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<header th:replace="~{fragment :: header2}"></header>
+<form name="search" method="post" action="process.jsp" enctype="multipart/form-data">
+  <input type="hidden" name="engine" value="modeye"/>
+
+  <table width="990" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="190" height="100%" rowspan="2" align="right" valign="top" style="padding-right:15px">
+        <table height="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td height="53"><img src="/images/subtit02.gif" width="161" height="53"></td>
+          </tr>
+          <tr>
+            <td height="10"></td>
+          </tr>
+          <tr>
+            <td height="10"></td>
+          </tr>
+          <tr>
+            <td height="21" valign="middle">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/icon_5.gif" width="6" height="10">&nbsp;&nbsp;MODPlus</td>
+          </tr>
+          <tr>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td height="21" valign="middle">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/icon_5.gif" width="6" height="10">&nbsp;&nbsp;DBond</td>
+          </tr>
+          <td height="5"></td>
+    </tr>
+    <tr>
+      <td height="21" valign="middle">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/icon_5.gif" width="6" height="10">&nbsp;&nbsp;ACTG</td>
+    </tr>
+    <tr>
+      <td height="100%" align="center" valign="bottom">&nbsp;</td>
+    </tr>
+  </table>
+  </td>
+
+  <td height="10" valign="top">
+    <table border="0" cellspacing="0" cellpadding="0" id="TitTable">
+      <tr>
+        <td style="padding-left:15px;">
+          <font color="#0033FF" size="3"><b>MODPlus</b>&nbsp;&nbsp;&nbsp;</font>ms/ms search ( <font color="#000000">version <span th:text="${userSetting.version}"></span></font> )
+        </td>
+        <td align="right" valign="bottom" style="padding-right:5px;">
+          <table border="0" cellspacing="0" cellpadding="0" th:if="${id != 4}">
+            <tr>
+              <td><img src="/images/top_icon_01.gif" width="2" height="9"> &nbsp;<a href="history.jsp" class="menu">History</a> &nbsp; &nbsp;</td>
+              <td><img src="/images/top_icon_01.gif" width="2" height="9"> &nbsp;<a href="/login.jsp?action=logout" class="menu">Logout</a> &nbsp; &nbsp;</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+  </tr>
+  <tr>
+    <td valign="top" style="padding:10px;">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" id="gray" style="BORDER-BOTTOM: #d9dddc 1px solid; BORDER-TOP: #d9dddc 2px solid;">
+        <tr>
+          <th><div align="right"><a href="/help.jsp#NAME" class="thmenu">User Name</a> </div></th>
+          <td colspan="3"><input name="user" type="text" size="60" th:value="${userName}" /></td>
+        </tr>
+        <tr>
+          <th align="right"><div align="right"><a href="/help.jsp#TIT" class="thmenu">Search Title</a> </div></th>
+          <td colspan="3"><input name="title" type="text" size="60" /></td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#DATA_FORMAT" class="thmenu">Data Format</a> </div></th>
+          <td>
+            <select name="ms_format" th:value="${userSetting.dataFormat}">
+              <option value="">Select -------------</option>
+              <option value="mgf" th:selected="${userSetting.dataFormat == 'mgf'}">Mascot (*.mgf)</option>
+              <option value="dta" th:selected="${userSetting.dataFormat == 'dta'}">Sequest (*.dta)</option>
+              <option value="pkl" th:selected="${userSetting.dataFormat == 'pkl'}">Micromass (*.pkl)</option>
+            </select>
+          </td>
+          <th><div align="right"><a href="/help.jsp#INST" class="thmenu">MS Resolution</a> </div></th>
+          <td>
+            <select name="ms_resolution" th:value="${userSetting.msResolution}">
+              <option value="high" th:selected="${userSetting.msResolution == 'high'}">High</option>
+              <option value="low" th:selected="${userSetting.msResolution == 'low'}">Low</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#INST" class="thmenu">MS/MS Instrument</a> </div></th>
+          <td>
+            <select name="ms_instrument" th:value="${userSetting.instrument}">
+              <option value="">Select ---</option>
+              <option value="ESI-ION-TRAP" th:selected="${userSetting.instrument == 'ESI-ION-TRAP'}">ESI-TRAP</option>
+              <option value="QTOF" th:selected="${userSetting.instrument == 'QTOF'}">HCD/QTOF</option>
+            </select>
+          </td>
+          <th><div align="right"><a href="/help.jsp#INST" class="thmenu">MS/MS Resolution</a> </div></th>
+          <td>
+            <select name="msms_resolution" th:value="${userSetting.msmsResolution}">
+              <option value="high" th:selected="${userSetting.msmsResolution == 'high'}">High</option>
+              <option value="low" th:selected="${userSetting.msmsResolution == 'low'}">Low</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#MSMS" class="thmenu">MS/MS Data</a> </div></th>
+          <td colspan="3"><input name="ms_file" type="file" size="45" /> &nbsp; File size limit : 500MB</td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#DB" class="thmenu">Database</a> </div></th>
+          <td colspan="3">
+            <select name="database">
+              <option value="">Select ------------------------</option>
+              <option value="1">Database 1</option>
+              <option value="2">Database 2</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="1"><div align="right"><a href="/help.jsp#DB" class="thmenu">Local DB</a> </div></th>
+          <td colspan="3"><input name="fasta" type="file" size="45" /> &nbsp; File size limit : 100MB</td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#TARDEC" class="thmenu">Target-Decoy</a> </div></th>
+          <td colspan="3"><input name="decoy" type="checkbox" class="CHECK" value="O" /><font size="2" color="blue"> Search with decoy proteins</font></td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#ENZYME" class="thmenu">Enzyme</a> </div></th>
+          <td colspan="3">
+            <select name="enzyme" th:value="${userSetting.enzyme}">
+              <option value="1">Enzyme 1</option>
+              <option value="2">Enzyme 2</option>
+            </select>
+            &nbsp;&nbsp;<input name="add_enzyme" type="button" class="btnBlueSmall" value=" + " />&nbsp;&nbsp;
+            <span th:if="${id == 4}">
+              <font size="2" color="blue">Login to add a new enzyme rule</font>
+            </span>
+
+          </td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#MISSCLEAVE" class="thmenu">Max No. of Missed Cleavages</a> </div></th>
+          <td>
+            <select name="missed_cleavage" th:value="${userSetting.missedCleavage}">
+              <option value="0" th:selected="${userSetting.missedCleavage == '0'}">0</option>
+              <option value="1" th:selected="${userSetting.missedCleavage == '1'}">1</option>
+              <option value="2" th:selected="${userSetting.missedCleavage == '2'}">2</option>
+              <option value="3" th:selected="${userSetting.missedCleavage == '3'}">3</option>
+              <option value="4" th:selected="${userSetting.missedCleavage == '4'}">4</option>
+              <option value="5" th:selected="${userSetting.missedCleavage == '5'}">5</option>
+            </select>
+          </td>
+          <th><div align="right"><a href="/help.jsp#NTT" class="thmenu">Min No. of Enzyme Termini</a> </div></th>
+          <td>
+            <select name="ntt" th:value="${userSetting.minNumEnzTerm}">
+              <option value="1" th:selected="${userSetting.minNumEnzTerm == '1'}">1</option>
+              <option value="2" th:selected="${userSetting.minNumEnzTerm == '2'}">2</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#PEPTTOL" class="thmenu">Peptide Tol.</a> </div></th>
+          <td>
+            ± <input name="pept_tolerance" type="text" size="10" th:value="${userSetting.pTolerance}" />
+            <select name="unit" th:value="${userSetting.pUnit}">
+              <option value="Da" th:selected="${userSetting.pUnit == 'Da'}">Da</option>
+              <option value="ppm" th:selected="${userSetting.pUnit == 'ppm'}">ppm</option>
+            </select>
+          </td>
+          <th><div align="right"><a href="/help.jsp#ISOERR" class="thmenu">#<sup>13</sup>C (Isotope error)</a> </div></th>
+          <td>
+            &nbsp;&nbsp;Min
+            <select name="min_isotope" th:value="${userSetting.minIE}">
+              <option value="0" th:selected="${userSetting.minIE == '0'}">0</option>
+              <option value="1" th:selected="${userSetting.minIE == '1'}">1</option>
+            </select>
+            &nbsp;&nbsp;Max
+            <select name="max_isotope" th:value="${userSetting.maxIE}">
+              <option value="0" th:selected="${userSetting.maxIE == '0'}">0</option>
+              <option value="1" th:selected="${userSetting.maxIE == '1'}">1</option>
+              <option value="2" th:selected="${userSetting.maxIE == '2'}">2</option>
+              <option value="3" th:selected="${userSetting.maxIE == '3'}">3</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#FRAGTOL" class="thmenu">Fragment Tol.</a> </div></th>
+          <td colspan="3">
+            ± <input name="frag_tolerance" type="text" size="10" th:value="${userSetting.fTolerance}" /> Da
+          </td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#MODRANGE" class="thmenu">Modified Mass</a> </div></th>
+          <td>Min&nbsp;&nbsp;&nbsp;<input name="min_modified_mass" type="text" size="10" th:value="${userSetting.minMM}" /> Da</td>
+          <td colspan="2">Max&nbsp;&nbsp;&nbsp;<input name="max_modified_mass" type="text" size="10" th:value="${userSetting.maxMM}" /> Da</td>
+        </tr>
+        <tr>
+          <th><div align="right"><a href="/help.jsp#FIXMOD" class="thmenu">Fixed Modifications</a> </div></th>
+          <td height="auto" style="word-break:break-all;">
+            <div th:insert="~{livesearch/fix_ptms}" th:with="id=${id}, engine=0"></div>
+          </td>
+          <th><div align="right"><a href="/help.jsp#VARMOD" class="thmenu">Variable Modifications</a> </div></th>
+          <td height="auto" style="word-break:break-all;">
+            <div th:insert="~{livesearch/var_ptms}" th:with="id=${id}, engine=0"></div>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="left">
+            <a href="result.jsp?file=50l4Gh80mJ1Q4o5FgSMnPo647UD217oh4E35174ln46038SP2125">Run sample data</a>&nbsp;&nbsp;(<a class="under" href="/download/test_data.zip">Download sample data</a>)
+          </td>
+          <td align="right">
+            <input name="Reset" type="reset" class="btn" value="Reset">
+            <input name="Submit" type="submit" class="btn" value="Submit">
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+</form>
+</body>
+<footer th:replace="~{fragment :: footer}"></footer>
+</html>

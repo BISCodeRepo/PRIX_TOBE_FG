@@ -4,14 +4,12 @@ import com.prix.homepage.backend.livesearch.dto.UserSettingDto;
 import com.prix.homepage.backend.livesearch.pojo.Modification;
 import com.prix.homepage.backend.livesearch.service.ModificationService;
 import com.prix.homepage.backend.livesearch.service.UserSettingService;
-import com.prix.homepage.constants.prixConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class LiveSearchController {
 
     @GetMapping("/livesearch")
     public String liveSearch(){
-        return "livesearch";
+        return "livesearch/livesearch";
     }
 
     @GetMapping("/modplus/search")

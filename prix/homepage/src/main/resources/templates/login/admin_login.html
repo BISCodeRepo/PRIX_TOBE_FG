@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+  <header th:replace="~{partials/fragment :: header0}"></header>
+    <main>
+      <div class="main-contents">
+        <div class="main-title">
+          <div class="title">
+            <h3 class="drakBR">ADMINISTRATOR LOGIN</h3>
+          </div>
+        </div>
+        <div class="outer-box">
+          <div class="container" style="background: #fff; width: 400px">
+            <div class="box">
+              <div>
+                <div class="inner-box">
+                  <div class="input-box">
+                    <div class="input-name">E-mail</div>
+                    <div class="input-form">
+                      <input type="text" size="30" />
+                    </div>
+                  </div>
+                  <div class="input-box">
+                    <div class="input-name">Password</div>
+                    <div class="input-form">
+                      <input type="password" size="30" />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="btn-box">
+                  <input class="btn" type="submit" value="Login" />
+                  <script>
+                    function goToAgree() {
+                      window.location.href = "/login/agree";
+                    }
+                  </script>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <footer th:replace="~{partials/fragment :: footer}"></footer>
+</html>

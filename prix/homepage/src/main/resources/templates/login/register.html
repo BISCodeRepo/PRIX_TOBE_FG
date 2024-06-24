@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+  <body>
+  <header th:replace="~{partials/fragment :: header0}"></header>
+
+    <main>
+      <div class="main-contents">
+        <div class="main-title">
+          <div class="title">
+            <h3 class="drakBR">REGISTRATION</h3>
+          </div>
+        </div>
+        <div class="outer-box">
+          <img src="/images/tit_join.gif" alt="Member Login" />
+          <div class="container" style="background: #fff; width: 400px">
+            <div class="box">
+              <div>
+                <div class="inner-box register-box">
+                  <div class="input-box register-box">
+                    <div class="input-name register-name">User ID</div>
+                    <div class="input-form">
+                      <input type="text" size="30" />
+                    </div>
+                  </div>
+                  <div class="input-box register-box">
+                    <div class="input-name register-name">Password</div>
+                    <div class="input-form">
+                      <input type="password" size="30" />
+                    </div>
+                  </div>
+                  <div class="input-box register-box" style="height: 40px">
+                    <div class="input-name register-name" style="height: 40px">
+                      Password
+                      <br />
+                      (Confirm)
+                    </div>
+                    <div class="input-form">
+                      <input type="text" size="30" />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div class="btn-box">
+                  <input
+                    class="btn"
+                    type="button"
+                    value="Cancel"
+                    onclick="goToLogin()"
+                  />
+                  <input class="btn" type="submit" value="Register" />
+                  <script>
+                    function goToAgree() {
+                      window.location.href = "/login/agree";
+                    }
+                    function goToLogin() {
+                      window.location.href = "/login/user";
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+
+  <footer th:replace="~{partials/fragment :: footer}"></footer>
+</html>

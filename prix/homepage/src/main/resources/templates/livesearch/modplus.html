@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="~{fragment :: head}"></head>
+<head th:replace="~{partials/fragment :: head}"></head>
 <head>
   <title>MODPlus Search</title>
   <meta charset="UTF-8">
 </head>
 <body>
-<header th:replace="~{fragment :: header2}"></header>
+<header th:replace="~{partials/fragment :: header2}"></header>
 <form name="search" method="post" action="process.jsp" enctype="multipart/form-data">
   <input type="hidden" name="engine" value="modeye"/>
 
@@ -189,7 +189,7 @@
           </td>
         </tr>
         <tr>
-          <th><div align="right"><a href="/help.jsp#FRAGTOL" class="thmenu">Fragment Tol.</a> </div></th>
+          <th><div align="right"><a href="/help.jsp#FRAGTOL" class="thmenu">fragment Tol.</a> </div></th>
           <td colspan="3">
             ± <input name="frag_tolerance" type="text" size="10" th:value="${userSetting.fTolerance}" /> Da
           </td>
@@ -227,5 +227,5 @@
   </table>
 </form>
 </body>
-<footer th:replace="~{fragment :: footer}"></footer>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
 </html>

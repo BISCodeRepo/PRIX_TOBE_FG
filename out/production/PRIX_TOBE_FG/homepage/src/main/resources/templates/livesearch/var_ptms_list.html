@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modification List</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        function checkAll(obj, flag) {
+            if (obj != null) {
+                if (obj.length > 0) {
+                    for (var i = 0; i < obj.length; i++)
+                        obj[i].checked = flag;
+                } else
+                    obj.checked = flag;
+            }
+        }
+
+        var checkAllClick = false;
+        function checkAllMods() {
+            checkAllClick = !checkAllClick;
+            var obj = document.mod_list.mod;
+            checkAll(obj, checkAllClick);
+            return true;
+        }
+
+        function uncheck(obj) {
+            if (checkAllClick && !obj.checked) {
+                checkAllClick = false;
+                document.mod_list.check_all.checked = false;
+            }
+        }
+
+        function sortBy(by) {
+            document.mod_list.sort.value = by;
+            document.mod_list.action = "/modplus/var_ptms_list";
+            document.mod_list.method = "get";
+            document.mod_list.submit();
+        }
+
+        function doSubmit() {
+            document.mod_list.action = "/modplus/var_ptms_list";
+            document.mod_list.method = "post";
+            document.mod_list.submit();
+        }
+
+        $(document).ready(function() {
+            $('#btnRemove').click(function() {
+                doSubmit();
+            });
+        });
+    </script>
+    <style>
+        .sort-arrows {
+            display: flex;
+            align-items: center;
+        }
+        .sort-arrows img {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<form name="mod_list" method="post" action="#" id="modListForm">
+    <input type="hidden" name="sort" th:value="${sort}"/>
+    <input type="hidden" name="var" th:value="${var}"/>
+    <input type="hidden" name="engine" th:value="${engine}"/>
+    <table border="0" cellspacing="0" cellpadding="0" id="TitTable">
+        <tr>
+            <td style="padding-left:15px;">
+                <font class="blueB" size="3" th:text="${engine == 1} ? 'dbond ms/ms search' : 'modplus ms/ms search'"> modplus </font> _
+                <span th:text="${var == 1} ? 'Variable' : 'Fixed'">Variable</span>
+                modification list
+                <span th:if="${engine == 1 && var == 1}" th:text="'( DBond allows up to 20 variable modifications to be specified. )'"></span>
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="1" width="95%" align="center" border="0">
+        <tbody>
+        <tr>
+            <td>
+                <input name="buttonAddUnimod" type="button" th:onclick="'window.open(\'unimod_ptms_list?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=1, width=900, height=600, scrollbars=yes\')'" value="Add from Unimod" />
+                <input name="buttonAddUser" type="button" th:if="${id != null && id != 4}" th:onclick="'window.open(\'user_ptms_list.jsp?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=0, width=800, height=600, scrollbars=yes\')'" value="Add from User list" />
+                <input type="button" value="Remove from search list" id="btnRemove"/>
+            </td>
+            <td>
+                <div align="right">
+                    <input name="buttonClose" type="button" onclick="window.close()" value="Close" />
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" style="BORDER-BOTTOM: #d9dddc 1px solid; BORDER-TOP: #d9dddc 2px solid;">
+        <thead>
+        <tr>
+            <th class="grayTH"><input name="check_all" type="checkbox" class="CHECK" onclick="checkAllMods();"/></th>
+            <th class="grayTH">
+                <div align="left">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="2" style="padding-right:10px">
+                                Name
+                                <span th:if="${sortBy == 'name asc'}">&uarr;</span>
+                                <span th:if="${sortBy == 'name desc'}">&darr;</span>
+                                <span th:unless="${sortBy == 'name asc' || sortBy == 'name desc'}">&nbsp;</span>
+                            </td>
+                            <td>
+                                <a href="#" onclick="sortBy('name asc')">
+                                    <img src="/images/sortup.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" onclick="sortBy('name desc')">
+                                    <img src="/images/sortdown_cur.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+            <th class="grayTH">
+                <div align="right">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="2" style="padding-right:10px">
+                                Mass
+                                <span th:if="${sortBy == 'mass_diff asc'}">&uarr;</span>
+                                <span th:if="${sortBy == 'mass_diff desc'}">&darr;</span>
+                                <span th:unless="${sortBy == 'mass_diff asc' || sortBy == 'mass_diff desc'}">&nbsp;</span>
+                            </td>
+                            <td>
+                                <a href="#" onclick="sortBy('mass_diff asc')">
+                                    <img src="/images/sortup.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" onclick="sortBy('mass_diff desc')">
+                                    <img src="/images/sortdown_cur.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+
+            <th class="grayTH">
+                <div align="center">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="2" style="padding-right:10px">
+                                Site
+                                <span th:if="${sortBy == 'residue asc'}">&uarr;</span>
+                                <span th:if="${sortBy == 'residue desc'}">&darr;</span>
+                                <span th:unless="${sortBy == 'residue asc' || sortBy == 'residue desc'}">&nbsp;</span>
+                            </td>
+                            <td>
+                                <a href="#" onclick="sortBy('residue asc')">
+                                    <img src="/images/sortup.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" onclick="sortBy('residue desc')">
+                                    <img src="/images/sortdown_cur.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+
+            <th class="grayTH">
+                <div align="center">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td rowspan="2" style="padding-right:10px">
+                                Position
+                                <span th:if="${sortBy == 'position asc'}">&uarr;</span>
+                                <span th:if="${sortBy == 'position desc'}">&darr;</span>
+                                <span th:unless="${sortBy == 'position asc' || sortBy == 'position desc'}">&nbsp;</span>
+                            </td>
+                            <td>
+                                <a href="#" onclick="sortBy('position asc')">
+                                    <img src="/images/sortup.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#" onclick="sortBy('position desc')">
+                                    <img src="/images/sortdown_cur.gif" width="10" height="10" border="0">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody th:unless="${#lists.isEmpty(modifications)}">
+            <tr th:each="modi : ${modifications}" onMouseOver="this.style.backgroundColor='#f7f7f7'" onMouseOut="this.style.backgroundColor='#ffffff'">
+                <td class="grayTD">
+                    <input name="mod" type="checkbox" class="CHECK" th:value="${modi.id}" onclick="uncheck(this);" />
+                </td>
+                <td class="grayTD" th:text="${modi.name}"></td>
+                <td class="grayTD" th:text="${modi.massDiff}"></td>
+                <td class="grayTD" th:text="${modi.residue}"></td>
+                <td class="grayTD" th:text="${modi.position}"></td>
+            </tr>
+        </tbody>
+        <tr th:if="${#lists.isEmpty(modifications)}">
+            <td class="grayTD" colspan="5">No modifications found.</td>
+        </tr>
+
+
+    </table>
+</form>
+</body>
+<footer th:replace="~{fragment :: footer}"></footer>
+</html>
