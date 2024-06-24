@@ -10,6 +10,6 @@ public class DownloadController {
 
     @GetMapping
     public String download(){
-        return "download/download";
+        return "download";
     }
 }

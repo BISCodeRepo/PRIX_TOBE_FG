@@ -10,6 +10,6 @@ public class PublicationController {
 
     @GetMapping
     public String publication(){
-        return "publication/publications";
+        return "publications";
     }
 }

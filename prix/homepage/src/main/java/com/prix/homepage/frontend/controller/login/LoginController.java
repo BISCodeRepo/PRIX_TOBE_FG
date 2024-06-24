@@ -15,7 +15,7 @@ public class LoginController {
 
     @GetMapping("/user")
     public String loginUser(@ModelAttribute("loginForm") LoginForm loginForm){
-        return "login/login";
+        return "login";
     }
 
     @PostMapping("/user")
@@ -30,16 +30,16 @@ public class LoginController {
 
     @GetMapping("/admin")
     public String loginAgdmin(){
-        return "login/admin_login";
+        return "admin_login";
     }
 
     @GetMapping("/agree")
     public String loginAgree(){
-        return "login/agree";
+        return "agree";
     }
 
     @GetMapping("/register")
     public String loginRegister(){
-        return "login/register";
+        return "register";
     }
 }
