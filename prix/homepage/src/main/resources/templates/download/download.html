@@ -6,87 +6,8 @@
 
     <main>
       <div class="main-group">
-        <aside>
-          <div class="main-slide">
-            <img src="/images/subtit03.gif" alt="" />
-          </div>
-
-          <div class="content-indexes">
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              ACTG
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              CIFTER
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              DBond
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              deMix
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              DDP Search
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              Next Search
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              MODa
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              MODPlus
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              MutCombinator
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              USE
-            </span>
-          </div>
-        </aside>
-        <article>
-          <div class="main-article">
-            <div class="main-title">
-              <div class="title">
-                <h3 class="drakBR">MODPlus</h3>
-                <br />
-              </div>
-            </div>
-
-            <div class="main-contents">
-
-          </div>
-        </article>
+        <aside th:replace="partials/download_article :: download-menus"></aside>
+        <article th:replace="partials/download_article :: ACTG"></article>
       </div>
     </main>
 
