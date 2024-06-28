@@ -368,7 +368,7 @@ p{font-size: 12px; color: #5D5D5D; font-family: Arial, Helvetica, sans-serif; li
 span{font-size: 12px; color: #5D5D5D; font-family: Arial, Helvetica, sans-serif; line-height: 130%; text-indent: initial;}
 ul{font-size: 12px; color: #5D5D5D; font-family: Arial, Helvetica, sans-serif; line-height: 130%; text-indent: initial;}
 
-.text-padding span:first-child{color: #4e4d4d; font-size:13px;}
+.text-padding .padding-paragraph-name{color: #4e4d4d; font-size:13px;}
 .main-contents span{font-size: 12px;}
 
 .content-indexes{padding-left: 10px;}

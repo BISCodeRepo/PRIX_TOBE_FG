@@ -32,6 +32,9 @@ public class DownloadController {
     @GetMapping("/MODa")
     public String moda_download() { return "download/mod_a"; }
 
+    @GetMapping("/MODPlus")
+    public String modplus_download() { return "download/mod_plus"; }
+
 
     @GetMapping("/MutCombinator")
     public String mutcombinator_download() { return "download/mut_combinator"; }

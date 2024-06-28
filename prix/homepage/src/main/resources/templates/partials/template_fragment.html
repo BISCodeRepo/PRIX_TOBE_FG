@@ -17,6 +17,31 @@
 </div>
 
 
+<!--download page - publication section-->
+<div th:fragment="publication-section(description, author, citation, citation_url, pmid, omicX)">
+    <div class="grayTD">
+        <img src="/images/p_st1.GIF" width="4" height="9" />
+        <span class="drakBR">Publication</span>
+    </div>
+    <div class="text-padding">
+            <span class="drakBR" th:text="${description}">description</span> <br>
+            <span><em th:text="${author}">author</em></span> <br>
+            <span th:text="${citation}">citation</span>
+            <span><a class="under" th:href="${citation_url}" th:text="${pmid}">PMID</a></span>
+            <div th:if="${omicX != null}">
+                <a th:href="${omicX}">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </div>
+    </div>
+
+
+
+</div>
+
+
+
+
 
 
 
@@ -42,7 +67,7 @@
 <div th:fragment="publication-content-no-download(name, description, author, citation, PMID)">
     <div>
         <img src="/images/p_st1.GIF" width="4" height="9" />
-        <span class="drakBR" th:text="${name}">Name</span><sup class="inline" th:if="${name} == 'MOD'">i</sup>
+        <span class="drakBR"><span  th:text="${name}">Name</span><sup class="inline" th:if="${name} == 'MOD'">i</sup></span>
     </div>
     <hr>
     <p>

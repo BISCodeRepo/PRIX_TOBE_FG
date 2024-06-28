@@ -10,71 +10,79 @@
     </div>
 
     <div class="content-indexes">
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
           <a class="menu" th:href="@{/download/ACTG}" href="../download/actg.html">
               ACTG
           </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/CIFTER}" href="../download/cifter.html">
                 CIFTER
             </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/DBond}" href="../download/dbond.html">
                 DBond
             </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/deMix}" href="../download/demix.html">
                 deMix
             </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/DDPSearch}" href="../download/ddp_search.html">
                 DDP Search
             </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/NextSearch}" href="../download/next_search.html">
                 Next Search
             </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/MODa}" href="../download/mod_a.html">
                 MODa
             </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          <a class="menu" th:href="@{/download/MODPlus}" href="../download/mod_plus.html">
+              MODPlus
+          </a>
+        </span>
+        <br>
+        <br>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
         <a class="menu" th:href="@{/download/MutCombinator}" href="../download/mut_combinator.html">
             MutCombinator
         </a>
         </span>
-        <br />
-        <br />
+        <br>
+        <br>
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
             <a class="menu" th:href="@{/download/USE}" href="../download/use.html">
@@ -94,41 +102,40 @@
             <p>
                 In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
                         ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
+                        <br>
                         If JRE is not installed, please visit
                     </span>
                 <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
-                <br />
+                <br>
+                <br>
                 <li>Release Note</li>
-                <br />
+                <br>
                 - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
                 ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
                 - Nov 5, 2018: version 1.11
-                <br />
+                <br>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                    <a href="https://omictools.com/amino-acids-to-genome-tool">
-                        <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                    </a>
-            </p>
+            <div th:replace="~{partials/template_fragment :: publication-section('ACTG: novel peptide mapping onto gene models', 'Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.', 'Bioinformatics, 2017, 33(8), 1218-1220.', 'https://www.ncbi.nlm.nih.gov/pubmed/28031186', '[ PMID: 28031186 ]', 'https://omictools.com/amino-acids-to-genome-tool')}"></div>
+<!--            <div class="grayTD">-->
+<!--                <img src="/images/p_st1.GIF" width="4" height="9" />-->
+<!--                <span class="drakBR">Publication</span>-->
+<!--            </div>-->
+<!--            <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>-->
+<!--            <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>-->
+<!--            <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>-->
+<!--                <a href="https://omictools.com/amino-acids-to-genome-tool">-->
+<!--                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">-->
+<!--                </a>-->
 
         </div>
     </div>
@@ -142,48 +149,47 @@
                 <h3 class="drakBR">
                     CIFTER
                     <span>- Charge State Determination</span>
+                    <span>( <a class="under" href="">Software download</a> ) </span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
                 Low-resolution mass spectrometers cannot completely resolve isotopes of multiply-charged peptides and therefore cannot reliably determine their charge states and masses. Instead, every possible charge state, commonly +2 and +3, is assumed to calculate its mass and repetitive database searches are required for each hypothetical mass. This greatly increases the overall time needed for searching candidate peptides, and also requires additional efforts to differentiate the correct match from false positives. To alleviate these problems, CIFTER is proposed to differentiate charge states of peptides obtained from low-resolution mass spectrometers.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Usage</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <p>
                 <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
+                        CIFTER was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br>
                         If JRE is not installed, please visit
                     </span>
                 <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
-                <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
+                </p>
+                <li>Input and Output</li>
+                <p class="blue">As input, CIFTER takes only a centroided mzXML file.</p>
+                <p>
+                    <span class="blue">As output, *.csd.txt file is automatically generated, where each MS/MS scan is given its charge state.</span> <br>
+                    <span class="blue">Body of output consists of three columns: [Scan No] [Estimated value] [Group]</span> <br>
+                    <span  class="blue">- Scan No: scan number in mzXML</span> <br>
+                    <span  class="blue">Estimated value: a positive value represents that a precursor ion is doubly charged and a negative value represents that a precursor ion is triply charged.</span><br>
+                    <span  class="blue">- Group: three groups, 2, 3, 2OR3</span><br>
+                </p>
+                <p class="blue">As output, an MGF file can be optionally generated, where charge states of MS/MS spectra are predicted by CIFTER.</p>
+
+                <li>Command Line</li>
+                <p class="blue">java -jar cifter.jar -i foo.mzXML [option]</p>
+                <p class="blue">option ' -mgf ' can be used to make MGF file (Its name would be foo.mgf).</p>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+
+            <div th:replace="~{partials/template_fragment :: publication-section('CIFTER: automated charge state determination for peptide tandem mass spectra.', 'Seungjin Na, Eunok Paek, and Cheolju Lee.', 'Analytical Chemistry, 2008, 80, 1520-1528.', 'http://www.ncbi.nlm.nih.gov/pubmed/18247484', '[ PMID: 18247484 ]' , null)}"></div>
 
         </div>
     </div>
@@ -197,41 +203,33 @@
             <p>
                 DBond assigns disulfide bond sites in a protein via analysis of MS/MS spectra of disulfide linked peptides from protein digestion under non-reducing condition. A disulfide linked peptide produces multiple fragment ions from two peptides, and therefore, its MS/MS spectrum shows complex patterns and includes many overlapping fragment ions. DBond was designed to recognize diagnostic fragment ions resultant specifically from disulfide linkages.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
                         DBond was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
+                        <br>
                         If JRE is not installed, please visit
                     </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                <br>
                 <li>Release Note</li>
-                <br />
+                <br>
                 - <span class="blue"> Oct 01, 2012: version 3.02</span>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
-                <li>Spectral Viewer</li>
+                ( <a href="" class="under">Software download</a> ) <br>
+                - Jan 01, 2012: version 3.01 <br>
+                <br>
+                <li>Spectral Viewer <span>( <a class="under" href="">Software download</a> )</span></li>
+                <br>
+                <span>To help users inspect MS/MS spectra manually, a spectral viewer is provided. The input XML file to a viewer is generated from DBond search. (*.bond.xml)</span>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+            <div th:replace="~{partials/template_fragment :: publication-section('New algorithm for the identification of intact disulfide linkages based on fragmentation characteristics in tandem mass spectra.', 'Seonhwa Choi, Jaeho Jeong, Seungjin Na, Hyo Sun Lee, Hwa-Young Kim, Kong-Joo Lee, and Eunok Paek.', 'Journal of Proteome Research, 2010, 9, 626-635.', 'http://www.ncbi.nlm.nih.gov/pubmed/19902913','[ PMID: 19902913 ]', null)}"></div>
+
 
         </div>
     </div>
@@ -250,47 +248,35 @@
                     deMix
                     <span> - Decoding deuterated Distributions from heterogeneous protein states via HDX-MS</span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
                 deMix deals directly with the deuterated isotopic distributions, but not considering their centroid masses and is designed to be robust over random noises. In addition, unlike the existing approaches that can only determine a single state from an isotopic distribution, deMix can also detect a bimodal deuterated distribution, arising from EX1 behavior or heterogeneous peptides in conformational isomer proteins. Furthermore, deMix comes with visualization software to facilitate validation and representation of the analysis results.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
+                        deMix was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br>
                         If JRE is not installed, please visit
                     </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                <br>
                 <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
+                <br>
+                - <a href="" class="under"> Apr 7, 2019: version 1.01</a>
+                <span>( <a href="" class="under">Software download</a> )</span>
+                <br>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+            <div th:replace="~{partials/template_fragment :: publication-section('deMix: Decoding Deuterated Distributions from Heterogeneous Protein States via HDX-MS.', 'Seungjin Na, Jae-Jin Lee, Jong Wha J. Joo, Kong-Joo Lee and Eunok Paek.', 'Scientific Reports, 2019, 9(1):3176.',  'http://www.ncbi.nlm.nih.gov/pubmed/30816214' ,'[ PMID: 30816214 ]', null)}"></div>
 
         </div>
     </div>
@@ -308,47 +294,37 @@
                     DDP Search
                     <span> - Data-dependent scoring parameter optimization</span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
                 DDP search conducts a preliminary search for the spectra selected by the spectrum quality filter. Search results from the preliminary search are used to generate data-dependent scoring parameters, then the full search over the entire input spectra are conducted using the learned scoring parameters.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
-                        If JRE is not installed, please visit
-                    </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
+                    DDP Search was implemented using both JAVA programming language and bash shell script, and requires both Java Running Environment (JRE) and bash shell under Linux operating system. <br>
+                    If JRE is not installed, please visit
+                    <a href="http://www.oracle.com/technetwork/java/index.html" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                    *Dependency: MS-GF+ software
+                    <a href="https://github.com/MSGFPlus/msgfplus">(download the latest version via GitHub)</a> <br>
+                </span>
+                <br>
                 <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
+                <br>
+                <span>
+                    - <a href="" class="under">Jul 26, 2018: version 1.00</a>
+                    ( <a href="" class="under">Software download</a> )
+                </span>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+            <div th:replace="~{partials/template_fragment :: publication-section('Data-dependent scoring parameter optimization in MS-GF+ using spectrum quality filter', 'Hyunjin Jo and Eunok Paek.', 'Journal of Proteome Research, 2018, XX, XXXXXX.', 'https://pubs.acs.org/doi/10.1021/acs.jproteome.8b00415', '[ DOI: 10.1021/acs.jproteome.8b00415 ]', null)}"></div>
 
         </div>
     </div>
@@ -365,47 +341,42 @@
                     Next Search
                     <span>- Exon Graph Search</span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
                 NextSearch includes modules (1) that constructs a compact nucleotide exon graph while incorporating novel splice variations (2) that identifies peptides by searching tandem mass spectra against the nucleotide exon graph built during the previous module.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
-                        If JRE is not installed, please visit
+                    NextSearch requires Java Running Environment (JRE) 1.7.0_45 or later. <br>
+                    If JRE is not installed, please visit
+                    <a href="http://www.oracle.com/technetwork/java/index.html" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                    If you want to use the Hadoop version of NextSearch, Hadoop version 1.2.1 or later is necessary.
+                    Please visit
+                    <a href="http://hadoop.apache.org/." class="under">http://hadoop.apache.org/.</a> <br>
                     </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
+                <br>
                 <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
+                <br>
+                <span>
+                    - <a href="" class="under">Feb 20, 2017: version 1.2</a>
+                    ( <a href="" class="under">Software download</a> ) <br>
+                    - Apr 22, 2016: version 1.11 <br>
+                    - Dec 15, 2015: version 1.1 <br>
+                    - June 10, 2015: version 1.00 <br>
+                </span>
+                <br>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+            <div th:replace="~{partials/template_fragment :: publication-section('NextSearch: A Search Engine for Mass Spectrometry Data against a Compact Nucleotide Exon Graph.', 'Hyunwoo Kim, Heejin Park, and Eunok Paek.', 'Journal of Proteome Research, 2015, 14(7), 2784-2791.', 'http://www.ncbi.nlm.nih.gov/pubmed/26004133',  '[ PMID: 26004133 ]', null)}"></div>
 
         </div>
     </div>
@@ -424,47 +395,96 @@
                     MODa
                     <span>- Multi-blind modification search</span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
                 With great biological interest in post-translational modifications (PTMs), various approaches have been introduced to identify PTMs using MS/MS. MODa is a novel "multi-blind" spectral alignment algorithm that allows for fast unrestrictive PTM searches with no limitation on the number of modifications per peptide while featuring over an order of magnitude speedup in relation to existing approaches.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
+                        MODa was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br>
                         If JRE is not installed, please visit
                     </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                <br>
                 <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
+                <br>
+                <span class="blue">
+                    - Jun 12, 2019: version 1.62 <br>
+                    - Jun 15, 2018: version 1.61 <br>
+                    - Mar 9, 2018: version 1.60 <br>
+                    - Feb 15, 2016: version 1.51 <br>
+                    - Jan 22, 2016: version 1.50 <br>
+                    - May 28, 2014: version 1.23 <br>
+                    - May 9, 2014: version 1.22 <br>
+                    - March 27, 2014: version 1.21 <br>
+                    - March 03, 2014: version 1.20 <br>
+                </span>
+
+
+                <br>
             </ul>
+            <div th:replace="~{partials/template_fragment :: publication-section('Fast multi-blind modification search through tandem mass spectrometry.', '  Seungjin Na, Nuno Bandeira, and Eunok Paek.', 'Molecular and Cellular Proteomics, 2012, 11, M111.010199.', 'http://www.ncbi.nlm.nih.gov/pubmed/22186716',  '[ PMID: 22186716 ]','https://omictools.com/amino-acids-to-genome-tool')}"></div>
+
+        </div>
+    </div>
+</article>
+
+
+<!-- Fragment: MODa -->
+<article th:fragment="MODPlus">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    MODPlus
+                    <span>- Robust and Unrestrictive Identification of Post-Translational Modifications Using Mass Spectrometry</span>
+                </h3>
+                <br>
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                Post-translational modifications regulate various cellular processes and are of great biological interest. Unrestrictive searches of mass spectrometry data enable the detection of any type of modification. MODplus makes practical unrestrictive searches possible by allowing (1) hundreds of modifications, (2) multiple modifications per peptide, (3) the whole proteome database, and (4) any tolerant values in search parameters.
+            </p>
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
+                <span class="drakBR">Software</span>
             </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+            <ul>
+                <li>Requirement</li>
+                <br>
+                <span class="blue">
+                        MODPlus was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br>
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                <br>
+                <li>Release Note</li>
+                <br>
+                <span class="blue">
+                    - <a href="" class="under"> Jan 15, 2023: version 2.01</a>
+                    ( <a href="" class="under">Software download</a> ) <br>
+                    - Jan 18, 2021: version 1.02 <br>
+                    - Sep 29, 2020: version 1.01 <br>
+                </span>
+
+
+                <br>
+            </ul>
+            <div th:replace="~{partials/template_fragment :: publication-section('MODplus: Robust and Unrestrictive Identification of Post-Translational Modifications Using Mass Spectrometry', 'Seungjin Na, Jihyung Kim and Eunok Paek.', 'Analytical Chemistry, 2019, 91, 17, 11324-11333.', 'http://www.ncbi.nlm.nih.gov/pubmed/31365238',  '[ PMID: 31365238 ]',null)}"></div>
 
         </div>
     </div>
@@ -483,47 +503,38 @@
                     MutCombinator
                     <span>- Combinatorial mutation search</span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
                 MutCombinator enables us to practically identify mutated peptides from tandem mass spectra allowing combinatorial mutations during the database search. It uses an upgraded version of a variant graph, keeping track of frame information. The variant graph is indexed by nine nucleotides for fast access. Combinations of point mutations are considered, and also it can be practically applied together with a large mutation database such as COSMIC. Furthermore, MutCombinator supports in-frame search for coding regions and three-frame search for noncoding regions.
             </p>
-            <br />
+            <br>
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
             </div>
             <ul>
                 <li>Requirement</li>
-                <br />
+                <br>
                 <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
-                        If JRE is not installed, please visit
-                    </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
+                    MutCombinator was implemented using JAVA programming language, and requires Java Running Environment (JRE). <br>
+                    If JRE is not installed, please visit
+                    <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a> <br>
+                </span>
+                <br>
                 <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
+                <br>
+                <span class="blue">
+                    - <a href="" class="under">Jun 28, 2024: version 1.11 with test data</a>
+                    ( <a href="" class="under">Software download</a> ) <br>
+                    - Mar 26, 2020: version 1.11 <br>
+                    - Jan 22, 2020: version 1.10 <br>
+                </span>
+                <br>
             </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
-            </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+            <div th:replace="~{partials/template_fragment :: publication-section('MutCombinator: identification of mutated peptides allowing combinatorial mutations using nucleotide-based graph search.', 'Seunghyuk Choi and Eunok Paek.', 'Bioinformatics, 2020, 7, i203-i209.', 'http://www.ncbi.nlm.nih.gov/pubmed/32657416',  '[ PMID: 32657416 ]', null)}"></div>
 
         </div>
     </div>
@@ -540,45 +551,22 @@
             <div class="title">
                 <h3 class="drakBR">
                     USE
-                    <span>-  - for MOD<sup>i</sup> and DBond</span>
+                    <span>- for MOD<sup>i</sup> and DBond</span>
                 </h3>
-                <br />
+                <br>
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Software</span>
+                <span class="drakBR">USE</span>
             </div>
-            <ul>
-                <li>Requirement</li>
-                <br />
-                <span class="blue">
-                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
-                        <br />
-                        If JRE is not installed, please visit
-                    </span>
-                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
-                <br />
-                <li>Release Note</li>
-                <br />
-                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
-                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
-                - Nov 5, 2018: version 1.11
-                <br />
-            </ul>
-            <div class="grayTD">
-                <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Publication</span>
+            <div class="text-padding">
+                <span><a class="under" href="https://prix.hanyang.ac.kr/use/">USE homepage</a></span>
             </div>
-            <p>
-                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
-                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
-                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
-                <a href="https://omictools.com/amino-acids-to-genome-tool">
-                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
-                </a>
-            </p>
+
+
+
 
         </div>
     </div>
