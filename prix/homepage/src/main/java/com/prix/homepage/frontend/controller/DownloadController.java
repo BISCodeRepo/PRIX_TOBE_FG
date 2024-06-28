@@ -13,10 +13,34 @@ public class DownloadController {
         return "download/download";
     }
 
-    @GetMapping("/actg")
-    public String downloadActg() { return "download/actg"; }
+    @GetMapping("/ACTG")
+    public String actg_download() { return "download/actg"; }
 
-    @GetMapping("/dbond")
-    public String downloadDbond() { return "download/dbond"; }
+    @GetMapping("/CIFTER")
+    public String cifter_download() { return "download/cifter"; }
+
+    @GetMapping("/DBond")
+    public String dbond_download() { return "download/dbond"; }
+
+    @GetMapping("/DDPSearch")
+    public String ddp_download() { return "download/ddp_search"; }
+
+    @GetMapping("/deMix")
+    public String demix_download() { return "download/demix"; }
+
+
+    @GetMapping("/MODa")
+    public String moda_download() { return "download/mod_a"; }
+
+
+    @GetMapping("/MutCombinator")
+    public String mutcombinator_download() { return "download/mut_combinator"; }
+
+    @GetMapping("/NextSearch")
+    public String nextsearch_download() { return "download/next_search"; }
+
+
+    @GetMapping("/USE")
+    public String use_download() { return "download/use"; }
 
 }

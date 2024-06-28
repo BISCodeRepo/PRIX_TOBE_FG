@@ -27,7 +27,7 @@
 <div>
     <img src="/images/p_st1.GIF" width="4" height="9" />
     <span class="drakBR" th:text="${name}">Name</span>
-    <span>( <a href="${download_link}">Software download</a> )</span>
+    <span>( <a th:href="@{${download_link}}">Software download</a> )</span>
 </div>
     <hr>
 <p>
@@ -39,6 +39,20 @@
 </p>
 </div>
 
+<div th:fragment="publication-content-no-download(name, description, author, citation, PMID)">
+    <div>
+        <img src="/images/p_st1.GIF" width="4" height="9" />
+        <span class="drakBR" th:text="${name}">Name</span><sup class="inline" th:if="${name} == 'MOD'">i</sup>
+    </div>
+    <hr>
+    <p>
+        <span class="drakBR" th:text="${description}">description</span> <br/>
+        <em th:text="${author}">author</em> <br/>
+        <span th:text="${citation}">citation.</span>
+        <span><a th:href="'https://pubmed.ncbi.nlm.nih.gov/' + ${PMID}" target="_blank" class="under" th:text="'[ PMID: '+${PMID}+' ]'">[ PMID ]</a></span>
+
+    </p>
+</div>
 
 
 

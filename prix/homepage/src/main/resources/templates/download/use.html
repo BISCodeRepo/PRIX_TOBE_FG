@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header3}"></header>
+
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/download_fragment :: download-menus"></aside>
+        <article th:replace="partials/download_fragment :: USE"></article>
+    </div>
+</main>
+
+</body>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</html>

@@ -14,7 +14,7 @@
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          <a class="menu" th:href="@{/download/actg}" href="../download/actg.html">
+          <a class="menu" th:href="@{/download/ACTG}" href="../download/actg.html">
               ACTG
           </a>
         </span>
@@ -22,13 +22,15 @@
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          CIFTER
+            <a class="menu" th:href="@{/download/CIFTER}" href="../download/cifter.html">
+                CIFTER
+            </a>
         </span>
         <br />
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-            <a class="menu" th:href="@{/download/dbond}" href="../download/dbond.html">
+            <a class="menu" th:href="@{/download/DBond}" href="../download/dbond.html">
                 DBond
             </a>
         </span>
@@ -36,43 +38,48 @@
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          deMix
+            <a class="menu" th:href="@{/download/deMix}" href="../download/demix.html">
+                deMix
+            </a>
         </span>
         <br />
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          DDP Search
+            <a class="menu" th:href="@{/download/DDPSearch}" href="../download/ddp_search.html">
+                DDP Search
+            </a>
         </span>
         <br />
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          Next Search
+            <a class="menu" th:href="@{/download/NextSearch}" href="../download/next_search.html">
+                Next Search
+            </a>
         </span>
         <br />
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          MODa
+            <a class="menu" th:href="@{/download/MODa}" href="../download/mod_a.html">
+                MODa
+            </a>
+        </span>
+        <br />
+        <br />
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+        <a class="menu" th:href="@{/download/MutCombinator}" href="../download/mut_combinator.html">
+            MutCombinator
+        </a>
         </span>
         <br />
         <br />
         <span>
           <img src="/images/icon_5.gif" width="6px" height="10px" />
-          MODPlus
-        </span>
-        <br />
-        <br />
-        <span>
-          <img src="/images/icon_5.gif" width="6px" height="10px" />
-          MutCombinator
-        </span>
-        <br />
-        <br />
-        <span>
-          <img src="/images/icon_5.gif" width="6px" height="10px" />
-          USE
+            <a class="menu" th:href="@{/download/USE}" href="../download/use.html">
+                USE
+            </a>
         </span>
     </div>
     </aside>
@@ -128,25 +135,25 @@
 </article>
 
 <!-- Fragment: CIFTER -->
-<article th:fragment="">
+<article th:fragment="CIFTER">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    CIFTER
+                    <span>- Charge State Determination</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+                Low-resolution mass spectrometers cannot completely resolve isotopes of multiply-charged peptides and therefore cannot reliably determine their charge states and masses. Instead, every possible charge state, commonly +2 and +3, is assumed to calculate its mass and repetitive database searches are required for each hypothetical mass. This greatly increases the overall time needed for searching candidate peptides, and also requires additional efforts to differentiate the correct match from false positives. To alleviate these problems, CIFTER is proposed to differentiate charge states of peptides obtained from low-resolution mass spectrometers.
             </p>
             <br />
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
-                <span class="drakBR">Software</span>
+                <span class="drakBR">Usage</span>
             </div>
             <ul>
                 <li>Requirement</li>
@@ -235,20 +242,20 @@
 
 
 <!-- Fragment: deMix -->
-<article th:fragment="">
+<article th:fragment="deMix">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    deMix
+                    <span> - Decoding deuterated Distributions from heterogeneous protein states via HDX-MS</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+                deMix deals directly with the deuterated isotopic distributions, but not considering their centroid masses and is designed to be robust over random noises. In addition, unlike the existing approaches that can only determine a single state from an isotopic distribution, deMix can also detect a bimodal deuterated distribution, arising from EX1 behavior or heterogeneous peptides in conformational isomer proteins. Furthermore, deMix comes with visualization software to facilitate validation and representation of the analysis results.
             </p>
             <br />
             <div class="grayTD">
@@ -293,20 +300,20 @@
 
 
 <!-- Fragment: DDP Search -->
-<article th:fragment="">
+<article th:fragment="DDPSearch">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    DDP Search
+                    <span> - Data-dependent scoring parameter optimization</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+                DDP search conducts a preliminary search for the spectra selected by the spectrum quality filter. Search results from the preliminary search are used to generate data-dependent scoring parameters, then the full search over the entire input spectra are conducted using the learned scoring parameters.
             </p>
             <br />
             <div class="grayTD">
@@ -350,20 +357,20 @@
 
 
 <!-- Fragment: Next Search -->
-<article th:fragment="">
+<article th:fragment="NextSearch">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    Next Search
+                    <span>- Exon Graph Search</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+                NextSearch includes modules (1) that constructs a compact nucleotide exon graph while incorporating novel splice variations (2) that identifies peptides by searching tandem mass spectra against the nucleotide exon graph built during the previous module.
             </p>
             <br />
             <div class="grayTD">
@@ -409,20 +416,20 @@
 
 
 <!-- Fragment: MODa -->
-<article th:fragment="">
+<article th:fragment="MODa">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    MODa
+                    <span>- Multi-blind modification search</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+                With great biological interest in post-translational modifications (PTMs), various approaches have been introduced to identify PTMs using MS/MS. MODa is a novel "multi-blind" spectral alignment algorithm that allows for fast unrestrictive PTM searches with no limitation on the number of modifications per peptide while featuring over an order of magnitude speedup in relation to existing approaches.
             </p>
             <br />
             <div class="grayTD">
@@ -468,20 +475,20 @@
 
 
 <!-- Fragment: MutCombinator -->
-<article th:fragment="">
+<article th:fragment="MutCombinator">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    MutCombinator
+                    <span>- Combinatorial mutation search</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
             <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+                MutCombinator enables us to practically identify mutated peptides from tandem mass spectra allowing combinatorial mutations during the database search. It uses an upgraded version of a variant graph, keeping track of frame information. The variant graph is indexed by nine nucleotides for fast access. Combinations of point mutations are considered, and also it can be practically applied together with a large mutation database such as COSMIC. Furthermore, MutCombinator supports in-frame search for coding regions and three-frame search for noncoding regions.
             </p>
             <br />
             <div class="grayTD">
@@ -527,22 +534,18 @@
 
 
 <!-- Fragment: USE -->
-<article th:fragment="">
+<article th:fragment="USE">
     <div class="main-article">
         <div class="main-title">
             <div class="title">
                 <h3 class="drakBR">
-                    ACTG
-                    <span>- Novel peptide mapping</span>
+                    USE
+                    <span>-  - for MOD<sup>i</sup> and DBond</span>
                 </h3>
                 <br />
             </div>
         </div>
         <div class="main-contents no-padding width-650">
-            <p>
-                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
-            </p>
-            <br />
             <div class="grayTD">
                 <img src="/images/p_st1.GIF" width="4" height="9" />
                 <span class="drakBR">Software</span>
