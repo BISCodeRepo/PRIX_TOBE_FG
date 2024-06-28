@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<!--Fragment: Main Title-->
+<div th:fragment="main-title(title, text)">
+    <div class="main-title">
+        <div class="title">
+            <h3 class="drakBR" th:text="${title}">
+                Default Title
+            </h3>
+            <span th:text="${text}">- Description</span>
+            <br />
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div th:fragment="publication-content(name, download_link, description, author, citation, PMID)">
+<div>
+    <img src="/images/p_st1.GIF" width="4" height="9" />
+    <span class="drakBR" th:text="${name}">Name</span>
+    <span>( <a href="${download_link}">Software download</a> )</span>
+</div>
+    <hr>
+<p>
+    <span class="drakBR" th:text="${description}">description</span> <br/>
+    <em th:text="${author}">author</em> <br/>
+    <span th:text="${citation}">citation.</span>
+    <span><a th:href="'https://pubmed.ncbi.nlm.nih.gov/' + ${PMID}" target="_blank" class="under" th:text="'[ PMID: '+${PMID}+' ]'">[ PMID ]</a></span>
+
+</p>
+</div>
+
+
+
+
+
+
+<!--Publication Fragments-->
+
+
+
+
+
+
+
+</body>
+</html>

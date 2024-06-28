@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<!--Menu list on the left-->
+<aside th:fragment="download-menus">
+    <div class="main-slide">
+        <img src="/images/subtit03.gif" alt="" />
+    </div>
+
+    <div class="content-indexes">
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          <a class="menu" th:href="@{/download/actg}" href="../download/actg.html">
+              ACTG
+          </a>
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          CIFTER
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+            <a class="menu" th:href="@{/download/dbond}" href="../download/dbond.html">
+                DBond
+            </a>
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          deMix
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          DDP Search
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          Next Search
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          MODa
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          MODPlus
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          MutCombinator
+        </span>
+        <br />
+        <br />
+        <span>
+          <img src="/images/icon_5.gif" width="6px" height="10px" />
+          USE
+        </span>
+    </div>
+    </aside>
+
+<!-- Main contents of the page. Defining each fragment below. -->
+
+<!-- Fragment: ACTG -->
+<article th:fragment="ACTG">
+    <div class="main-article">
+        <div th:replace="~{partials/template_fragment :: main-title('ACTG', '- Novel peptide mapping')}"></div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                    <a href="https://omictools.com/amino-acids-to-genome-tool">
+                        <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                    </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+<!-- Fragment: CIFTER -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+<!-- Fragment: DBond -->
+<article th:fragment="DBond">
+    <div class="main-article">
+        <div th:replace="~{partials/template_fragment :: main-title('DBond', '- Identification of intact disulfide linkages')}"></div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                DBond assigns disulfide bond sites in a protein via analysis of MS/MS spectra of disulfide linked peptides from protein digestion under non-reducing condition. A disulfide linked peptide produces multiple fragment ions from two peptides, and therefore, its MS/MS spectrum shows complex patterns and includes many overlapping fragment ions. DBond was designed to recognize diagnostic fragment ions resultant specifically from disulfide linkages.
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        DBond was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <span class="blue"> Oct 01, 2012: version 3.02</span>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+                <li>Spectral Viewer</li>
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- Fragment: deMix -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- Fragment: DDP Search -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+
+
+<!-- Fragment: Next Search -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- Fragment: MODa -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- Fragment: MutCombinator -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- Fragment: USE -->
+<article th:fragment="">
+    <div class="main-article">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">
+                    ACTG
+                    <span>- Novel peptide mapping</span>
+                </h3>
+                <br />
+            </div>
+        </div>
+        <div class="main-contents no-padding width-650">
+            <p>
+                In many proteogenomics applications, mapping peptide sequences onto gene models can be very useful because it can find new gene model ,and correct or modify annotated gene model. ACTG provides a peptide mapping allowing four structural variations: junction variation, exon skipping, frame shift and intron retention (exon extension at exon-exon junction).
+            </p>
+            <br />
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Software</span>
+            </div>
+            <ul>
+                <li>Requirement</li>
+                <br />
+                <span class="blue">
+                        ACTG was implemented using JAVA programming language, and requires Java Running Environment (JRE).
+                        <br />
+                        If JRE is not installed, please visit
+                    </span>
+                <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank" class="under">http://www.oracle.com/technetwork/java/index.html</a>
+                <br />
+                <li>Release Note</li>
+                <br />
+                - <a href="ACTG_ReleaseNote.txt" class="under"> Nov 17, 2020: version 1.20</a>
+                ( <a href="/request.jsp?software=ACTG" class="under">Software download</a> )
+                - Nov 5, 2018: version 1.11
+                <br />
+            </ul>
+            <div class="grayTD">
+                <img src="/images/p_st1.GIF" width="4" height="9" />
+                <span class="drakBR">Publication</span>
+            </div>
+            <p>
+                <span class="indented drakBR">ACTG: novel peptide mapping onto gene models</span>
+                <em class="indented">Seunghyuk Choi, Hyunwoo Kim, and Eunok Paek.</em>
+                <span class="indented">Bioinformatics, 2017, 33(8), 1218-1220. <a href="https://www.ncbi.nlm.nih.gov/pubmed/28031186" target="_blank" class="under">[ PMID: 28031186 ]</a></span>
+                <a href="https://omictools.com/amino-acids-to-genome-tool">
+                    <img src="/images/omictoolslogo.JPG" width="120px" height="40px">
+                </a>
+            </p>
+
+        </div>
+    </div>
+</article>
+
+</body>
+</html>

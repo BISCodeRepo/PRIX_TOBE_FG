@@ -12,4 +12,11 @@ public class DownloadController {
     public String download(){
         return "download/download";
     }
+
+    @GetMapping("/actg")
+    public String downloadActg() { return "download/actg"; }
+
+    @GetMapping("/dbond")
+    public String downloadDbond() { return "download/dbond"; }
+
 }
