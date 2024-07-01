@@ -1,10 +1,12 @@
 package com.prix.homepage.frontend.controller.login;
 
 import com.prix.homepage.backend.user.domain.LoginForm;
+import com.prix.homepage.backend.user.domain.RegisterForm;
 import com.prix.homepage.backend.user.domain.User;
 import com.prix.homepage.backend.user.dto.RequestLoginDto;
 import com.prix.homepage.backend.user.service.UserService;
 import com.prix.homepage.frontend.controller.BaseController;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,11 +63,6 @@ public class LoginController extends BaseController {
         return "login/agree";
     }
 
-    @GetMapping("/register")
-    public String loginRegister() {
-        return "login/register";
-    }
-
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -74,5 +71,40 @@ public class LoginController extends BaseController {
             log.info("logout Success");
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/register")
+    public String loginRegister() {
+        return "login/register";
+    }
+
+    @PostMapping("/register")
+    public String signUp(@ModelAttribute("loginForm") RegisterForm registerForm, Model model, HttpServletRequest request) {
+
+        if (!registerForm.getPassword().equals(registerForm.getConfirmPassword())) {
+            model.addAttribute("error", "Password mismatch.");
+            return "login/register";
+        }
+
+        RequestLoginDto requestLoginDto = new RequestLoginDto();
+        requestLoginDto.setEmail(registerForm.getUsername());
+        requestLoginDto.setPassword(registerForm.getPassword());
+
+        int result = userService.signUp(requestLoginDto);
+
+        log.info(Integer.toString(result));
+
+        if(result == 1) {
+            model.addAttribute("error", "Invalid username or password.");
+            return "login/register";
+        }
+        else if (result == 2) {
+            model.addAttribute("error", "User ID already exists.");
+            return "login/register";
+        }
+        else {
+            //유저 등록 성공
+            return "redirect:/";
+        }
     }
 }

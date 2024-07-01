@@ -41,16 +41,17 @@ public class UserService {
 
      @param requestLoginDto 회원가입 요청 DTO
      */
-    public void signUp(RequestLoginDto requestLoginDto) {
+    public int signUp(RequestLoginDto requestLoginDto) {
         if (!validateRequest(requestLoginDto)) {
-            throw new IllegalArgumentException("Invalid signup request data");
+            return 1;
         }
 
         if (userMapper.findByEmail(requestLoginDto.getEmail()) != null) {
-            throw new IllegalArgumentException("Email already exists");
+            return 2;
         }
 
         userMapper.insertUser(requestLoginDto.getEmail(), requestLoginDto.getPassword(), 1);
+        return 0;
     }
 
     /**
