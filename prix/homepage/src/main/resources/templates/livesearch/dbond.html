@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header2}"></header>
+
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
+        <article>
+
+            <div th:replace="~{partials/template_fragment :: livesearch-title('DBond', 'ms/ms search', 'version 3.01')}" ></div>
+            <div class="main-contents">
+                <table id="gray">
+
+                    <tbody><tr>
+                        <th><a href="/help.jsp#NAME" class="thmenu align-right">User Name</a></th>
+                        <td colspan="3"><input name="user" type="text" size="60" value="anonymous"></td>
+                    </tr>
+                    <tr>
+                        <th ><a href="/help.jsp#TIT" class="thmenu align-right">Search  Title </a></th>
+                        <td colspan="3"><input name="title" type="text" size="60"></td>
+                    </tr>
+                    <tr>
+                        <th><a href="/help.jsp#DATA_FORMAT" class="thmenu align-right">Data Format</a></th>
+                        <td>
+
+                            <select name="ms_format">
+                                <option value="">Select -------------</option>
+                                <option value="mgf">Mascot (*.mgf)</option>
+                                <option value="dta">Sequest (*.dta)</option>
+                                <option value="pkl">Micromass (*.pkl)</option>
+                            </select>
+
+                        </td>
+                        <th><a href="/help.jsp#INST" class="thmenu align-right">Instrument</a></th>
+                        <td>
+
+                            <select name="ms_instrument">
+                                <option value="">Select ---------</option>
+                                <option value="ESI-ION-TRAP">ESI-ION-TRAP</option>
+                                <option value="QTOF">HCD/QTOF</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><a href="/help.jsp#MSMS" class="thmenu align-right">MS/MS Data</a></th>
+                        <td colspan="3"><input name="ms_file" type="file" size="45"><span class="text-padding">File size limit : 500MB</span></td>
+                    </tr>
+
+                    <tr>
+                        <th><a href="/help.jsp#DB" class="thmenu align-right">Database</a></th>
+                        <td colspan="3"><select name="database" onchange="changeDB()">
+                            <option value="">Select ------------------------</option>
+                            <option value="30">Swiss-Prot_Homo.sapiens[Human] (202012)</option>
+                            <option value="31">Swiss-Prot_Mus.musculus[Mouse] (202012)</option>
+                            <option value="32">Swiss-Prot_S.cerevisiae[Yeast] (202012)</option>
+                        </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><a href="/help.jsp#DB" class="thmenu align-right">Local  DB</a></th>
+                        <td colspan="3"><input name="fasta" type="file" size="45"><span class="text-padding">File size limit : 500MB</span></td>
+                    </tr>
+
+                    <tr>
+                        <th><a href="/help.jsp#TARDEC" class="thmenu align-right">Target-Decoy </a></th>
+                        <td colspan="3"><input name="decoy" type="checkbox" class="CHECK" value="O"><span class="text-padding blue-up"> Search with decoy proteins</span></td>
+                    </tr>
+                    <tr>
+                        <th><a href="/help.jsp#ENZYME" class="thmenu align-right">Enzyme</a></th>
+                        <td colspan="3">
+                            <select name="enzyme" onclick="enzymeList();">
+                            <option value="1">Trypsin</option>
+                            <option value="2">Arg-C</option>
+                            <option value="3">Glu-C</option>
+                            <option value="4">Lys-C</option>
+                            <option value="5">Chymotrypsin</option>
+                            <option value="6">PepsinA</option>
+                            <option value="20">trychymotry *</option>
+                        </select>
+                            <span class="text-padding"></span>
+                            <input name="add_enzyme" type="button" class="btnBlueSmall" value=" + "><span class="blue-up text-padding">Login to add new enzyme rule</span></td>
+                    </tr>
+                    <tr>
+                        <th><a href="/help.jsp#MISSCLEAVE" class="thmenu align-right">Max No. of Missed Cleavages</a></th>
+                        <td colspan="3"><select name="missed_cleavage">
+                            <option>0</option>
+                            <option selected="">1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select></td>
+                    </tr
+                    ><tr>
+                        <th><a href="/help.jsp#PEPTTOL" class="thmenu align-right">Peptide  Tol.</a></th>
+                        <td>± <input name="pept_tolerance" type="text" size="10" value="0.5">
+                            <select name="unit">
+                                <option selected="">Da</option>
+                                <option>ppm</option>
+                            </select>
+                        </td>
+                        <th><a href="/help.jsp#FRAGTOL" class="thmenu align-right">Fragment Tol.</a></th>
+                        <td>± <input name="frag_tolerance" type="text" size="10" value="0.5"> Da</td>
+                    </tr>
+                    <tr>
+                        <th><a href="/help.jsp#FIXMOD" class="thmenu align-right">Fixed Modifications</a></th>
+                        <td><div th:insert="~{livesearch/fix_ptms}" th:with="id=${id}, engine=0"></div></td>
+                        <th><a href="/help.jsp#VARMOD" class="thmenu align-right">Variable Modifications</a></th>
+                        <td><div th:insert="~{livesearch/var_ptms}" th:with="id=${id}, engine=0"></div></td>
+                    </tr>
+                    </tbody></table>
+                    <br>
+                    <div class="btn-box align-right">
+                        <input class="btn" type="submit" value="Reset" />
+                        <input class="btn" type="submit" value="Submit" />
+                    </div>
+            </div>
+
+
+        </article>
+
+    </div>
+</main>
+
+</body>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</html>

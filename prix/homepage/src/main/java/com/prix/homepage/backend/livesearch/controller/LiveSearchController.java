@@ -125,4 +125,11 @@ public class LiveSearchController extends BaseController {
         }
         private List<String> modValues;
     }
+
+
+    // DBond
+    @GetMapping("/livesearch/dbond")
+    public String dbond() { return "livesearch/dbond"; }
 }
+
+
