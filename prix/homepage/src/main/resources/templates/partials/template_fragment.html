@@ -34,9 +34,6 @@
                 </a>
             </div>
     </div>
-
-
-
 </div>
 
 
@@ -88,7 +85,53 @@
 
 
 
+<!--Live Search Fragments-->
+<aside th:fragment="livesearch-menu" >
+    <div class="main-slide">
+        <img src="/images/subtit02.gif" alt="" />
+    </div>
 
+    <div class="content-indexes">
+        <br>
+        <br>
+        <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              <a class="menu" th:href="@{/livesearch/dbond}">DBond</a>
+            </span>
+        <br>
+        <br>
+        <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              <a class="menu" th:href="@{/download}">ACTG</a>
+            </span>
+        <br>
+        <br>
+        <span>
+              <img src="/images/icon_5.gif" width="6px" height="10px" />
+              <a class="menu" th:href="@{/download}">Pattern Match</a>
+            </span>
+    </div>
+</aside>
+
+<div th:fragment="livesearch-title(title, text, version)">
+    <div class="main-title">
+        <div class="title space-between">
+            <div class="title text-padding">
+                <h3 class="blue-up" th:text="${title}">
+                    Default Title
+                </h3>
+                <span th:text="${text}">- Description</span>
+                <span class="text-padding black" th:if="${version}" th:text="'( ' + ${version} + ' )'"></span>
+            </div>
+            <div style="margin-right: 12px;">
+                <img src="/images/top_icon_01.gif" style="width:2px; height:9px; padding-right: 3px;">
+                <span><a class="menu" href=""> History</a></span>
+                <img src="/images/top_icon_01.gif" style="width:2px; height:9px; padding-right: 3px;">
+                <span><a class="menu" href=""> Logout</a></span>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

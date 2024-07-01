@@ -6,59 +6,48 @@
 
     <main>
       <div class="main-group">
-        <aside>
-          <div class="main-slide">
-            <img src="/images/subtit02.gif" alt="" />
-          </div>
-
-          <div class="content-indexes">
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              MODPlus
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              DBond
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              ACTG
-            </span>
-            <br />
-            <br />
-            <span>
-              <img src="/images/icon_5.gif" width="6px" height="10px" />
-              Pattern Match
-            </span>
-          </div>
-        </aside>
+        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
         <article>
           <div class="main-article">
-            <div class="main-title">
-              <div class="title">
-                <h3 class="drakBR">MS/MS ANALYSIS</h3>
-                <br />
-              </div>
-            </div>
+            <div th:replace="~{partials/template_fragment :: main-title('MS/MS ANALYSIS', '')}"></div>
 
             <div class="main-contents">
-              <img src="/images/p_st1.GIF" width="4px" height="9px" />
-              <a th:href="@{/modplus/search}" href="../index.html" class="thmenu">
-                <span class="blue-up">MODPlus</span>
-              </a>
-              <span class="drakBR">
-                - advanced version of MOD
-                <sup>i</sup>
-              </span>
+              <p>
+                <div class="livesearch-box">
+                  <h3 class="blue-up">
+                    <img src="/images/p_st1.GIF" width="5px" height="12px" />
+                    <a th:href="@{/livesearch/dbond}" href="../index.html" class="blue-up" >
+                      DBond
+                    </a>
+                  </h3>
+                </div>
+                <span class="indented">Identification of intact disulfide linkages</span>
+              </p>
+              <p>
+                <div class="livesearch-box">
+                  <h3 class="blue-up">
+                    <img src="/images/p_st1.GIF" width="5px" height="12px" />
+                    <a th:href="@{/download}" href="../index.html" class="blue-up" >
+                      ACTG
+                    </a>
+                  </h3>
+                </div>
+                <span class="indented">Novel peptide mapping onto gene models</span>
+              </p>
+              <p>
+              <div class="livesearch-box">
+                <h3 class="blue-up">
+                  <img src="/images/p_st1.GIF" width="5px" height="12px" />
+                  <a th:href="@{/download}" href="../index.html" class="blue-up" >
+                    Pattern Match
+                  </a>
+                </h3>
+              </div>
+              </p>
 
-              <br />
-              <br />
+
+              <br>
+              <br>
             </div>
           </div>
         </article>
