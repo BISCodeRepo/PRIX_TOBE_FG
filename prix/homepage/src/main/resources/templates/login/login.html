@@ -3,55 +3,58 @@
 <head th:replace="~{partials/fragment :: head}"></head>
   <body>
   <header th:replace="~{partials/fragment :: header0}"></header>
-    <main>
-      <div class="main-contents">
-        <div class="main-title">
-          <div class="title">
-            <h3 class="drakBR">LOGIN</h3>
-          </div>
+  <main>
+    <div class="main-contents">
+      <div class="main-title">
+        <div class="title">
+          <h3 class="drakBR">LOGIN</h3>
         </div>
-        <div class="outer-box">
-          <img src="/images/tit_login.gif" alt="Member Login" />
-          <form th:action th:object="${loginForm}" method="post">
-            <div class="container" style="background: #fff; width: 400px">
-              <div class="box">
-                <div>
-                  <div class="inner-box">
-                    <div class="input-box">
-                      <div class="input-name">ID</div>
-                      <div class="input-form">
-                        <input type="text" th:field="*{username}"size="30" />
-                      </div>
-                    </div>
-                    <div class="input-box">
-                      <div class="input-name">Password</div>
-                      <div class="input-form">
-                        <input type="password" th:field="*{password}"size="30" />
-                      </div>
+      </div>
+      <div class="outer-box">
+        <img src="/images/tit_login.gif" alt="Member Login"/>
+        <div th:if="${error != null}">
+          <p style="color: red; " th:text="${error}"></p>
+        </div>
+        <form th:action="@{/login/user}" th:object="${loginForm}" method="post">
+          <div class="container" style="background: #fff; width: 400px">
+            <div class="box">
+              <div>
+                <div class="inner-box">
+                  <div class="input-box">
+                    <div class="input-name">ID</div>
+                    <div class="input-form">
+                      <input type="text" th:field="*{username}" size="30"/>
                     </div>
                   </div>
-                  <br />
-                  <div class="btn-box">
-                    <input class="btn" type="submit" value="Login" />
-                    <input
+                  <div class="input-box">
+                    <div class="input-name">Password</div>
+                    <div class="input-form">
+                      <input type="password" th:field="*{password}" size="30"/>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div class="btn-box">
+                  <input class="btn" type="submit" value="Login"/>
+                  <input
                       class="btn"
                       type="button"
                       value="New Account"
                       onclick="goToAgree()"
-                    />
-                    <script>
-                      function goToAgree() {
-                        window.location.href = "/login/agree";
-                      }
-                    </script>
-                  </div>
+                  />
+                  <script>
+                    function goToAgree() {
+                      window.location.href = "/login/agree";
+                    }
+                  </script>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    </main>
+    </div>
+  </main>
   </body>
 
   <footer th:replace="~{partials/fragment :: footer}"></footer>

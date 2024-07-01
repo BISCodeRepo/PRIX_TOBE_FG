@@ -27,14 +27,11 @@ public class UserService {
      */
     public User login(RequestLoginDto requestLoginDto, int level) {
         if (!validateRequest(requestLoginDto)) {
-            throw new IllegalArgumentException("Invalid login request data");
+            return null;
         }
         User user = userMapper.findByEmailAndPassword(requestLoginDto.getEmail(), requestLoginDto.getPassword());
-        if (user == null) {
-            throw new IllegalArgumentException("User not found with provided credentials");
-        }
         if (!validateUserRole(user, level)) {
-            throw new IllegalArgumentException("User role does not match the expected level");
+            return null;
         }
         return user;
     }
@@ -65,7 +62,7 @@ public class UserService {
      */
     public boolean validateUserRole(User user, int level) {
         if (user == null) {
-            throw new IllegalArgumentException("User is null");
+            return false;
         }
         return user.getLevel() == level;
     }
