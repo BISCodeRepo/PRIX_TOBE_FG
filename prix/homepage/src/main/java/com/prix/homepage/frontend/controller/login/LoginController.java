@@ -4,6 +4,7 @@ import com.prix.homepage.backend.user.domain.LoginForm;
 import com.prix.homepage.backend.user.domain.User;
 import com.prix.homepage.backend.user.dto.RequestLoginDto;
 import com.prix.homepage.backend.user.service.UserService;
+import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/login")
 @Slf4j
-public class LoginController {
+public class LoginController extends BaseController {
 
     private final UserService userService;
 
@@ -70,7 +71,8 @@ public class LoginController {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
+            log.info("logout Success");
         }
-        return "redirect:/login/user";
+        return "redirect:/";
     }
 }

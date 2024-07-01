@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/download")
-public class DownloadController {
+public class DownloadController extends BaseController{
 
     @GetMapping
     public String download(){
