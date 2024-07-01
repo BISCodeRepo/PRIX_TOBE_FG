@@ -4,6 +4,7 @@ import com.prix.homepage.backend.livesearch.dto.UserSettingDto;
 import com.prix.homepage.backend.livesearch.pojo.Modification;
 import com.prix.homepage.backend.livesearch.service.ModificationService;
 import com.prix.homepage.backend.livesearch.service.UserSettingService;
+import com.prix.homepage.frontend.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import static com.prix.homepage.constants.prixConst.*;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
-public class LiveSearchController {
+public class LiveSearchController extends BaseController {
 
     private final UserSettingService userSettingService;
     private final ModificationService modificationService;
