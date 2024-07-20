@@ -10,4 +10,6 @@ public interface UserSettingMapper {
     @Select("SELECT * FROM px_user_setting WHERE user_id = #{id} AND engine = 'modeye'")
     UserSetting findByUserId(Integer id);
 
+    @Select("SELECT name FROM px_account WHERE id = #{id}")
+    String findAccountNameById(Integer id);
 }

@@ -34,11 +34,6 @@ public class LiveSearchController extends BaseController {
 
     @GetMapping("/modplus/search")
     public String modplus(Model model){
-//        현재 로그인한 사용자의 ID 가져오기
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Integer id = userDetails.getId();
-//        현재 로그인한 사용자의 이름 가져오기
-//        String userName = userDetails.getUserName();
         Integer id = test; //테스트용 id 원래 id 는 anony(== 4)
         String userName = "anonymous";
         model.addAttribute("userName",userName);
@@ -49,28 +44,6 @@ public class LiveSearchController extends BaseController {
 
 
         return "livesearch/modplus";
-    }
-
-    @GetMapping("/modplus/var_ptms_list")
-    public String varPtmsList(
-            @RequestParam(defaultValue = "1") Integer var,
-            @RequestParam(defaultValue = "0") Integer engine,
-            @RequestParam(required = false) String sort,
-            Model model) {
-//        현재 로그인한 사용자의 ID 가져오기
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Integer id = userDetails.getId();
-        Integer id = test; //테스트용 id 원래 id 는 anony(== 4)
-
-        model.addAttribute("id",id);
-        model.addAttribute("var", var);
-        model.addAttribute("engine", engine);
-        model.addAttribute("sort", sort != null ? sort : "");
-        List<Modification> modifications = Optional.ofNullable(modificationService.findModByUserAndCond(id, var == 1, engine == 1, sort))
-                .orElse(new ArrayList<>());
-        model.addAttribute("modifications", modifications);
-
-        return "livesearch/var_ptms_list";
     }
 
     @GetMapping("/modplus/unimod_ptms_list")
@@ -125,11 +98,6 @@ public class LiveSearchController extends BaseController {
         }
         private List<String> modValues;
     }
-
-
-    // DBond
-    @GetMapping("/livesearch/dbond")
-    public String dbond() { return "livesearch/dbond"; }
 }
 
 

@@ -33,22 +33,30 @@
 
         function sortBy(by) {
             document.mod_list.sort.value = by;
-            document.mod_list.action = "/modplus/var_ptms_list";
+            document.mod_list.action = "/dbond/var_ptms_list";
             document.mod_list.method = "get";
             document.mod_list.submit();
         }
 
         function doSubmit() {
-            document.mod_list.action = "/modplus/var_ptms_list";
+            console.log("hello");
+            document.mod_list.action = "/dbond/var_ptms_list";
             document.mod_list.method = "post";
             document.mod_list.submit();
         }
+        /*<![CDATA[*/
+        var reloadParent = /*[[${reloadParent}]]*/ false;
+        if (reloadParent) {
+            window.onload = function() {
+                if (window.opener && !window.opener.closed) {
+                    var currentURL = new URL(window.opener.location.href);
+                    currentURL.searchParams.set("entry", "true");
+                    window.opener.location.href = currentURL.toString();
+                }
+            }
+        }
+        /*]]>*/
 
-        $(document).ready(function() {
-            $('#btnRemove').click(function() {
-                doSubmit();
-            });
-        });
     </script>
     <style>
         .sort-arrows {
@@ -61,14 +69,14 @@
     </style>
 </head>
 <body>
-<form name="mod_list" method="post" action="#" id="modListForm">
+<form name="mod_list" method="post"  action="/dbond/var_ptms_list" id="modListForm">
     <input type="hidden" name="sort" th:value="${sort}"/>
     <input type="hidden" name="var" th:value="${var}"/>
     <input type="hidden" name="engine" th:value="${engine}"/>
     <table border="0" cellspacing="0" cellpadding="0" id="TitTable">
         <tr>
             <td style="padding-left:15px;">
-                <font class="blueB" size="3" th:text="${engine == 1} ? 'dbond ms/ms search' : 'modplus ms/ms search'"> modplus </font> _
+                <font class="blueB" size="3" th:text="${engine == 1} ? 'dbond ms/ms search' : 'modplus ms/ms search'"> dbond </font> _
                 <span th:text="${var == 1} ? 'Variable' : 'Fixed'">Variable</span>
                 modification list
                 <span th:if="${engine == 1 && var == 1}" th:text="'( DBond allows up to 20 variable modifications to be specified. )'"></span>
@@ -80,8 +88,8 @@
         <tr>
             <td>
                 <input name="buttonAddUnimod" type="button" th:onclick="'window.open(\'unimod_ptms_list?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=1, width=900, height=600, scrollbars=yes\')'" value="Add from Unimod" />
-                <input name="buttonAddUser" type="button" th:if="${id != null && id != 4}" th:onclick="'window.open(\'user_ptms_list.jsp?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=0, width=800, height=600, scrollbars=yes\')'" value="Add from User list" />
-                <input type="button" value="Remove from search list" id="btnRemove"/>
+                <input name="buttonAddUser" type="button" th:if="${id != null && id != 4}" th:onclick="'window.open(\'user_ptms_list?var=' + ${var} + '&engine=' + ${engine} + '\', \'\', \'resizable=0, width=800, height=600, scrollbars=yes\')'" value="Add from User list" />
+                <input type="button" value="Remove from search list" id="btnRemove" onclick="doSubmit()"/>
             </td>
             <td>
                 <div align="right">

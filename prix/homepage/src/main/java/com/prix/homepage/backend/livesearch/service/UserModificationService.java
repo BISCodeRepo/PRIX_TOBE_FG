@@ -23,7 +23,16 @@ public class UserModificationService {
         return userModificationMapper.getUserModificationCount(userId, variable, engine);
     }
 
-    public void insertUserModifications(String userId,List<String> modIds, Boolean var, Boolean engine){
-        userModificationMapper.insertUserModifications(userId, modIds, var, engine);
+    public void deleteModificationsForAnonymousUser(int userId) {
+        userModificationMapper.deleteByUserId(userId);
     }
+
+    public void insertModifications(int id, List<Integer> modValues, boolean variable, boolean engine) {
+        userModificationMapper.insertModifications(id, modValues, variable, engine);
+    }
+
+    public void deleteModifications(int userId, int engine, List<Integer> modIds) {
+        userModificationMapper.deleteModifications(userId, engine, modIds);
+    }
+
 }

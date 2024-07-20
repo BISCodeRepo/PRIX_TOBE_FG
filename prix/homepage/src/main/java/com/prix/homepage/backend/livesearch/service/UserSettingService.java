@@ -18,29 +18,13 @@ public class UserSettingService {
 
     private final UserSettingMapper userSettingMapper;
 
-    public UserSettingDto findUserSettingById(Integer id){
-        UserSettingDto anonyuserSettingDto = new UserSettingDto();
+    public UserSettingDto findUserSettingById(Integer id) {
+        return Optional.ofNullable(userSettingMapper.findByUserId(id))
+                .map(UserSettingDto::new)
+                .orElse(new UserSettingDto());
+    }
 
-        Optional<UserSetting> optionalUserSetting
-                = Optional.ofNullable(userSettingMapper.findByUserId(id));
-
-        if(!optionalUserSetting.isPresent()) return anonyuserSettingDto;
-
-        UserSetting userSetting = optionalUserSetting.get();
-
-        return UserSettingDto.builder()
-                .enzyme(String.valueOf(userSetting.getEnzyme()))
-                .missedCleavage(String.valueOf(userSetting.getMmc()))
-                .minNumEnzTerm(String.valueOf(userSetting.getMet()))
-                .pTolerance(String.valueOf(userSetting.getPtol()))
-                .pUnit(String.valueOf(userSetting.getPtolUnit()))
-                .fTolerance(String.valueOf(userSetting.getFtol()))
-                .minMM(String.valueOf(userSetting.getMmMin()))
-                .maxMM(String.valueOf(userSetting.getMmMax()))
-                .dataFormat(userSetting.getDataFormat())
-                .instrument(userSetting.getInstrument())
-                .msResolution(userSetting.getMsResolution())
-                .msmsResolution(userSetting.getMsmsResolution())
-                .build();
+    public String findAccountNameById(Integer id){
+        return userSettingMapper.findAccountNameById(id);
     }
 }

@@ -1,10 +1,7 @@
 package com.prix.homepage.backend.livesearch.mapper;
 
 import com.prix.homepage.backend.livesearch.pojo.UserSetting;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,12 +17,33 @@ public interface UserModificationMapper {
 
     @Insert({
             "<script>",
-            "INSERT INTO px_user_modification (user_id, mod_id, var, engine) VALUES ",
-            "<foreach collection='modIds' item='modId' separator=','>",
-            "(#{userId}, #{modId}, #{var}, #{engine})",
+            "INSERT INTO px_user_modification (user_id, mod_id, variable, engine) VALUES ",
+            "<foreach collection='modValues' item='modValue' separator=','>",
+            "(#{id}, #{modValue}, #{variable}, #{engine})",
             "</foreach>",
             "</script>"
     })
-    void insertUserModifications(String userId, @Param("modIds") List<String> modIds,Boolean var,Boolean engine);
+    void insertModifications(
+            @Param("id") int id,
+            @Param("modValues") List<Integer> modValues,
+            @Param("variable") boolean variable,
+            @Param("engine") boolean engine
+    );
+
+    @Delete("DELETE FROM px_user_modification WHERE user_id = #{userId}")
+    void deleteByUserId(int userId);
+
+    @Delete({
+            "<script>",
+            "DELETE FROM px_user_modification",
+            "WHERE user_id = #{userId}",
+            "AND engine = #{engine}",
+            "AND mod_id IN",
+            "<foreach item='modId' collection='modIds' open='(' separator=',' close=')'>",
+            "#{modId}",
+            "</foreach>",
+            "</script>"
+    })
+    void deleteModifications(@Param("userId") int userId, @Param("engine") int engine, @Param("modIds") List<Integer> modIds);
 
 }

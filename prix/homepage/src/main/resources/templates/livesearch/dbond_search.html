@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}">
+</head>
+<body>
+<header th:replace="~{partials/fragment :: header2}"></header>
+
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
+        <article>
+            <div th:replace="~{partials/template_fragment :: livesearch-title('DBond', 'ms/ms search', ${userSetting.version})}"></div>
+            <div class="main-contents">
+                <form name="search" method="post" enctype="multipart/form-data">
+                    <table id="gray">
+                        <tbody>
+                        <tr>
+                            <th><a href="/help.jsp#NAME" class="thmenu align-right">User Name</a></th>
+                            <td colspan="3"><input name="user" type="text" size="60" th:value="${userName}"></td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#TIT" class="thmenu align-right">Search Title</a></th>
+                            <td colspan="3"><input name="title" type="text" size="60"></td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#DATA_FORMAT" class="thmenu align-right">Data Format</a></th>
+                            <td>
+                                <select name="ms_format">
+                                    <option value="">Select -------------</option>
+                                    <option value="mgf" th:selected="${userSetting.dataFormat == 'mgf'}">Mascot (*.mgf)</option>
+                                    <option value="dta" th:selected="${userSetting.dataFormat == 'dta'}">Sequest (*.dta)</option>
+                                    <option value="pkl" th:selected="${userSetting.dataFormat == 'pkl'}">Micromass (*.pkl)</option>
+                                </select>
+                            </td>
+                            <th><a href="/help.jsp#INST" class="thmenu align-right">Instrument</a></th>
+                            <td>
+                                <select name="ms_instrument">
+                                    <option value="">Select ---------</option>
+                                    <option value="ESI-ION-TRAP" th:selected="${userSetting.instrument == 'ESI-ION-TRAP'}">ESI-ION-TRAP</option>
+                                    <option value="QTOF" th:selected="${userSetting.instrument == 'QTOF'}">HCD/QTOF</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#MSMS" class="thmenu align-right">MS/MS Data</a></th>
+                            <td colspan="3"><input name="ms_file" type="file" size="45"><span class="text-padding">File size limit : 500MB</span></td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#DB" class="thmenu align-right">Database</a></th>
+                            <td colspan="3">
+                                <select name="database">
+                                    <option value="">Select ------------------------</option>
+                                    <option th:each="db : ${databaseList}" th:value="${db.id}" th:text="${db.name}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#DB" class="thmenu align-right">Local DB</a></th>
+                            <td colspan="3"><input name="fasta" type="file" size="45"><span class="text-padding">File size limit : 500MB</span></td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#TARDEC" class="thmenu align-right">Target-Decoy</a></th>
+                            <td colspan="3"><input name="decoy" type="checkbox" class="CHECK" value="O"><span class="text-padding blue-up"> Search with decoy proteins</span></td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#ENZYME" class="thmenu align-right">Enzyme</a></th>
+                            <td colspan="3">
+                                <select name="enzyme" onclick="enzymeList();">
+                                    <option th:each="enzyme : ${enzymeList}" th:value="${enzyme.id}" th:text="${enzyme.name}"></option>
+                                </select>
+                                <span class="text-padding"></span>
+                                <input name="add_enzyme" type="button" class="btnBlueSmall" value=" + "><span class="blue-up text-padding">Login to add new enzyme rule</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#MISSCLEAVE" class="thmenu align-right">Max No. of Missed Cleavages</a></th>
+                            <td colspan="3">
+                                <select name="missed_cleavage">
+                                    <option>0</option>
+                                    <option th:selected="${userSetting.missedCleavage == '1'}">1</option>
+                                    <option th:selected="${userSetting.missedCleavage == '2'}">2</option>
+                                    <option th:selected="${userSetting.missedCleavage == '3'}">3</option>
+                                    <option th:selected="${userSetting.missedCleavage == '4'}">4</option>
+                                    <option th:selected="${userSetting.missedCleavage == '5'}">5</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#PEPTTOL" class="thmenu align-right">Peptide Tol.</a></th>
+                            <td>± <input name="pept_tolerance" type="text" size="10" th:value="${userSetting.pTolerance}">
+                                <select name="unit">
+                                    <option th:selected="${userSetting.pUnit == 'Da'}">Da</option>
+                                    <option th:selected="${userSetting.pUnit == 'ppm'}">ppm</option>
+                                </select>
+                            </td>
+                            <th><a href="/help.jsp#FRAGTOL" class="thmenu align-right">Fragment Tol.</a></th>
+                            <td>± <input name="frag_tolerance" type="text" size="10" th:value="${userSetting.fTolerance}"> Da</td>
+                        </tr>
+                        <tr>
+                            <th><a href="/help.jsp#FIXMOD" class="thmenu align-right">Fixed Modifications</a></th>
+                            <td><div th:insert="~{livesearch/fix_ptms}" th:with="id=${id}, engine=1"></div></td>
+                            <th><a href="/help.jsp#VARMOD" class="thmenu align-right">Variable Modifications</a></th>
+                            <td><div th:insert="~{livesearch/var_ptms}" th:with="id=${id}, engine=1"></div></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <div class="btn-box align-right">
+                        <input class="btn" type="reset" value="Reset" />
+                        <input name="Submit" type="button" class="btn" onClick="process()" value="Submit">
+                    </div>
+                    <div th:if="${msIndex != null}">
+                        <input type="hidden" name="ms_instrument" th:value="${inst}" />
+                        <input type="hidden" name="ms_format" th:value="${msType}" />
+                        <input type="hidden" name="msfile" th:value="${msFile}" />
+                        <input type="hidden" name="dbfile" th:value="${dbFile}" />
+                        <input type="hidden" name="msindex" th:value="${msIndex}" />
+                        <input type="hidden" name="dbindex" th:value="${dbNewIndex}" />
+                    </div>
+                </form>
+            </div>
+        </article>
+    </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+
+<script type="text/javascript">
+    var xmlhttp;
+
+    function getXMLHTTP() {
+        if (xmlhttp == null) {
+            if (window.XMLHttpRequest)
+                xmlhttp = new XMLHttpRequest();
+            else
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+
+    function trimText(str) {
+        var text = str;
+        var pos = -1;
+        for (var i = 0; i < text.length; i++) {
+            if (text.charAt(i) != ' ' && text.charAt(i) != '\n' && text.charAt(i) != '\r' && text.charAt(i) != '\t') {
+                pos = i;
+                break;
+            }
+        }
+        if (pos >= 0)
+            text = text.substr(pos);
+        else
+            text = '';
+        return text;
+    }
+
+    function process() {
+        var form = document.search;
+
+        if (!validateText(form.user.value, form.title.value)) {
+            alert("Sorry! Character ' | ' cannot be used in UserName or Search Title field.");
+            return;
+        }
+
+        if (form.ms_format.value == '') {
+            alert("Please select Data format.");
+            return;
+        }
+
+        if (form.ms_instrument.value == '') {
+            alert("Please select Instrument type.");
+            return;
+        }
+
+        if (form.ms_file.value == '') {
+            alert("Please select MS/MS Data file.");
+            return;
+        }
+
+        if (form.database.value == '' && form.fasta.value == '') {
+            alert("Please specify Database or upload protein database file(*.fasta).");
+            return;
+        }
+
+        if (!validateDataFormat(form.ms_file.value, form.ms_format.value)) {
+            alert("Specified Data Format and MS/MS Data are inconsistent. Please check it.");
+            return;
+        }
+
+        if (!validateTolerance(form.pept_tolerance.value, form.frag_tolerance.value)) {
+            alert("Peptide Tol. and Fragment Tol. should be real number.");
+            return;
+        }
+
+        getXMLHTTP();
+        if (xmlhttp != null) {
+            xmlhttp.open("GET", "var_ptms_count.jsp", false);
+            xmlhttp.send(null);
+            var count = trimText(xmlhttp.responseText);
+            if (parseInt(count) > 20) {
+                alert("Number of variable modifications should be no greater than 20.");
+                return;
+            }
+        }
+
+        // 폼 데이터를 AJAX로 서버에 전송
+        var formData = new FormData(form);
+        getXMLHTTP();
+        if (xmlhttp != null) {
+            xmlhttp.open("POST", "/process", true);
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var response = JSON.parse(xmlhttp.responseText);
+                    // 서버 응답 처리 로직
+                    if (response.success) {
+                        alert("Submission successful!");
+                    } else {
+                        alert("Submission failed: " + response.message);
+                    }
+                }
+            };
+            xmlhttp.send(formData);
+        }
+    }
+
+    function validateText(user, title) {
+        return !(user.indexOf("|") > -1 || title.indexOf("|") > -1);
+    }
+
+    function validateTolerance(pept, frag) {
+        if (pept == '' || frag == '')
+            return false;
+        var ex = /^[+-]?\d*\.*\d*$/;
+        return ex.test(pept) && ex.test(frag);
+    }
+
+    function validateDataFormat(data, format) {
+        var tmp = data.substring(data.lastIndexOf(".") + 1).toLowerCase();
+        return !(tmp == 'mgf' || tmp == 'pkl' || tmp == 'dta') || tmp == format;
+    }
+
+    var fixed = /*[[${fixedModsCount}]]*/ 0;
+
+    function enzymeList() {
+        if (xmlhttp == null)
+        {
+            if (window.XMLHttpRequest)
+                xmlhttp = new XMLHttpRequest();
+            else
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        if (xmlhttp == null)
+            return;
+
+        xmlhttp.open("GET", "/user_enzyme", false); // 서버의 엔드포인트로 수정
+        xmlhttp.send(null);
+        stateChanged();
+    }
+
+    function stateChanged() {
+        var obj = document.search.enzyme;
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            // 기존의 옵션들을 제거
+            while (obj.options.length > 0) {
+                obj.remove(0);
+            }
+
+            var text = xmlhttp.responseText;
+            var nodes = text.split(',');
+            for (var i = 0; i < nodes.length; i++) {
+                var values = nodes[i].split(':');
+                if (values[0] != null && values[0] != '') {
+                    var option = new Option(values[0], values[1]);
+                    obj.options.add(option);
+                }
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

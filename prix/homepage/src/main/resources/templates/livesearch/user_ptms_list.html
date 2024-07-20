@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PRIX - PRoteome InformatiX</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript">
+        function checkAll(obj, flag) {
+            if (obj != null) {
+                if (obj.length > 0) {
+                    for (var i = 0; i < obj.length; i++)
+                        obj[i].checked = flag;
+                } else
+                    obj.checked = flag;
+            }
+        }
+
+        var checkAllClick = false;
+        function checkAllMods() {
+            checkAllClick = !checkAllClick;
+            var obj = document.mod_list.mod;
+            checkAll(obj, checkAllClick);
+            return true;
+        }
+
+        function uncheck(obj) {
+            if (checkAllClick && !obj.checked) {
+                checkAllClick = false;
+                document.mod_list.check_all.checked = false;
+            }
+        }
+
+        function doDelete(id) {
+            document.mod_list.act.value = id;
+            document.mod_list.action = '/deleteModification';
+            document.mod_list.submit();
+            return true;
+        }
+
+        function doSubmit() {
+            var obj = document.mod_list.mod;
+            var filled = false;
+            if (obj != null) {
+                if (obj.length > 0) {
+                    for (var i = 0; i < obj.length; i++)
+                        if (obj[i].checked)
+                            filled = true;
+                } else {
+                    if (obj.checked)
+                        filled = true;
+                }
+            }
+            if (filled) {
+                document.mod_list.action = '/submitModifications';
+                document.mod_list.submit();
+            } else {
+                // alert('Please select modifications.');
+            }
+        }
+    </script>
+</head>
+<body>
+<form method="post" action="/addModification">
+    <input type="hidden" name="act" value="add"/>
+    <input type="hidden" name="var" th:value="${var}"/>
+    <input type="hidden" name="engine" th:value="${engine}"/>
+    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" id="gray" style="BORDER-BOTTOM: #d9dddc 1px solid; BORDER-TOP: #d9dddc 2px solid; ">
+        <tbody>
+        <tr>
+            <td class="grayTH">Name</td>
+            <td><input id="name" name="name" size="60"/></td>
+        </tr>
+        <tr>
+            <td class="grayTH">Mass Difference</td>
+            <td><input id="massDiff" name="mass"/></td>
+        </tr>
+        <tr>
+            <td class="grayTH">Site</td>
+            <td>
+                <select id="residue" name="residue">
+                    <option th:each="site : ${sites}" th:value="${site}" th:text="${site}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="grayTH">Position</td>
+            <td>
+                <select id="position" name="position">
+                    <option th:each="position : ${positions}" th:value="${position}" th:text="${position}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="grayTH">&nbsp;</td>
+            <td align="right"><input name="btn145" type="submit" class="btnOrgSmall" value=" add " /></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<font th:if="${addState == 1}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : modification name is empty.</font>
+<font th:if="${addState == 5}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : Character '|' and white space cannot be used in name.</font>
+<font th:if="${addState == 2}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : mass difference is empty.</font>
+<font th:if="${addState == 3}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : mass difference should be real number.</font>
+<font th:if="${addState == 4}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : site is inconsistent with its position.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If site is N-term, its position should be either ANY_N_TERM or PROTEIN_N_TERM.</font>
+<br/>
+<br/>
+
+<form name="mod_list" method="post" action="javascript:doSubmit();">
+    <input type="hidden" name="act" value="submit"/>
+    <input type="hidden" name="var" th:value="${var}"/>
+    <input type="hidden" name="engine" th:value="${engine}"/>
+    <table width="95%" border="0" align="center" cellpadding="1">
+        <tr>
+            <td align="left"><font class="blue"><em>User-defined modification list</em></font></td>
+            <td align="right">
+                <input name="button222" type="submit" value=" Add to search list "/>
+                <input name="button3322" type="button" onClick="window.close()" value=" Close "/>
+            </td>
+        </tr>
+    </table>
+    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" style="BORDER-BOTTOM: #d9dddc 1px solid; BORDER-TOP: #d9dddc 2px solid;">
+        <tr>
+            <td class="grayTH"><div align="center"><input name="check_all" type="checkbox" class="CHECK" onclick="checkAllMods()"/></div></td>
+            <td class="grayTH"><div align="left">Name </div></td>
+            <td class="grayTH"><div align="right">Mass </div></td>
+            <td class="grayTH"><div align="center">Site </div></td>
+            <td class="grayTH"><div align="center">Position </div></td>
+            <td class="grayTH"><div align="right">Delete </div></td>
+        </tr>
+        <tr th:each="modi : ${modifications}" onMouseOver="this.style.backgroundColor='#f7f7f7'" onMouseOut="this.style.backgroundColor='#ffffff'">
+            <td class="grayTD"><div align="center"><input name="mod" type="checkbox" class="CHECK" th:value="${modi.id}" onclick="uncheck(this);"/></div></td>
+            <td class="grayTD" th:text="${modi.name}"></td>
+            <td class="grayTD"><div align="right" th:text="${modi.massDiff}"></div></td>
+            <td class="grayTD"><div align="center" th:text="${modi.residue}"></div></td>
+            <td class="grayTD"><div align="center" th:text="${modi.position}"></div></td>
+            <td align="right" class="grayTD"><input type="button" class="btnBlueSmall" value=" del " th:onclick="'doDelete(' + ${modi.id} + ');'"/></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(modifications)}">
+            <td class="grayTD" colspan="6">No modifications found.</td>
+        </tr>
+    </table>
+</form>
+</body>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</html>

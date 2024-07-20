@@ -54,12 +54,12 @@
                 }
             }
             if (filled) {
-                document.mod_list.action = "/modplus/unimod_ptms_list?submit=true";
+                document.mod_list.action = "/dbond/unimod_ptms_list?submit=true";
                 document.mod_list.submit();
             }
         }
 
-        var currentFilter = /*[[${filter == 'default'} ? 0 : 1]]*/;
+        var currentFilter = "[[${filter == 'default' ? 0 : 1}]]";
         function showFiltered() {
             if (!document.mod_list.filter[currentFilter].checked) {
                 currentFilter = ~currentFilter;
@@ -75,13 +75,15 @@
                 window.close();
             } else if ("[[${finished}]]" === "true") {
                 opener.location = "var_ptms_list?var=[[${var}]]&engine=[[${engine}]]";
-                opener.opener.location.href = opener.opener.document.URL;
+                var currentURL = new URL(window.opener.opener.location.href);
+                currentURL.searchParams.set("entry", "true");
+                window.opener.opener.location.href = currentURL.toString();
             }
         });
     </script>
 </head>
 <body>
-<form name="mod_list" method="post" action="/modplus/unimod_ptms_list" id="modListForm">
+<form name="mod_list" method="post" action="/dbond/unimod_ptms_list" id="modListForm">
     <input type="hidden" name="sort" th:value="${sortBy}"/>
     <input type="hidden" name="var" th:value="${var}"/>
     <input type="hidden" name="engine" th:value="${engine}"/>

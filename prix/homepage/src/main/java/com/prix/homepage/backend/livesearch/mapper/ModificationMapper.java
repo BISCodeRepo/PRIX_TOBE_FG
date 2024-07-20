@@ -22,4 +22,7 @@ public interface ModificationMapper {
                                          @Param("filter") String filter,
                                          @Param("userId") Integer userId);
 
+    @Select("SELECT id, name, mass_diff, residue, position FROM px_modification WHERE user_id = #{userId} AND id NOT IN (SELECT mod_id FROM px_user_modification WHERE user_id = #{userId} AND engine = #{engine})")
+    List<Modification> findUserModifications(@Param("userId") Integer userId, @Param("var") Integer var, @Param("engine") Integer engine);
+
 }

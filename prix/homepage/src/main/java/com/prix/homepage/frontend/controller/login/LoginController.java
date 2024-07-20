@@ -43,7 +43,8 @@ public class LoginController extends BaseController {
 
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            user.setUserid(777); //temp
+            session.setAttribute("user", user.getUserid());
             session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)
             log.info("login Success");
             return "redirect:/";

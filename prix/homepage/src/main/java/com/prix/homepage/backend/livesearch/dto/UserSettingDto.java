@@ -1,5 +1,6 @@
 package com.prix.homepage.backend.livesearch.dto;
 
+import com.prix.homepage.backend.livesearch.pojo.UserSetting;
 import lombok.*;
 
 @Getter
@@ -40,4 +41,19 @@ public class UserSettingDto {
     private String msResolution = "";
     @Builder.Default
     private String msmsResolution = "";
+
+    public UserSettingDto(UserSetting userSetting) {
+        this.enzyme = String.valueOf(userSetting.getEnzyme());
+        this.missedCleavage = String.valueOf(userSetting.getMmc());
+        this.minNumEnzTerm = String.valueOf(userSetting.getMet());
+        this.pTolerance = String.valueOf(userSetting.getPtol());
+        this.pUnit = String.valueOf(userSetting.getPtolUnit());
+        this.fTolerance = String.valueOf(userSetting.getFtol());
+        this.minMM = String.valueOf(userSetting.getMmMin());
+        this.maxMM = String.valueOf(userSetting.getMmMax());
+        this.dataFormat = userSetting.getDataFormat();
+        this.instrument = userSetting.getInstrument();
+        this.msResolution = userSetting.getMsResolution();
+        this.msmsResolution = userSetting.getMsmsResolution();
+    }
 }

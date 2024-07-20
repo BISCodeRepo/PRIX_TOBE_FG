@@ -1,6 +1,8 @@
 package com.prix.homepage.backend.livesearch.mapper;
 
 import org.apache.ibatis.jdbc.SQL;
+
+import java.util.List;
 import java.util.Map;
 
 public class ModificationSqlProvider {
@@ -47,6 +49,18 @@ public class ModificationSqlProvider {
 
             if (sortBy != null && !sortBy.isEmpty()) {
                 ORDER_BY((sortBy.startsWith("class") ? "c." : "m.") + sortBy);
+            }
+        }}.toString();
+    }
+
+    public String insertModifications(Map<String, Object> params) {
+        List<Integer> modValues = (List<Integer>) params.get("modValues");
+        return new SQL() {{
+            INSERT_INTO("px_user_modification");
+            INTO_COLUMNS("user_id", "mod_value", "var", "engine");
+            for (Integer modValue : modValues) {
+                INTO_VALUES("#{id}", "#{modValue}", "#{var}", "#{engine}");
+                ADD_ROW();
             }
         }}.toString();
     }
