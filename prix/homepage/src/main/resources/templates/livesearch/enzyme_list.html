@@ -54,6 +54,16 @@
         </tr>
     </form>
 </table>
+
+<!-- Error messages -->
+<div th:if="${addState != null}">
+    <div th:if="${addState == 1}" class="red">Failed to add: enzyme name is empty.</div>
+    <div th:if="${addState == 2}" class="red">Failed to add: cleave is empty.</div>
+    <div th:if="${addState == 3}" class="red">Failed to add: cleave should be the sequence of amino acids.</div>
+    <div th:if="${addState == 4}" class="red">Failed to add: enzyme name duplication.</div>
+    <div th:if="${addState == 5}" class="red">Failed to add: Character ' | ' cannot also be used in name.</div>
+</div>
+
 <br/>
 <br/>
 <table width="95%" border="0" align="center" cellpadding="1">

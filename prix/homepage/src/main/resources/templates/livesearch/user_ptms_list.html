@@ -106,11 +106,11 @@
         </tbody>
     </table>
 </form>
-<font th:if="${addState == 1}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : modification name is empty.</font>
-<font th:if="${addState == 5}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : Character '|' and white space cannot be used in name.</font>
-<font th:if="${addState == 2}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : mass difference is empty.</font>
-<font th:if="${addState == 3}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : mass difference should be real number.</font>
-<font th:if="${addState == 4}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : site is inconsistent with its position.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If site is N-term, its position should be either ANY_N_TERM or PROTEIN_N_TERM.</font>
+<span th:if="${addState == 1}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : modification name is empty.</span>
+<span th:if="${addState == 5}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : Character '|' and white space cannot be used in name.</span>
+<span th:if="${addState == 2}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : mass difference is empty.</span>
+<span th:if="${addState == 3}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : mass difference should be real number.</span>
+<span th:if="${addState == 4}" class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed to add : site is inconsistent with its position.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If site is N-term, its position should be either ANY_N_TERM or PROTEIN_N_TERM.</span>
 <br/>
 <br/>
 

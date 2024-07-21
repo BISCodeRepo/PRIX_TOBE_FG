@@ -36,13 +36,47 @@ public class ModificationService {
     }
 
     public Integer addModification(Integer userId, String name, String mass, String residue, String position) {
+        int addState = 0;
+
+        // Check if name is empty
+        if (name == null || name.trim().isEmpty()) {
+            return 1; // Name is empty
+        }
+
+        // Check if name contains '|' or whitespace
+        if (name.contains("|") || name.contains(" ")) {
+            return 5; // Invalid character in name
+        }
+
+        // Check if mass is empty
+        if (mass == null || mass.trim().isEmpty()) {
+            return 2; // Mass is empty
+        }
+
         try {
+            // Try parsing the mass to a double
             double massValue = Double.parseDouble(mass);
-            return modificationMapper.insertModification(userId, name, massValue, residue, position);
+
+            // Check if residue and position are consistent
+            if ("N-term".equals(residue)) {
+                if ("ANYWHERE".equals(position) || position.endsWith("C_TERM")) {
+                    return 4; // Inconsistent site and position
+                }
+            } else if ("C-term".equals(residue)) {
+                if ("ANYWHERE".equals(position) || position.endsWith("N_TERM")) {
+                    return 4; // Inconsistent site and position
+                }
+            }
+            log.info("insert success!");
+            // If all checks pass, insert the modification
+            modificationMapper.insertModification(userId, name, massValue, residue, position);
+            return 0;
+
         } catch (NumberFormatException e) {
-            return 3; // Mass difference should be real number
+            return 3; // Mass difference should be a real number
         }
     }
+
 
     public void deleteModification(Integer id) {
         log.info("delete modification!");

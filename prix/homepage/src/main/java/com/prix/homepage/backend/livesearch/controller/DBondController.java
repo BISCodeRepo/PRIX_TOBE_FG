@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.livesearch.controller.liveSearch;
+package com.prix.homepage.backend.livesearch.controller;
 
 import com.prix.homepage.backend.basic.utils.PrixDataWriter;
 import com.prix.homepage.backend.livesearch.controller.LiveSearchController;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -324,10 +325,11 @@ public class DBondController extends BaseController {
                                   @RequestParam String position,
                                   @RequestParam(defaultValue = "1") Integer var,
                                   @RequestParam(defaultValue = "0") Integer engine,
+                                  RedirectAttributes redirectAttributes,
                                   Model model) {
 
         int addState = modificationService.addModification(id, name, mass, residue, position);
-        model.addAttribute("addState", addState);
+        redirectAttributes.addFlashAttribute("addState", addState);
         return "redirect:/dbond/user_ptms_list?var=" + var + "&engine=" + engine;
     }
 
@@ -369,6 +371,7 @@ public class DBondController extends BaseController {
         List<Enzyme> enzymes = enzymeService.getEnzymesByUserId(id);
         model.addAttribute("enzymes", enzymes);
         model.addAttribute("id", id);
+
         return "livesearch/enzyme_list";
     }
 
@@ -377,10 +380,12 @@ public class DBondController extends BaseController {
      * @return Redirect String view : "livesearch/enzyme_list"
      **/
     @PostMapping("/enzyme/add")
-    public String addEnzyme(@LoginUserId Integer id,HttpSession session, @RequestParam String enzyme_name, @RequestParam String nt_cleave, @RequestParam String ct_cleave, Model model) {
+    public String addEnzyme(@LoginUserId Integer id, HttpSession session, @RequestParam String enzyme_name,
+                            @RequestParam String nt_cleave, @RequestParam String ct_cleave,
+                            Model model, RedirectAttributes redirectAttributes) {
 
         int addState = enzymeService.addEnzyme(id, enzyme_name, nt_cleave, ct_cleave);
-        model.addAttribute("addState", addState);
+        redirectAttributes.addFlashAttribute("addState", addState);
 
         return "redirect:/dbond/enzyme_list";
     }

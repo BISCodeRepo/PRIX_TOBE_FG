@@ -1,5 +1,6 @@
 package com.prix.homepage.backend.livesearch.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
@@ -63,5 +64,18 @@ public class ModificationSqlProvider {
                 ADD_ROW();
             }
         }}.toString();
+    }
+
+    public String findUserModifications(@Param("userId") Integer userId, @Param("var") Integer var, @Param("engine") Integer engine) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT id, name, mass_diff, residue, position FROM px_modification WHERE user_id = #{userId}");
+
+        if (!var.equals(1)) {
+            sql.append(" AND position = 'ANYWHERE'");
+        }
+
+        sql.append(" AND id NOT IN (SELECT mod_id FROM px_user_modification WHERE user_id = #{userId} AND engine = #{engine})");
+
+        return sql.toString();
     }
 }
