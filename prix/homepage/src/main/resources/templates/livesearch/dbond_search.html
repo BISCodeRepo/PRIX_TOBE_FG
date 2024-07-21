@@ -69,7 +69,13 @@
                                     <option th:each="enzyme : ${enzymeList}" th:value="${enzyme.id}" th:text="${enzyme.name}"></option>
                                 </select>
                                 <span class="text-padding"></span>
-                                <input name="add_enzyme" type="button" class="btnBlueSmall" value=" + "><span class="blue-up text-padding">Login to add new enzyme rule</span>
+                                <input name="add_enzyme" type="button" class="btnBlueSmall" value=" + "
+                                       th:if="${id != 4}" th:onclick="'window.open(\'enzyme_list\', \'\', \'resizable=0,width=500,height=500,scrollbars=yes\')'" />
+                                <span class="text-small text-blue">
+                                    <span th:if="${id == 4}" class="text-small text-blue">Login</span>
+                                    <span th:if="${id != 4}" class="text-small text-blue">Click</span>
+                                    to add new enzyme rule
+                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -250,7 +256,7 @@
         if (xmlhttp == null)
             return;
 
-        xmlhttp.open("GET", "/user_enzyme", false); // 서버의 엔드포인트로 수정
+        xmlhttp.open("GET", "/user_enzyme", false);
         xmlhttp.send(null);
         stateChanged();
     }
@@ -274,6 +280,10 @@
             }
         }
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        enzymeList();
+    });
 
 </script>
 </body>

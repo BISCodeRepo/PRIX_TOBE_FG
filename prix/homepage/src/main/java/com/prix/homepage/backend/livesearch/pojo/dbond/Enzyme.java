@@ -12,4 +12,6 @@ public class Enzyme {
     private Long id;
     private String name;
     private String userId;
+    private String ntCleave;
+    private String ctCleave;
 }

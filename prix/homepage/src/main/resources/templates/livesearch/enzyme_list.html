@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PRIX - PRoteome InformatiX</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <script type="text/javascript">
+        function deleteEnzyme(enzymeId) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/enzyme/delete';
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'enzyme_id';
+            input.value = enzymeId;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</head>
+<body th:onload="javascript:if([[${reloadOpener}]] && [[${id}]] == null) { window.opener.location.href = '/login?url=modi/search'; window.close(); } else if([[${reloadOpener}]]) { window.opener.location.reload(); }">
+<table border="0" cellspacing="0" cellpadding="0" id="TitTable">
+    <tr>
+        <td style="padding-left:15px;"><span class="blueB" style="font-size: 3em;">ms/ms search</span> _ User enzyme list</td>
+    </tr>
+</table>
+<table width="95%" border="0" align="center" cellpadding="1">
+    <tr>
+        <td align="left"><span class="blue"><em>Define new enzyme rule</em></span></td>
+    </tr>
+</table>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="bordered">
+    <tr>
+        <td class="grayTH">Name</td>
+        <td class="grayTH">Nterm_cleave</td>
+        <td class="grayTH">Cterm_cleave</td>
+        <td class="grayTH"><div align="right">Add&nbsp;&nbsp;&nbsp;</div></td>
+    </tr>
+    <form id="enzyme_add" method="post" th:action="@{/enzyme/add}">
+        <tr>
+            <td class="grayTD"><input name="enzyme_name" type="text" size="10"/>&nbsp;&nbsp;</td>
+            <td class="grayTD"><input name="nt_cleave" type="text" size="10"/>&nbsp;&nbsp;</td>
+            <td class="grayTD"><input name="ct_cleave" type="text" size="10"/>&nbsp;&nbsp;</td>
+            <td class="grayTD"><div align="right"><input name="add_enzyme" type="submit" class="btnOrgSmall" value=" add " /></div></td>
+        </tr>
+        <tr>
+            <td><span class="red">&nbsp;&nbsp;Ex)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trypsin</span></td>
+            <td><span class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            <td><span class="red">&nbsp;&nbsp;&nbsp;KR</span></td>
+            <td align="right">&nbsp;</td>
+        </tr>
+    </form>
+</table>
+<br/>
+<br/>
+<table width="95%" border="0" align="center" cellpadding="1">
+    <tr>
+        <td align="left"><span class="blue"><em>User-defined enzyme list</em></span></td>
+    </tr>
+</table>
+<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="bordered">
+    <tr>
+        <td class="grayTH">Name</td>
+        <td class="grayTH"><div align="center">Cleavage</div></td>
+        <td class="grayTH"><div align="center">Term</div></td>
+        <td class="grayTH"><div align="right">Delete</div></td>
+    </tr>
+    <tr th:each="enzyme : ${enzymes}">
+        <td class="grayTD" th:text="${enzyme.name}"></td>
+        <td class="grayTD" align="center" th:text="${enzyme.ntCleave}"></td>
+        <td class="grayTD" align="center" th:text="${enzyme.ctCleave}"></td>
+        <td class="grayTD" align="right"><input type="button" class="btnBlueSmall" value=" del " th:onclick="'deleteEnzyme(' + ${enzyme.id} + ');'"/></td>
+    </tr>
+</table>
+<br/>
+<table cellpadding="1" width="95%" align="center" border="0">
+    <tbody>
+    <tr>
+        <td align="right">
+            <input name="buttonClose" type="button" onclick="window.close()" value=" Close " />
+        </td>
+    </tr>
+    <tr>
+        <td align="left">
+            <span class="red">User-defined enzymes are * labeled in enzyme list of submit page.</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>

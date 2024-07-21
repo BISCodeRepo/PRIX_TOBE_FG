@@ -25,4 +25,9 @@ public interface ModificationMapper {
     @Select("SELECT id, name, mass_diff, residue, position FROM px_modification WHERE user_id = #{userId} AND id NOT IN (SELECT mod_id FROM px_user_modification WHERE user_id = #{userId} AND engine = #{engine})")
     List<Modification> findUserModifications(@Param("userId") Integer userId, @Param("var") Integer var, @Param("engine") Integer engine);
 
+    @Insert("INSERT INTO px_modification (user_id, name, mass_diff, residue, position) VALUES (#{userId}, #{name}, #{massDiff}, #{residue}, #{position})")
+    int insertModification(@Param("userId") Integer userId, @Param("name") String name, @Param("massDiff") double massDiff, @Param("residue") String residue, @Param("position") String position);
+
+    @Delete("DELETE FROM px_modification WHERE id = #{id}")
+    void deleteModification(@Param("id") Integer id);
 }

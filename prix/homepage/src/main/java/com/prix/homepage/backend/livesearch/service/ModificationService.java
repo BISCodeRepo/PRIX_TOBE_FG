@@ -35,6 +35,20 @@ public class ModificationService {
         return modificationMapper.findUserModifications(userId, var, engine);
     }
 
+    public Integer addModification(Integer userId, String name, String mass, String residue, String position) {
+        try {
+            double massValue = Double.parseDouble(mass);
+            return modificationMapper.insertModification(userId, name, massValue, residue, position);
+        } catch (NumberFormatException e) {
+            return 3; // Mass difference should be real number
+        }
+    }
+
+    public void deleteModification(Integer id) {
+        log.info("delete modification!");
+        modificationMapper.deleteModification(id);
+    }
+
     public List<String> getSiteOptions(Integer var) {
         if (var == 1) {
             return Arrays.asList("N-term", "C-term", "A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y");

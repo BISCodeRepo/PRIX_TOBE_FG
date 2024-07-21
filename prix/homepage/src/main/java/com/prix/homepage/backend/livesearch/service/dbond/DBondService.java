@@ -17,7 +17,7 @@ public class DBondService {
 
     private final DBondMapper dBondMapper;
 
-    public List<Enzyme> getUserEnzymes(String userId) {
+    public List<Enzyme> getUserEnzymes(Integer userId) {
         return dBondMapper.findByUserId(userId);
     }
     public List<Database> getDatabaseList() {

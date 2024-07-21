@@ -412,6 +412,13 @@ table{width: 100%; border-collapse: collapse; border-top: 2px solid #d9dddc; bor
 
 aside{width: 190px; padding-left: 30px; padding-right: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #5d5d5d;}
 
+.text-small {
+	font-size: 0.875em;
+}
+
+.text-blue {
+	color: blue;
+}
 
 
 

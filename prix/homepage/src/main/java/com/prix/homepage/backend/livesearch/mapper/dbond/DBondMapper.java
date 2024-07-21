@@ -12,7 +12,7 @@ import java.util.List;
 public interface DBondMapper {
     
     @Select("SELECT id, name FROM px_enzyme WHERE user_id = #{userId}")
-    List<Enzyme> findByUserId(String userId);
+    List<Enzyme> findByUserId(Integer userId);
 
     @Select("SELECT id, name FROM px_database")
     List<Database> findAll();

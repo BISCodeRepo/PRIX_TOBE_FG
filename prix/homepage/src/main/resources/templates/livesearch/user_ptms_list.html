@@ -32,8 +32,9 @@
         }
 
         function doDelete(id) {
+            console.log("id = " + id);
             document.mod_list.act.value = id;
-            document.mod_list.action = '/deleteModification';
+            document.mod_list.action = '/deleteModification?id=' + id;
             document.mod_list.submit();
             return true;
         }
@@ -58,6 +59,13 @@
                 // alert('Please select modifications.');
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            opener.location = "var_ptms_list?var=[[${var}]]&engine=[[${engine}]]";
+            var currentURL = new URL(window.opener.opener.location.href);
+            currentURL.searchParams.set("entry", "true");
+            window.opener.opener.location.href = currentURL.toString();
+        });
     </script>
 </head>
 <body>
