@@ -108,4 +108,19 @@ public class LoginController extends BaseController {
             return "redirect:/";
         }
     }
+
+    @GetMapping("/delete_account")
+    public String deleteAccount() {
+        return "login/delete_account";
+    }
+
+    @PostMapping("/delete_account")
+    public String deleteAccount(@ModelAttribute("deleteAccountForm") HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+
+        return "redirect:/";
+    }
+
+
 }

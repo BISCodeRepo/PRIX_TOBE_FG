@@ -19,11 +19,10 @@ public class UserService {
     }
 
     /**
-     사용자 로그인 처리 메소드
-
-     @param requestLoginDto 로그인 요청 DTO
-     @param level 기대하는 역할 레벨
-     @return 로그인된 사용자 정보
+     * 사용자 로그인 처리 메소드
+     * @param requestLoginDto 로그인 요청 DTO
+     * @param level 기대하는 역할 레벨
+     * @return 로그인된 사용자 정보
      */
     public User login(RequestLoginDto requestLoginDto, int level) {
         if (!validateRequest(requestLoginDto)) {
@@ -37,9 +36,8 @@ public class UserService {
     }
 
     /**
-     사용자 회원가입 처리 메소드
-
-     @param requestLoginDto 회원가입 요청 DTO
+     * 사용자 회원가입 처리 메소드
+     * @param requestLoginDto 회원가입 요청 DTO
      */
     public int signUp(RequestLoginDto requestLoginDto) {
         if (!validateRequest(requestLoginDto)) {
@@ -55,11 +53,24 @@ public class UserService {
     }
 
     /**
-     사용자 역할 검증 메소드
+     * 사용자 삭제 처리 메소드
+     * @param email 삭제할 사용자의 이메일
+     * @return 삭제 성공 시 true, 실패 시 false
+     */
+    public boolean deleteUser(String email) {
+        User user = userMapper.findByEmail(email);
+        if (user == null) {
+            return false; // 사용자 존재하지 않음
+        }
+        userMapper.deleteUserByEmail(email);
+        return true; // 삭제 성공
+    }
 
-     @param user 검증할 사용자
-     @param level 기대하는 역할 레벨
-     @return 역할이 일치하는 경우 true, 그렇지 않은 경우 false
+    /**
+     * 사용자 역할 검증 메소드
+     * @param user 검증할 사용자
+     * @param level 기대하는 역할 레벨
+     * @return 역할이 일치하는 경우 true, 그렇지 않은 경우 false
      */
     public boolean validateUserRole(User user, int level) {
         if (user == null) {
@@ -69,10 +80,9 @@ public class UserService {
     }
 
     /**
-     입력값 검증 메소드
-
-     @param requestLoginDto 요청 DTO
-     @return 유효한 경우 true, 그렇지 않은 경우 false
+     * 입력값 검증 메소드
+     * @param requestLoginDto 요청 DTO
+     * @return 유효한 경우 true, 그렇지 않은 경우 false
      */
     public boolean validateRequest(RequestLoginDto requestLoginDto) {
         String email = requestLoginDto.getEmail();

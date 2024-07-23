@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header0}"></header>
+<main>
+  <div class="main-contents">
+    <div class="main-title">
+      <div class="title">
+        <h3 class="drakBR">DELETE ACCOUNT</h3>
+      </div>
+    </div>
+    <div class="outer-box">
+      <img src="/images/tit03_deleteAccount.gif" alt="Delete Account"/>
+      <form th:action="@{/login/delete_account}" method="post">
+        <div class="container" style="background: #fff; width: 400px">
+          <div class="box">
+            <div>
+              <div class="inner-box">
+                <div th:if="${userId != null}">
+                  <h3 align="left">Do you want to delete your account?<br>
+                    It does not recover when you delete your account once.</h3><br>
+                </div>
+                <br/>
+                <div class="btn-box">
+                  <input value="Cancel" type="button" class="btn" onclick="history.go(-1);"/>
+                  <input type="submit" class="btn" value="Delete"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>
