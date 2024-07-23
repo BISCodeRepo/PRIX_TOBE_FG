@@ -32,6 +32,12 @@ public class LiveSearchController extends BaseController {
         return "livesearch/livesearch";
     }
 
+    @GetMapping("/livesearch/ACTG")
+    public String ACTG(){
+        return "livesearch/actg";
+    }
+
+
     @GetMapping("/modplus/search")
     public String modplus(Model model){
         Integer id = test; //테스트용 id 원래 id 는 anony(== 4)

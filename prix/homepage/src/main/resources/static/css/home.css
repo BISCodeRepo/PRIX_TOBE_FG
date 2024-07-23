@@ -80,6 +80,10 @@ a { outline: none; }
 	PADDING: 2px 3px 2px 10px;
 	BORDER-BOTTOM: #d9dddc 2px solid;
 	FONT-SIZE: 12px; COLOR: #656565; TEXT-DECORATION: none; TEXT-ALIGN: left; FONT-WEIGHT: normal;}
+#ac th, td {
+	width: 50%;
+}
+
 
 
 /* form: tag */
@@ -406,7 +410,10 @@ a.blue-up:hover   {color:#0033FF;font-weight:bold;text-decoration:underline; pad
 .one-in-a-row{column-span: 2;}
 
 table{width: 100%; border-collapse: collapse; border-top: 2px solid #d9dddc; border-bottom: 2px solid #d9dddc;}
+
 .align-right{float: right;}
+.align-center{text-align: center;}
+
 
 
 
