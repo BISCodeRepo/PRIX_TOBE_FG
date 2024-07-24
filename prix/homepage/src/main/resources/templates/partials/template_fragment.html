@@ -108,18 +108,16 @@
         <br>
         <span>
               <img src="/images/icon_5.gif" width="6px" height="10px" />
-              <a class="menu" th:href="@{/download}">Pattern Match</a>
+              <a class="menu" th:href="@{/livesearch/PatternMatch}">Pattern Match</a>
             </span>
         <br>
         <br>
         <span>
               <img src="/images/icon_5.gif" width="6px" height="10px" />
-              <a class="menu" th:href="@{/download}">USE</a>
+              <a class="menu" th:href="@{/livesearch/USE}">USE</a>
             </span>
     </div>
-</aside>
-
-<div th:fragment="livesearch-title(title, text, version)">
+</aside><div th:fragment="livesearch-title(title, text, version)">
     <div class="main-title">
         <div class="title space-between">
             <div class="title text-padding">
@@ -127,7 +125,8 @@
                     Default Title
                 </h3>
                 <span th:text="${text}">- Description</span>
-                <span class="text-padding black" th:if="${version}" th:text="'( ' + ${version} + ' )'"></span>
+
+                <span class="text-padding black" th:if="${version}!=''" th:text="'( ' + ${version} + ' )'"></span>
             </div>
             <div style="margin-right: 12px;">
                 <img src="/images/top_icon_01.gif" style="width:2px; height:9px; padding-right: 3px;">
@@ -138,6 +137,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 </body>

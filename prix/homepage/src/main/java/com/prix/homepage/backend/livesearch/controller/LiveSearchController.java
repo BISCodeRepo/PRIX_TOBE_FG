@@ -37,6 +37,16 @@ public class LiveSearchController extends BaseController {
         return "livesearch/actg";
     }
 
+    @GetMapping("/livesearch/PatternMatch")
+    public String PatternMatch(){
+        return "livesearch/pattern_match";
+    }
+
+    @GetMapping("/livesearch/USE")
+    public String USE(){
+        return "livesearch/use";
+    }
+
 
     @GetMapping("/modplus/search")
     public String modplus(Model model){
