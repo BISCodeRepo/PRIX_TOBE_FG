@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}">
+</head>
+<body>
+<header th:replace="~{partials/fragment :: header2}"></header>
+
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
+        <article>
+            <div th:replace="~{partials/template_fragment :: livesearch-title('USE', '', '')}"></div>
+            <div class="main-contents">
+
+
+
+
+            </div>
+        </article>
+    </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+
+
+
+</body>
+</html>
