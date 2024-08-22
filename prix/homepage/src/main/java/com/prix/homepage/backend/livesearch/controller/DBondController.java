@@ -3,6 +3,7 @@ package com.prix.homepage.backend.livesearch.controller;
 import com.prix.homepage.backend.basic.utils.PrixDataWriter;
 import com.prix.homepage.backend.livesearch.controller.LiveSearchController;
 import com.prix.homepage.backend.livesearch.dto.UserSettingDto;
+import com.prix.homepage.backend.livesearch.dto.dbond.ProcessRequestDto;
 import com.prix.homepage.backend.livesearch.pojo.Modification;
 import com.prix.homepage.backend.livesearch.pojo.dbond.Enzyme;
 import com.prix.homepage.backend.livesearch.pojo.dbond.PxData;
@@ -23,15 +24,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.prix.homepage.constants.prixConst.anony;
@@ -66,6 +67,10 @@ public class DBondController extends BaseController {
                             @RequestParam(required = false) String inst,
                             @RequestParam(required = false) String[] protein_list) {
 
+
+        log.info("Received dbondForm request with parameters: id={}, entry={}, ms={}, db={}, msfile={}, dbfile={}, mstype={}, inst={}, protein_list={}",
+                id, entry, ms, db, msfile, dbfile, mstype, inst, protein_list);
+
         String userName;
         if (id == 4) userName = "annoymous";
         else userName = userSettingService.findAccountNameById(id);
@@ -86,10 +91,11 @@ public class DBondController extends BaseController {
         model.addAttribute("userSetting", userSetting);
 
         int dbNewIndex = -1;
+
         if (ms != null) {
             String fasta = "";
             PxData pxData = dBondService.getDataById(Integer.parseInt(db));
-
+            log.info("pxData = {}",pxData);
             if (pxData != null) {
                 String pwd = pxData.getName();
                 File file = new File(pwd);
@@ -414,6 +420,101 @@ public class DBondController extends BaseController {
         return enzymes.stream()
                 .map(e -> e.getName() + ":" + e.getId())
                 .collect(Collectors.joining(","));
+    }
+
+    @GetMapping("/dbond/process")
+    public String processData2(@LoginUserId Integer id,
+                              HttpServletRequest request,
+                              Model model) {
+
+        if(id == 4) return "redirect:/login/user?url=modi/search";
+
+        Map<String, String> paramsMap = new HashMap<>();
+        request.getParameterMap().forEach((key, value) -> {
+            if (value.length > 0) {
+                paramsMap.put(key, value[0]);
+            }
+        });
+//
+//        log.info("ParamsMap Contents: ");
+//        paramsMap.forEach((key, value) -> {
+//            log.info(key + " : " + value);
+//        });
+
+        ProcessRequestDto dto = dBondService.processFilesAndData(id, paramsMap, new MultipartFile[]{});
+
+        log.info("Dto = {}",dto.toString());
+
+        model.addAttribute("process",dto);
+
+        return dto.getAddress();
+    }
+
+    @PostMapping("/dbond/process")
+    public String processData(@LoginUserId Integer id,
+                              HttpServletRequest request,
+                              @RequestParam("ms_file") MultipartFile msFile,
+                              @RequestParam("fasta") MultipartFile fasta,
+                              Model model) {
+
+        if(id == 4) return "redirect:/login/user?url=modi/search";
+
+        Map<String, String> paramsMap = new HashMap<>();
+        request.getParameterMap().forEach((key, value) -> {
+            if (value.length > 0) {
+                paramsMap.put(key, value[0]);
+            }
+        });
+
+//        log.info("ParamsMap Contents: ");
+//        paramsMap.forEach((key, value) -> {
+//            log.info(key + " : " + value);
+//        });
+//
+//        log.info("hasMsFile = {}",!msFile.isEmpty());
+//        log.info("hasFasta = {}",!fasta.isEmpty());
+
+        ProcessRequestDto dto = dBondService.processFilesAndData(id, paramsMap, new MultipartFile[]{msFile, fasta});
+
+        log.info("Dto = {}",dto.toString());
+
+        model.addAttribute("process",dto);
+
+        return dto.getAddress();
+    }
+
+    @GetMapping("/dbond/result")
+    public String getSearchResults(Model model) {
+        model.addAttribute("engineName", "PRIX Engine");
+        model.addAttribute("version", "1.0.0");
+        model.addAttribute("date", "2024-08-23");
+        model.addAttribute("userName", "John Doe");
+        model.addAttribute("title", "Test Search");
+        model.addAttribute("fileName", "test.mgf");
+        model.addAttribute("databaseName", "UniProt");
+        model.addAttribute("numberOfUserProteins", 10000);
+        model.addAttribute("numberOfUserResidues", 300000);
+        model.addAttribute("enzymeName", "Trypsin");
+        model.addAttribute("maxMissedCleavages", 2);
+        model.addAttribute("minTerminiNumber", 2);
+        model.addAttribute("variableModifications", new ArrayList<>()); // 여기에 실제 수정 목록을 추가합니다
+        model.addAttribute("fixedModifications", new ArrayList<>()); // 여기에 실제 수정 목록을 추가합니다
+        model.addAttribute("proteinMassMin", 500.0);
+        model.addAttribute("proteinMassMax", 5000.0);
+        model.addAttribute("peptideTolerance", 0.1);
+        model.addAttribute("ptUnit", "ppm");
+        model.addAttribute("fragmentTolerance", 0.5);
+        model.addAttribute("ftUnit", "Da");
+        model.addAttribute("instrumentName", "Orbitrap");
+        model.addAttribute("msResolution", "60000");
+        model.addAttribute("msmsResolution", "15000");
+        model.addAttribute("numberOfQueries", 1000);
+        model.addAttribute("isModMapRun", true);
+        model.addAttribute("isMultiStage", true);
+        model.addAttribute("isTargetDecoyed", true);
+        model.addAttribute("decoyFilePath", "/path/to/decoy");
+
+        return "livesearch/result";
     }
 }
 

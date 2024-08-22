@@ -19,4 +19,7 @@ public interface EnzymeMapper {
 
     @Delete("DELETE FROM px_enzyme WHERE id = #{enzymeId} AND user_id = #{userId}")
     void deleteEnzyme(@Param("userId") int userId, @Param("enzymeId") int enzymeId);
+
+    @Select("SELECT name, nt_cleave AS ntCleave, ct_cleave AS ctCleave FROM px_enzyme WHERE id = #{enzymeId}")
+    Enzyme getEnzymeById(@Param("enzymeId") int enzymeId);
 }

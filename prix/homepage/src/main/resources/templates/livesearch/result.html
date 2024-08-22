@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header2}"></header>
+<h2>PRIX Search Results</h2>
+
+<table>
+    <tr>
+        <td><b>Search Engine</b></td>
+        <td>: <span th:text="${engineName}"></span> (version <span th:text="${version}"></span>)</td>
+    </tr>
+    <tr>
+        <td><b>Date</b></td>
+        <td>: <span th:text="${date}"></span></td>
+    </tr>
+    <tr>
+        <td><b>User</b></td>
+        <td>: <span th:text="${userName}"></span></td>
+    </tr>
+    <tr>
+        <td><b>Search title</b></td>
+        <td>: <span th:text="${title}"></span></td>
+    </tr>
+    <tr>
+        <td><b>MS/MS data</b></td>
+        <td>: <span th:text="${fileName}"></span></td>
+    </tr>
+    <tr>
+        <td><b>Database</b></td>
+        <td>: <span th:text="${databaseName}"></span> (<span th:text="${numberOfUserProteins}"></span> proteins / <span th:text="${numberOfUserResidues}"></span> residues)</td>
+    </tr>
+</table>
+
+<div class="section-title"><b>Search Parameters</b></div>
+<table>
+    <tr>
+        <td><b>Enzyme</b></td>
+        <td>: <span th:text="${enzymeName}"></span></td>
+    </tr>
+    <tr>
+        <td><b>Max Missed Cleavages</b></td>
+        <td>: <span th:text="${maxMissedCleavages}"></span></td>
+    </tr>
+    <tr>
+        <td><b>No. of enzyme termini</b></td>
+        <td>: <span th:text="${minTerminiNumber}"></span></td>
+    </tr>
+    <tr th:if="${variableModifications != null and #lists.size(variableModifications) > 0}">
+        <td><b>Variable Modifications</b></td>
+        <td>
+        <span th:if="${#lists.size(variableModifications) >= 10}">
+            <a th:href="@{/modification(type=0)}" th:text="${#lists.size(variableModifications)}"></a>
+        </span>
+            <span th:if="${#lists.size(variableModifications) < 10}">
+            <span th:each="mod : ${variableModifications}">
+                <span th:text="${mod.type}"></span> (<span th:text="${mod.position}"></span>)
+                <span th:if="${!#lists.isLast(mod)}">, </span>
+            </span>
+        </span>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>: <font color="red">* indicates disulfide bond.</font></td>
+    </tr>
+    <tr th:if="${fixedModifications != null and #lists.size(fixedModifications) > 0}">
+        <td><b>Fixed Modifications</b></td>
+        <td>
+        <span th:if="${#lists.size(fixedModifications) >= 10}">
+            <a th:href="@{/modification(type=1)}" th:text="${#lists.size(fixedModifications)}"></a>
+        </span>
+            <span th:if="${#lists.size(fixedModifications) < 10}">
+            <span th:each="mod : ${fixedModifications}">
+                <span th:text="${mod.type}"></span> (<span th:text="${mod.position}"></span>)
+                <span th:if="${!#lists.isLast(mod)}">, </span>
+            </span>
+        </span>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Modified Mass Range</b></td>
+        <td>: <span th:text="${proteinMassMin}"></span> ~ <span th:text="${proteinMassMax < 0 ? 'Unrestricted' : '+' + proteinMassMax}"></span> Da</td>
+    </tr>
+    <tr>
+        <td><b>Peptide Mass Tolerance</b></td>
+        <td>: &#177; <span th:text="${peptideTolerance}"></span> <span th:text="${ptUnit}"></span></td>
+    </tr>
+    <tr>
+        <td><b>Fragment Mass Tolerance</b></td>
+        <td>: &#177; <span th:text="${fragmentTolerance}"></span> <span th:text="${ftUnit}"></span></td>
+    </tr>
+    <tr>
+        <td><b>Instrument type</b></td>
+        <td>: <span th:text="${instrumentName}"></span> <span th:if="${msResolution != null}">(Resolution: <span th:text="${msResolution}"></span>-MS / <span th:text="${msmsResolution}"></span>-MS/MS)</span></td>
+    </tr>
+    <tr>
+        <td><b>Number of queries</b></td>
+        <td>: <span th:text="${numberOfQueries}"></span></td>
+    </tr>
+    <tr th:if="${isModMapRun}">
+        <td><b>MODmap</b></td>
+        <td>: <a href="#PTMAP">Checked</a></td>
+    </tr>
+    <tr th:if="${isMultiStage}">
+        <td><b>MultiStages search</b></td>
+        <td>: Checked</td>
+    </tr>
+    <tr>
+        <td><b>Decoy search</b></td>
+        <td>: <span th:if="${isTargetDecoyed}" th:text="'Checked (' + decoyFilePath + ')'"></span><span th:if="${!isTargetDecoyed}">No</span></td>
+    </tr>
+</table>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>

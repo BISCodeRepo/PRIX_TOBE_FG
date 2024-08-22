@@ -11,7 +11,7 @@
         <article>
             <div th:replace="~{partials/template_fragment :: livesearch-title('DBond', 'ms/ms search', ${userSetting.version})}"></div>
             <div class="main-contents">
-                <form name="search" method="post" enctype="multipart/form-data">
+                <form name="search" th:action="@{/dbond/process}" method="post" enctype="multipart/form-data">
                     <table id="gray">
                         <tbody>
                         <tr>
@@ -123,6 +123,7 @@
                         <input type="hidden" name="msindex" th:value="${msIndex}" />
                         <input type="hidden" name="dbindex" th:value="${dbNewIndex}" />
                     </div>
+                    <input type="hidden" name="engine" value="dbond"/>
                 </form>
             </div>
         </article>
@@ -198,33 +199,39 @@
 
         getXMLHTTP();
         if (xmlhttp != null) {
-            xmlhttp.open("GET", "var_ptms_count.jsp", false);
+            var userId = [[${id}]];
+            var url = "/api/livesearch/user-modification/count?userId=" + userId + "&variable=" + 1 + "&engine=" + 1;
+            xmlhttp.open("GET", url, false);
             xmlhttp.send(null);
             var count = trimText(xmlhttp.responseText);
+            console.log("count = "+ count);
             if (parseInt(count) > 20) {
                 alert("Number of variable modifications should be no greater than 20.");
                 return;
             }
         }
 
-        // 폼 데이터를 AJAX로 서버에 전송
-        var formData = new FormData(form);
-        getXMLHTTP();
-        if (xmlhttp != null) {
-            xmlhttp.open("POST", "/process", true);
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var response = JSON.parse(xmlhttp.responseText);
-                    // 서버 응답 처리 로직
-                    if (response.success) {
-                        alert("Submission successful!");
-                    } else {
-                        alert("Submission failed: " + response.message);
-                    }
-                }
-            };
-            xmlhttp.send(formData);
-        }
+        form.submit();
+
+
+        // // 폼 데이터를 AJAX로 서버에 전송
+        // var formData = new FormData(form);
+        // getXMLHTTP();
+        // if (xmlhttp != null) {
+        //     xmlhttp.open("POST", "/dbond/process", true);
+        //     xmlhttp.onreadystatechange = function() {
+        //         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        //             var response = JSON.parse(xmlhttp.responseText);
+        //             // 서버 응답 처리 로직
+        //             if (response.success) {
+        //                 alert("Submission successful!");
+        //             } else {
+        //                 alert("Submission failed: " + response.message);
+        //             }
+        //         }
+        //     };
+        //     xmlhttp.send(formData);
+        // }
     }
 
     function validateText(user, title) {
