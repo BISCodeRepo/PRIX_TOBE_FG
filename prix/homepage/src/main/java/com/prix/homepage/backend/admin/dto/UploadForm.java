@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.admin;
+package com.prix.homepage.backend.admin.dto;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

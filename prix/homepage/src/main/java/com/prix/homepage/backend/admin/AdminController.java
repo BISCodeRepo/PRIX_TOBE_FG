@@ -1,6 +1,7 @@
 package com.prix.homepage.backend.admin;
 
-import com.prix.homepage.backend.user.service.UserService;
+import com.prix.homepage.backend.admin.dto.Database;
+import com.prix.homepage.backend.admin.dto.UploadForm;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class AdminController extends BaseController {
     }
 
     @GetMapping("/configuration")
-    public String configuration() {
+    public String configuration(Model model) {
+        Database [] database  = new Database[]{Database.builder().id(1).name("asdf").file("asdf").build()};
+        model.addAttribute("databases", database);
         return "admin/configuration";
     }
 
