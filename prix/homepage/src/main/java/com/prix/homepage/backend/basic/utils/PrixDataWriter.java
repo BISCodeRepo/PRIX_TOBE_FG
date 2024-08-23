@@ -15,8 +15,10 @@ import java.io.FileOutputStream;
 import java.util.Calendar;
 
 @Slf4j
+@Component
 public class PrixDataWriter {
     //static String logdir = "E:\\PRIX\\logs\\db_error_";
+
     static String logdir = PathUtil.getGlobalDirectoryPath("/home/prix/log");
     
     static public int write(String type, String name, InputStream is) throws java.sql.SQLException, java.io.FileNotFoundException, java.io.UnsupportedEncodingException {

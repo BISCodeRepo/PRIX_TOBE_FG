@@ -1,6 +1,17 @@
 package com.prix.homepage.backend.basic.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class PathUtil {
+
+    private static String libraryPath;
+
+    @Value("${library.path}")
+    public void setLibraryPath(String libraryPath) {
+        PathUtil.libraryPath = libraryPath;
+    }
 
     public static String getGlobalDirectoryPath(String path) {
         String os = System.getProperty("os.name").toLowerCase();
@@ -13,5 +24,9 @@ public class PathUtil {
         }
 
         return path;
+    }
+
+    public static String getLibPath(){
+        return libraryPath;
     }
 }

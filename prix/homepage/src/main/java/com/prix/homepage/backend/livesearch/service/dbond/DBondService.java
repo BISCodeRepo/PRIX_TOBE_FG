@@ -38,6 +38,8 @@ public class DBondService {
     private final ModificationMapper modificationMapper;
     private final UserSettingMapper userSettingMapper;
     private final SearchLogMapper searchLogMapper;
+    //주소 관리
+    private final PathUtil pathUtil;
 
     public List<Enzyme> getUserEnzymes(Integer userId) {
         return dBondMapper.findByUserId(userId);
@@ -102,8 +104,8 @@ public class DBondService {
         String output = "";
 
         if (params.get("execute") == null) {
-            final String dir = PathUtil.getGlobalDirectoryPath("/home/PRIX/data/");
-            final String dbDir = PathUtil.getGlobalDirectoryPath("/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/");
+            final String dir = pathUtil.getGlobalDirectoryPath("/home/PRIX/data/");
+            final String dbDir = pathUtil.getGlobalDirectoryPath("/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/");
 
             log.info("dir = {}",dir);
             Date date = new Date();
@@ -348,10 +350,12 @@ public class DBondService {
 //                    String[] command = {"/bin/bash", "-c", String.format("%s%s %s > %s", "java -Xmx2000M -cp /usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/engine.jar:/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/jdom.jar:/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/jrap_StAX_v5.2.jar:/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/xercesImpl.jar prix.Prix_", engine, xmlPath, logPath) };
 //                    Runtime.getRuntime().exec(command);
 
-                    String classpath = "C:\\Users\\82108\\Desktop\\prix\\lib\\engine.jar;" +
-                            "C:\\Users\\82108\\Desktop\\prix\\lib\\jdom.jar;" +
-                            "C:\\Users\\82108\\Desktop\\prix\\lib\\jrap_StAX_v5.2.jar;" +
-                            "C:\\Users\\82108\\Desktop\\prix\\lib\\xercesImpl.jar";
+                    String classpath = pathUtil.getLibPath() + "\\engine.jar;" +
+                            pathUtil.getLibPath() + "\\jdom.jar;" +
+                            pathUtil.getLibPath() + "\\jrap_StAX_v5.2.jar;" +
+                            pathUtil.getLibPath() + "\\xercesImpl.jar";
+
+                    log.info("classpath = {}",classpath);
 
                     String[] command = {"cmd.exe", "/c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
                     Runtime.getRuntime().exec(command);
