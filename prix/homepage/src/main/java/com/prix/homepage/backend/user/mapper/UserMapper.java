@@ -29,7 +29,7 @@ public interface UserMapper {
      * @param password 사용자의 비밀번호
      * @param level 사용자의 레벨 (회원가입 시 1로 고정)
      */
-    @Insert("INSERT INTO px_account (email, password, level) VALUES (#{email}, SHA2(#{password}, 256), #{level})")
+    @Insert("INSERT INTO px_account (email, name, password, level) VALUES (#{email}, #{email}, SHA2(#{password}, 256), #{level})")
     void insertUser(@Param("email") String email, @Param("password") String password, @Param("level") int level);
 
     /**

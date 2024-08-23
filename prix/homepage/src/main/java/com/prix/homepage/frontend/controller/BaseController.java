@@ -9,20 +9,33 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class BaseController {
     public static final String USER_SESSION_KEY = "user";
+    public static final int ANONY = 4;
 
-    @ModelAttribute("isUserLoggedIn")
-    public boolean isUserLoggedIn(HttpServletRequest request) {
+    @ModelAttribute("id")
+    public int id(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-
         if (session == null) {
-            return false;
+            //로그인이 되어있지 않을 경우 기존 코드와 동일하게 4(anony)반환
+            return ANONY;
         }
+        return (int)session.getAttribute("id");
+    }
 
-        Object userIdObj = session.getAttribute(USER_SESSION_KEY);
-        if (userIdObj == null) {
-            return false;
+    @ModelAttribute("name")
+    public String name(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "anonymous";
         }
-        Integer userId = (Integer)userIdObj;
-        return userId != null && !userId.equals(4);
+        return (String)session.getAttribute("name");
+    }
+
+    @ModelAttribute("level")
+    public int level(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return 0;
+        }
+        return (int)session.getAttribute("level");
     }
 }

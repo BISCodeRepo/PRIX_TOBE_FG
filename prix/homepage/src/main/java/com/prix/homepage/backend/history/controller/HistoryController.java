@@ -3,6 +3,7 @@ package com.prix.homepage.backend.history.controller;
 import com.prix.homepage.backend.history.domain.SearchLog;
 import com.prix.homepage.backend.history.service.HistoryService;
 import com.prix.homepage.backend.user.domain.User;
+import com.prix.homepage.frontend.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class HistoryController {
+public class HistoryController extends BaseController {
 
     @Autowired
     private HistoryService historyService;
@@ -26,19 +27,10 @@ public class HistoryController {
      */
     @GetMapping("/history")
     public String showHistory(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
 
-
-        // 사용자가 없으면 로그인 페이지로 리디렉션합니다.
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        int userId = user.getUserid();
-
-        List<SearchLog> searchLog = historyService.getHistoryByUserId(userId);
-
-        model.addAttribute("historyList", searchLog);
+//        List<SearchLog> searchLog = historyService.getHistoryByUserId(userId);
+//
+//        model.addAttribute("historyList", searchLog);
 
         return "history.html";
     }

@@ -206,16 +206,16 @@
             <div class="top-dot" style="width: 60px"></div>
         </div>
         <div class="top-menu">
-            <div th:if="${!isUserLoggedIn}" class="top-dot2">
+            <div th:if="${id == 4}" class="top-dot2">
                 <img src="/images/top_icon_01.gif" style="width: 2px; height: 9px; padding-right: 3px"/>
                 <a class="top_menu" th:href="@{/login/user}" href="../login/login.html">LOG IN</a>
             </div>
-            <div th:if="${isUserLoggedIn}" class="top-dot2">
+            <div th:if="${id != 4}" class="top-dot2">
                 <img src="/images/top_icon_01.gif" style="width: 2px; height: 9px; padding-right: 3px"/>
                 <a class="top_menu" href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit()">LOG OUT</a>
                 <form id="logoutForm" th:action="@{/login/logout}" method="post" style="display: none;"></form>
             </div>
-            <div th:if="${isUserLoggedIn}" class="top-dot2">
+            <div th:if="${id != 4}" class="top-dot2">
                 <img src="/images/top_icon_01.gif" style="width: 2px; height: 9px; padding-right: 3px"/>
                 <a class="top_menu" th:href="@{/login/delete_account}" href="../login/delete_account.html">DELETE<br>ACCOUNT</a>
             </div>
