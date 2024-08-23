@@ -33,7 +33,7 @@ public class LoginController extends BaseController {
     }
 
     @PostMapping("/user")
-    public String loginUserAfter(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpServletRequest request) {
+    public String loginUserPost(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpServletRequest request) {
         RequestLoginDto requestLoginDto = new RequestLoginDto();
         requestLoginDto.setEmail(loginForm.getUsername());
         requestLoginDto.setPassword(loginForm.getPassword());
@@ -56,8 +56,31 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/admin")
-    public String loginAdmin() {
+    public String loginAdmin(@ModelAttribute("loginForm") LoginForm loginForm) {
         return "login/admin_login";
+    }
+
+    @PostMapping("/admin")
+    public String loginAdminPost(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpServletRequest request) {
+        RequestLoginDto requestLoginDto = new RequestLoginDto();
+        requestLoginDto.setEmail(loginForm.getUsername());
+        requestLoginDto.setPassword(loginForm.getPassword());
+
+        User user = userService.login(requestLoginDto, 2);
+
+        if (user != null) {
+            //세션에 계정 정보 등록
+            HttpSession session = request.getSession();
+            session.setAttribute(SESSION_KEY_ID, user.getId());
+            session.setAttribute(SESSION_KEY_NAME, user.getName());
+            session.setAttribute(SESSION_KEY_LEVEL, user.getLevel());
+            session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)
+            log.info("login Success");
+            return "redirect:/";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login/admin_login";
+        }
     }
 
     @GetMapping("/agree")
