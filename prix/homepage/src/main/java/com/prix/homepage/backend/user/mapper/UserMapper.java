@@ -33,9 +33,9 @@ public interface UserMapper {
     void insertUser(@Param("email") String email, @Param("password") String password, @Param("level") int level);
 
     /**
-     * 이메일로 사용자를 삭제합니다.
-     * @param email 사용자의 이메일
+     * id로 사용자를 삭제합니다.
+     * @param id 사용자의 db id
      */
-    @Delete("DELETE FROM px_account WHERE email = #{email}")
-    void deleteUserByEmail(@Param("email") String email);
+    @Delete("DELETE FROM px_account WHERE id = #{id}")
+    void deleteUserById(@Param("id") int id);
 }

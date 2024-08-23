@@ -54,16 +54,10 @@ public class UserService {
 
     /**
      * 사용자 삭제 처리 메소드
-     * @param email 삭제할 사용자의 이메일
-     * @return 삭제 성공 시 true, 실패 시 false
+     * @param id 삭제할 사용자의 id
      */
-    public boolean deleteUser(String email) {
-        User user = userMapper.findByEmail(email);
-        if (user == null) {
-            return false; // 사용자 존재하지 않음
-        }
-        userMapper.deleteUserByEmail(email);
-        return true; // 삭제 성공
+    public void deleteUser(int id) {
+        userMapper.deleteUserById(id);
     }
 
     /**

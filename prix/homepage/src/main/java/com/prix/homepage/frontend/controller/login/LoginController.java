@@ -111,14 +111,27 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/delete_account")
-    public String deleteAccount() {
+    public String deleteAccount(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        //로그인 안된 경우 메인 페이지로 보냄
+        if (session == null) {
+            return "redirect:/";
+        }
         return "login/delete_account";
     }
 
     @PostMapping("/delete_account")
-    public String deleteAccount(@ModelAttribute("deleteAccountForm") HttpServletRequest request) {
-
+    public String deleteAccountPost(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
+        //로그인 안된 경우 메인 페이지로 보냄
+        if (session == null) {
+            return "redirect:/";
+        }
+
+        int id = (int)session.getAttribute(SESSION_KEY_ID);
+
+        userService.deleteUser(id);
+        session.invalidate();
 
         return "redirect:/";
     }
