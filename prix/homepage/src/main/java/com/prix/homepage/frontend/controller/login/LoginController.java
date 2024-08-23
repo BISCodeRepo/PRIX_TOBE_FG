@@ -44,7 +44,7 @@ public class LoginController extends BaseController {
         if (user != null) {
             //세션에 계정 정보 등록
             HttpSession session = request.getSession();
-            session.setAttribute("id", user.getId());
+            session.setAttribute(USER_SESSION_KEY, user.getId());
             session.setAttribute("name", user.getName());
             session.setAttribute("level", user.getLevel());
             session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)

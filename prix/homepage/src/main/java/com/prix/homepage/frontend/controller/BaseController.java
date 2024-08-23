@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 public class BaseController {
-    public static final String USER_SESSION_KEY = "user";
+    public static final String USER_SESSION_KEY = "id";
     public static final int ANONY = 4;
 
     @ModelAttribute("id")
@@ -18,7 +18,7 @@ public class BaseController {
             //로그인이 되어있지 않을 경우 기존 코드와 동일하게 4(anony)반환
             return ANONY;
         }
-        return (int)session.getAttribute("id");
+        return (int)session.getAttribute(USER_SESSION_KEY);
     }
 
     @ModelAttribute("name")
