@@ -10,7 +10,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.prix.homepage.frontend.controller.BaseController.USER_SESSION_KEY;
+import static com.prix.homepage.frontend.controller.BaseController.SESSION_KEY_ID;
 
 
 @Slf4j
@@ -30,12 +30,12 @@ public class LoginUserIdArgumentResolver implements HandlerMethodArgumentResolve
             return 4;
         }
 
-        Object check = session.getAttribute(USER_SESSION_KEY);
+        Object check = session.getAttribute(SESSION_KEY_ID);
         Integer id;
 
         if (check == null) {
             id = 4;
-            session.setAttribute(USER_SESSION_KEY, id);
+            session.setAttribute(SESSION_KEY_ID, id);
         }else{
             id = (Integer)check;
         }

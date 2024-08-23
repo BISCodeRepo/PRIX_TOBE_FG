@@ -6,7 +6,6 @@ import com.prix.homepage.backend.user.domain.User;
 import com.prix.homepage.backend.user.dto.RequestLoginDto;
 import com.prix.homepage.backend.user.service.UserService;
 import com.prix.homepage.frontend.controller.BaseController;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,9 +43,9 @@ public class LoginController extends BaseController {
         if (user != null) {
             //세션에 계정 정보 등록
             HttpSession session = request.getSession();
-            session.setAttribute(USER_SESSION_KEY, user.getId());
-            session.setAttribute("name", user.getName());
-            session.setAttribute("level", user.getLevel());
+            session.setAttribute(SESSION_KEY_ID, user.getId());
+            session.setAttribute(SESSION_KEY_NAME, user.getName());
+            session.setAttribute(SESSION_KEY_LEVEL, user.getLevel());
             session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)
             log.info("login Success");
             return "redirect:/";
