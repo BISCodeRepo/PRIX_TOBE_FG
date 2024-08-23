@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{partials/fragment :: head}">
+    <style>
+        .titTable { width: 100%; border: none;}
+        .outer-box {padding-right: 15px; border: none;}
+        .databaseTable { width: 40%; border: none;}
+        .innerTable { width: 40%; border: none; }
+        .rightAlign { text-align: right; }
+        .verticalSpace { margin: 1em 0; }
+    </style>
+</head>
+<body>
+<header th:replace="~{partials/fragment :: header0}"></header>
+<main>
+    <div class="main-contents">
+        <div class="main-title">
+            <table id="TitTable" class="titTable">
+                <tr>
+                    <td>
+                        <font class="drakBR" size="3">ADMINISTRATION&nbsp;&nbsp;</font>
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<u>Configuration</u>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a href="searchlog.html" class="menu">Search Log</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a href="users.html" class="menu">Users</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a href="requestlog.html" class="menu">Request Log</a>
+                    </td>
+                    <td class="rightAlign" style="padding-right:5px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><font color="blue"> &gt; Configuration</font></td>
+                </tr>
+            </table>
+        </div>
+        <div class="outer-box">
+            <!-- 자바스크립트 함수들 -->
+            <script th:inline="javascript">
+                // ... (스크립트 내용은 변경 없음)
+            </script>
+
+            <table class="databaseTable">
+                <tr>
+                    <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Database</font><br/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="innerTable">
+                            <tr>
+                                <th class="grayTH">Name</th>
+                                <th class="grayTH">File</th>
+                                <th class="grayTH rightAlign">&nbsp;</th>
+                            </tr>
+                            <tr th:each="db : ${databases}">
+                                <form method="post" th:action="@{/manage}">
+                                    <input name="db_index" type="hidden" th:value="${db.id}"/>
+                                    <td class="grayTD"><input name="db_name" type="text" style="width:40em" th:value="${db.name}" /></td>
+                                    <td class="grayTD" th:text="${db.file}"></td>
+                                    <td class="grayTD rightAlign">
+                                        <input name="modify_db" type="submit" class="btnSmall" value=" edit " />&nbsp;
+                                        <input name="delete_db" type="button" class="btnSmall" value=" unlink " th:onclick="'document.location=\'/manage?delete_db=' + ${db.id} + '\''" />
+                                    </td>
+                                </form>
+                            </tr>
+                            <tr>
+                                <form method="post" th:action="@{/admin/manage_file}" th:object="${UploadForm}" enctype="multipart/form-data">
+                                    <td class="grayTD"><input name="name" type="text" style="width:40em" /></td>
+                                    <td class="grayTD"><input name="file" type="file" style="width:40em" /></td>
+                                    <td class="grayTD rightAlign"><input name="add_db" type="submit" class="btnSmall" value=" upload " /></td>
+                                </form>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="verticalSpace">&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>
