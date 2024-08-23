@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class PrixDataWriter {
     //static String logdir = "E:\\PRIX\\logs\\db_error_";
 
-    static String logdir = PathUtil.getGlobalDirectoryPath("/home/prix/log");
+    static String logdir = PathUtil.getGlobalDirectoryPath("/home/prix/log/");
     
     static public int write(String type, String name, InputStream is) throws java.sql.SQLException, java.io.FileNotFoundException, java.io.UnsupportedEncodingException {
         Connection conn = PrixConnector.getConnection();
@@ -52,13 +52,13 @@ public class PrixDataWriter {
 
         Calendar cal = Calendar.getInstance();
         String date = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-
         File logDir = new File(logdir);
         if (!logDir.exists()) {
             logDir.mkdirs(); // 전체 경로에 포함된 디렉토리를 생성
         }
 
         try (PrintStream ps = new PrintStream(new FileOutputStream(logdir + date + ".log", true), false, "UTF-8")) {
+            log.info("final log dir = {}",logdir + date + ".log");
             ps.println("[" + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND) + "] " + sql);
             ps.println(result);
         }
@@ -89,6 +89,12 @@ public class PrixDataWriter {
 
         Calendar cal = Calendar.getInstance();
         String date = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+
+        File logDir = new File(logdir);
+        if (!logDir.exists()) {
+            logDir.mkdirs(); // 전체 경로에 포함된 디렉토리를 생성
+        }
+
         try (PrintStream ps = new PrintStream(new FileOutputStream(logdir + date + ".log", true), false, "UTF-8")) {
             ps.println("[" + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND) + "] " + sql);
             ps.println(result);
