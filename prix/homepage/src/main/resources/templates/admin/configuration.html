@@ -2,16 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{partials/fragment :: head}">
     <style>
-        .titTable {
-            width: 100%;
-            border-collapse: collapse; /* 셀 간의 경계선을 없앱니다. */
-            border-spacing: 0; /* 셀 간의 간격을 0으로 설정합니다. */
-            border: none; /* 테이블의 경계선을 제거합니다. */
-        .titTable td, .titTable th, .titTable th {
-            border-collapse: collapse; /* 셀 간의 경계선을 없앱니다. */
-            border-spacing: 0; /* 셀 간의 간격을 0으로 설정합니다. */
-            border: none; /* 테이블의 경계선을 제거합니다. */
-        }
         .outer-box {padding-right: 15px; border: none;}
         .databaseTable { width: 40%; border: none;}
         .innerTable { width: 40%; border: none; }
@@ -24,7 +14,7 @@
 <main>
     <div class="main-contents">
         <div class="main-title">
-            <table id="TitTable" class="titTable">
+            <table id="TitTable" class="TitTable">
                 <tr>
                     <td>
                         <font class="drakBR" size="3">ADMINISTRATION&nbsp;&nbsp;</font>
@@ -41,11 +31,6 @@
             </table>
         </div>
         <div class="outer-box">
-            <!-- 자바스크립트 함수들 -->
-            <script th:inline="javascript">
-                // ... (스크립트 내용은 변경 없음)
-            </script>
-
             <table class="databaseTable">
                 <tr>
                     <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Database</font><br/></td>
@@ -71,19 +56,7 @@
                                     </td>
 
                                 </form>
-
                             </tr>
-                            <script>
-                                function confirmDelete(button) {
-                                    var id = button.getAttribute('data-id');
-                                    if (confirm('Are you sure you want to delete this item?')) {
-                                        var url = '/admin/delete_file?id=' + encodeURIComponent(id);
-                                        window.location.href = url;
-                                    }
-                                    return false;
-                                }
-                            </script>
-
                             <tr>
                                 <form method="post" th:action="@{/admin/manage_file}" th:object="${UploadForm}" enctype="multipart/form-data">
                                     <td class="grayTD"><input name="name" type="text" style="width:40em" /></td>
