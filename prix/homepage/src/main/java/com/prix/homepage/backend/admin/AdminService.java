@@ -1,5 +1,6 @@
 package com.prix.homepage.backend.admin;
 
+import com.prix.homepage.backend.admin.dto.Database;
 import com.prix.homepage.backend.admin.dto.UploadForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,9 @@ public class AdminService {
 
     public void uploadFile(UploadForm uploadForm) {
         adminMapper.insertFile(uploadForm.getName(), uploadForm.getFile().getOriginalFilename());
+    }
+
+    public Database[] selectAllFile() {
+        return adminMapper.selectAllFile();
     }
 }

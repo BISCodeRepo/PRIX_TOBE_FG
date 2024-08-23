@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController extends BaseController {
 
     private final AdminService adminService;
+    private final AdminMapper adminMapper;
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, AdminMapper adminMapper) {
         this.adminService = adminService;
+        this.adminMapper = adminMapper;
     }
 
     @GetMapping("/configuration")
     public String configuration(Model model) {
-        Database [] database  = new Database[]{Database.builder().id(1).name("asdf").file("asdf").build()};
+//        Database [] database  = new Database[]{Database.builder().id(1).name("asdf").file("asdf").build()};
+
+        Database [] database = adminService.selectAllFile();
+
         model.addAttribute("databases", database);
         return "admin/configuration";
     }
@@ -35,6 +37,22 @@ public class AdminController extends BaseController {
     public String manageFile(@ModelAttribute("UploadForm") UploadForm uploadForm, Model model) {
 
         adminService.uploadFile(uploadForm);
-        return "admin/configuration";
+        return "redirect:/admin/configuration";
     }
+
+
+    @PostMapping("/update_file")
+    public String updateFile(
+            @ModelAttribute("Database") Database database,
+            @RequestParam("action") String action) {
+
+        // 버튼 클릭에 따른 처리
+        if ("edit name".equals(action)) {
+            adminMapper.updateDatabase(database.getId(), database.getName());
+        } else if ("unlink".equals(action)) {
+            adminMapper.deleteDatabase(database.getId());
+        }
+        return "redirect:/admin/configuration";
+    }
+
 }
