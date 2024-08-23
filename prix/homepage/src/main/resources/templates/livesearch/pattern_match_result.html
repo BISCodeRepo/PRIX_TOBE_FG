@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pattern Match Result</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>Pattern Match Result</h2>
+
+<ul>
+    <li>Database Type: <span th:text="${dbType}"></span></li>
+    <li>Version: <span th:text="${version}"></span> (<span th:text="${date}"></span>)</li>
+</ul>
+
+<h3>Patterns</h3>
+<ul>
+    <li th:each="pattern : ${patterns}">
+        <span th:text="${pattern}"></span>
+    </li>
+</ul>
+
+<h3>Options</h3>
+<p>Format Type: <span th:text="${formatType}"></span></p>
+<p>Check Species: <span th:text="${checkSpecies}"></span></p>
+<p>Species: <span th:text="${species}"></span></p>
+<p>Check Except: <span th:text="${checkExcept}"></span></p>
+<p>Check Order: <span th:text="${checkOrder}"></span></p>
+
+</body>
+</html>

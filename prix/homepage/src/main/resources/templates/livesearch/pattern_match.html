@@ -13,7 +13,7 @@
       <div class="main-contents">
         <div class="separate-two">
           <div class="table-container column">
-            <div>
+            <form action="/livesearch/PatternMatch/Result" method="get" target="_blank">
               <h5>Select DATABASE</h5>
               <label class="label-radio"><input class="input-radio" type="radio" name="db_type" value="1" checked="on"> SWISS-PROT </label><span class="indented text-padding">Release (2015-04-29)</span> <br>
               <label class="label-radio"><input class="input-radio" type="radio" name="db_type" value="0"> GENBANK  </label> <span class="indented text-padding">Release (2015-04-17)</span><br>
@@ -31,7 +31,7 @@
               <label class="label-radio"><input type="text" name="pattern5" size="20"></label>
 
               <h5>Search Option</h5>
-              <label class="label-radio"> <input class="input-radio" type="checkbox" name="check_species" value="1"> Match To Species</label>
+              <label class="label-radio"> <input class="input-radio" type="checkbox" name="check_species" value="0"> Match To Species</label>
               <br>
               <div class="indented text-padding">
                 <select name="species">
@@ -39,20 +39,21 @@
                   <option>Mus musculus</option>
                   <option>Rattus norvegicus</option>
                   <option>Caenorhabditis elegans</option>
+
                   <option>Drosophila melanogaster</option>
                   <option>Saccharomyces cerevisiae</option>
                   <option>Escherichia coli</option>
                   <option>Xenopus laevis</option>
                 </select>
               </div>
-              <label class="label-radio"> <input class="input-radio" type="checkbox" name="check_species" value="1"> Without Sequence Data</label> <br>
-              <label class="label-radio"> <input class="input-radio" type="checkbox" name="check_species" value="1"> Keep Pattern Order</label>  <br>
+              <label class="label-radio"> <input class="input-radio" type="checkbox" name="check_except" value="0"> Without Sequence Data</label> <br>
+              <label class="label-radio"> <input class="input-radio" type="checkbox" name="check_order" value="0"> Keep Pattern Order</label>  <br>
               <div class="btn-box align-right">
-                <input class="btn" type="button" value="  RUN  " />
+                <input class="btn" type="submit" value="  RUN  " />
                 <input class="btn" type="reset"  value="CANCEL">
               </div>
 
-            </div>
+            </form>
 
 
 
