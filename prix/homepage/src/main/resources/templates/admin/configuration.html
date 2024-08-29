@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{partials/fragment :: head}">
-    <style>
-        .outer-box {padding-right: 15px; border: none;}
-        .databaseTable { width: 40%; border: none;}
-        .innerTable { width: 40%; border: none; }
-        .rightAlign { text-align: right; }
-        .verticalSpace { margin: 1em 0; }
-    </style>
 </head>
 <body>
 <header th:replace="~{partials/fragment :: header0}"></header>
 <main>
+    <style>
+        .rightAlign { text-align: right; }
+        .verticalSpace { margin: 1em 0; }
+        .table-width {
+            width: 40%;
+            border: none;
+        }
+        .no-border {
+            border: none;
+        }
+        .input-width {
+            width: 300px;
+        }
+    </style>
     <div class="main-contents">
         <div class="main-title">
-            <table id="TitTable" class="TitTable">
-                <tr>
+            <table id="TitTable" class="no-border">
+                <tr class="no-border">
                     <td>
                         <font class="drakBR" size="3">ADMINISTRATION&nbsp;&nbsp;</font>
                         <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<u>Configuration</u>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -25,23 +32,24 @@
                     </td>
                     <td class="rightAlign" style="padding-right:5px;">&nbsp;</td>
                 </tr>
-                <tr>
+                <tr class="no-border">
                     <td><font color="blue"> &gt; Configuration</font></td>
                 </tr>
             </table>
         </div>
-        <div class="outer-box">
-            <table class="databaseTable">
-                <tr>
-                    <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Database</font><br/></td>
+        <div>
+            <table class="table-width">
+                <tr class="no-border">
+                    <td class="no-border"><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Database</font><br/></td>
                 </tr>
                 <tr>
                     <td>
-                        <table class="innerTable">
+                        <table >
                             <tr>
                                 <th class="grayTH">Name</th>
                                 <th class="grayTH">File</th>
-                                <th class="grayTH rightAlign">&nbsp;</th>
+                                <th class="grayTH"></th>
+                                <th class="grayTH">&nbsp;</th>
                             </tr>
                             <tr th:each="db : ${databases}">
                                 <form method="post" th:action="@{/admin/update_file}" th:object="${Database}">
@@ -50,18 +58,111 @@
                                         <input name="name" type="text" style="width:40em" th:value="${db.name}" />
                                     </td>
                                     <td class="grayTD" th:text="${db.file}"></td>
-                                    <td class="grayTD" style="display: flex;">
+                                    <td class="grayTD">
                                         <input name="action" type="submit" class="btnSmall" style="margin-right: 10px;" value="edit name" />
-                                        <input name="action" type="submit" class="btnSmall" value="unlink" />
                                     </td>
-
+                                    <td class="grayTD">
+                                        <input name="action" type="submit" class="btnSmall" value=" unlink " />
+                                    </td>
                                 </form>
                             </tr>
                             <tr>
                                 <form method="post" th:action="@{/admin/manage_file}" th:object="${UploadForm}" enctype="multipart/form-data">
                                     <td class="grayTD"><input name="name" type="text" style="width:40em" /></td>
                                     <td class="grayTD"><input name="file" type="file" style="width:40em" /></td>
-                                    <td class="grayTD rightAlign"><input name="add_db" type="submit" class="btnSmall" value=" upload " /></td>
+                                    <td class="grayTD"><input name="add_db" type="submit" class="btnSmall" value=" upload " /></td>
+                                </form>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="verticalSpace">&nbsp;</td>
+                </tr>
+            </table>
+            <table class="table-width">
+                    <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Enzymes</font><br/></td>
+
+                <tr>
+                    <td>
+                        <table class="innerTable">
+                            <tr>
+                                <th class="grayTH">Name</th>
+                                <th class="grayTH">At Nterm</th>
+                                <th class="grayTH">At Cterm</th>
+                                <th class="grayTH">&nbsp;</th>
+                                <th class="grayTH">&nbsp;</th>
+
+                            </tr>
+                            <tr th:each="e : ${enzymes}">
+                                <form method="post" th:action="@{/admin/update_enzyme}" th:object="${Enzyme}">
+                                    <input name="id" type="hidden" th:value="${e.id}" />
+                                    <td class="grayTD">
+                                        <input name="name" type="text" class="input-width" th:value="${e.name}" />
+                                    </td>
+                                    <td class="grayTD">
+                                        <input name="ntCleave" type="text" class="input-width" th:value="${e.ntCleave}" />
+                                    </td>
+                                    <td class="grayTD">
+                                        <input name="ctCleave" type="text" class="input-width" th:value="${e.ctCleave}" />
+                                    </td>
+                                    <td class="grayTD">
+                                        <input name="action" type="submit" class="btnSmall" style="margin-right: 10px;" value=" edit name " />
+                                    </td>
+                                    <td class="grayTD">
+                                        <input name="action" type="submit" class="btnSmall" value=" delete " />
+                                    </td>
+                                </form>
+                            </tr>
+                            <tr>
+                                <form method="post" th:action="@{/admin/add_enzyme}" th:object="${Enzyme}">
+                                    <td class="grayTD"><input name="name" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="ntCleave" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="ctCleave" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" add " /></td>
+                                </form>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="verticalSpace">&nbsp;</td>
+                </tr>
+            </table>
+            <table class="table-width">
+                <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Modifications</font><br/></td>
+
+                <tr>
+                    <td>
+                        <table class="innerTable">
+                            <tr>
+                                <th class="grayTH">Date</th>
+                                <th class="grayTH">Version</th>
+                                <th class="grayTH">File</th>
+                                <th class="grayTH">&nbsp;</th>
+                                <th class="grayTH">&nbsp;</th>
+
+                            </tr>
+                            <tr th:each="m : ${modificationLogs}">
+                                <form method="post" th:action="@{/admin/update_modification}" th:object="${modificationLogs}">
+                                    <input name="id" type="hidden" th:value="${e.id}" />
+                                    <td class="grayTD">
+                                        <input name="name" type="text" class="input-width" th:value="${e.name}" />
+                                    </td>
+                                    <td class="grayTD">
+                                        <input name="ntCleave" type="text" class="input-width" th:value="${e.ntCleave}" />
+                                    </td>
+                                    <td class="grayTD">
+                                        <input name="ctCleave" type="text" class="input-width" th:value="${e.ctCleave}" />
+                                    </td>
+                                </form>
+                            </tr>
+                            <tr>
+                                <form method="post" th:action="@{/admin/add_enzyme}" th:object="${Enzyme}">
+                                    <td class="grayTD"><input name="name" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="ntCleave" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="ctCleave" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" add " /></td>
                                 </form>
                             </tr>
                         </table>

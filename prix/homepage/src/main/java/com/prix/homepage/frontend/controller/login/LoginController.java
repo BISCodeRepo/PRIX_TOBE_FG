@@ -75,8 +75,7 @@ public class LoginController extends BaseController {
             session.setAttribute(SESSION_KEY_NAME, user.getName());
             session.setAttribute(SESSION_KEY_LEVEL, user.getLevel());
             session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)
-            log.info("login Success");
-            return "admin/configuration";
+            return "redirect:/admin/configuration";
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login/admin_login";

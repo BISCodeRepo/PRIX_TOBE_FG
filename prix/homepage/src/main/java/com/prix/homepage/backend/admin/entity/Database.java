@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.admin.dto;
+package com.prix.homepage.backend.admin.entity;
 
 import lombok.*;
 
