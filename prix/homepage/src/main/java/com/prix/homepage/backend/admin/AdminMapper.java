@@ -73,6 +73,7 @@ public interface AdminMapper {
     @Select("SELECT COUNT(*) FROM px_search_log")
     int countSearchLogs();
 
+//    users
     @Select("SELECT id, name, affiliation, email, level FROM px_account")
     List<User> findAllUsers();
 
@@ -81,4 +82,14 @@ public interface AdminMapper {
 
     @Delete("DELETE FROM px_account WHERE id = #{id}")
     void deleteUserById(@Param("id") int id);
+
+//    request
+    @Select("SELECT * FROM px_software_request ORDER BY date DESC, id DESC")
+    List<SoftwareRequest> findAllRequests();
+
+    @Update("UPDATE px_software_request SET state = #{state}, senttime = NOW() WHERE id = #{requestId}")
+    void updateRequestState(@Param("requestId") int requestId, @Param("state") int state);
+
+    @Delete("DELETE FROM px_software_request WHERE id = #{requestId}")
+    void deleteRequestById(@Param("requestId") int requestId);
 }

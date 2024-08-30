@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header0}"></header>
+<main>
+    <style>
+        /* 테이블 행에 마우스 오버 시 배경색 변경 */
+        .request-log-table tr:hover {
+            background-color: #fafad2;
+        }
+    </style>
+
+    <div class="main-contents">
+        <div th:replace="~{'admin/menu' :: menu(currentSection='Request Log')}"></div>
+
+        <table class="request-log-table" style="border-collapse: collapse; width: 100%; table-layout: fixed; border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
+            <tr>
+                <td class="grayTH"><div style="text-align: center;">No.</div></td>
+                <td class="grayTH"><div style="text-align: center;">Request Time</div></td>
+                <td class="grayTH"><div style="text-align: center;">Name</div></td>
+                <td class="grayTH"><div style="text-align: center;">Affiliation</div></td>
+                <td class="grayTH"><div style="text-align: center;">Title</div></td>
+                <td class="grayTH"><div style="text-align: center;">E-mail</div></td>
+                <td class="grayTH"><div style="text-align: center;">Instrument</div></td>
+                <td class="grayTH"><div style="text-align: center;">Software</div></td>
+                <td class="grayTH"><div style="text-align: center;">Ver.</div></td>
+                <td class="grayTH"><div style="text-align: center;">State</div></td>
+                <td class="grayTH"><div style="text-align: center;">&nbsp;</div></td>
+                <td class="grayTH"><div style="text-align: center;">Delete</div></td>
+            </tr>
+            <tr th:each="request, iterStat : ${requests}">
+                <td class="grayTD"><div style="text-align: center;" th:text="${totalRequests - iterStat.index}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.date}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.name}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.affiliation}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.title}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.email}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.instrument}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.software}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.version}"></div></td>
+                <td class="grayTD"><div style="text-align: center;" th:text="${request.state == 1 ? 'accepted' : request.state == 2 ? 'rejected' : 'pending'}"></div></td>
+                <td class="grayTD"><div style="text-align: center;">
+          <span th:if="${request.state == 0}">
+            <input name="btup" type="button" class="btnBlueSmall" value="Accept"
+                   th:onclick="|location.href='/admin/update_request?accept=${request.id}';|" />
+          </span>
+                    <span th:if="${request.state != 0}">
+            <div th:text="${request.sentTime}"></div>
+          </span>
+                </div></td>
+                <td class="grayTD"><div style="text-align: center;">
+                    <input name="deluser" type="button" class="btnSmall" value="Del"
+                           th:onclick="|if(window.confirm('Sure to delete it?')) location.href='/admin/update_request?delete=${request.id}';|" />
+                </div></td>
+            </tr>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>

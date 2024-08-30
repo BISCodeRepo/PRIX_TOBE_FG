@@ -1,11 +1,7 @@
 package com.prix.homepage.backend.admin;
 
-import com.prix.homepage.backend.admin.entity.Database;
+import com.prix.homepage.backend.admin.entity.*;
 import com.prix.homepage.backend.admin.dto.UploadForm;
-import com.prix.homepage.backend.admin.entity.Enzyme;
-import com.prix.homepage.backend.admin.entity.SoftwareLog;
-import com.prix.homepage.backend.admin.entity.ModificationLog;
-import com.prix.homepage.backend.admin.entity.SearchLog;
 import com.prix.homepage.backend.user.domain.User;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
@@ -137,4 +133,30 @@ public class AdminController extends BaseController {
         }
         return "redirect:/admin/users";
     }
+
+    @GetMapping("/requestlog")
+    public String showRequestLog(Model model) {
+        List<SoftwareRequest> requests = adminMapper.findAllRequests();
+        model.addAttribute("requests", requests);
+        model.addAttribute("totalRequests", requests.size());
+        return "admin/requestlog";
+    }
+
+    @PostMapping("/update_request")
+    public String updateRequest(
+            @RequestParam(name = "accept", required = false) Integer acceptId,
+            @RequestParam(name = "reject", required = false) Integer rejectId,
+            @RequestParam(name = "delete", required = false) Integer deleteId) {
+
+        if (acceptId != null) {
+            adminMapper.updateRequestState(acceptId, 1); // 1 for accepted
+        } else if (rejectId != null) {
+            adminMapper.updateRequestState(rejectId, 2); // 2 for rejected
+        } else if (deleteId != null) {
+            adminMapper.deleteRequestById(deleteId);
+        }
+        return "redirect:/admin/requestlog";
+    }
+
+
 }
