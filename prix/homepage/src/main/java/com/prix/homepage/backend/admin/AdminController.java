@@ -5,12 +5,16 @@ import com.prix.homepage.backend.admin.dto.UploadForm;
 import com.prix.homepage.backend.admin.entity.Enzyme;
 import com.prix.homepage.backend.admin.entity.SoftwareLog;
 import com.prix.homepage.backend.admin.entity.ModificationLog;
+import com.prix.homepage.backend.admin.entity.SearchLog;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -88,5 +92,29 @@ public class AdminController extends BaseController {
         int userId = (int) model.getAttribute(SESSION_KEY_ID);
         adminMapper.insertEnzyme(userId, enzyme.getName(), enzyme.getNtCleave(), enzyme.getCtCleave());
         return "redirect:/admin/configuration";
+    }
+
+
+
+    @GetMapping("/searchlog")
+    public String searchLog(@RequestParam(value = "p", defaultValue = "0") int curPage,
+                            HttpSession session,
+                            Model model) {
+        Integer level = (Integer) session.getAttribute("level");
+        if (level == null || level <= 1) {
+            return "redirect:/index.html?url=searchlog.html";
+        }
+
+        final int pageSize = 50;
+        int offset = curPage * pageSize;
+
+        List<SearchLog> searchLogs = adminMapper.findSearchLogs(offset, pageSize);
+        int totalPage = (adminMapper.countSearchLogs() - 1) / pageSize + 1;
+
+        model.addAttribute("searchLogs", searchLogs);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("totalPage", totalPage);
+
+        return "admin/searchlog";
     }
 }

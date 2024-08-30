@@ -1,10 +1,9 @@
 package com.prix.homepage.backend.admin;
 
-import com.prix.homepage.backend.admin.entity.Database;
-import com.prix.homepage.backend.admin.entity.Enzyme;
-import com.prix.homepage.backend.admin.entity.SoftwareLog;
-import com.prix.homepage.backend.admin.entity.ModificationLog;
+import com.prix.homepage.backend.admin.entity.*;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface AdminMapper {
@@ -55,4 +54,14 @@ public interface AdminMapper {
 
     @Select("SELECT message FROM px_software_msg WHERE id = 'signature'")
     String selectSignatureMessage();
+
+    // SearchLog 관련 메서드 추가
+    @Select("SELECT l.title, l.date, l.msfile, l.db, l.result, l.engine, a.name as userName, l.id " +
+            "FROM px_search_log l, px_account a WHERE l.user_id = a.id " +
+            "ORDER BY l.date DESC, l.id DESC " +
+            "LIMIT #{offset}, #{pageSize}")
+    List<SearchLog> findSearchLogs(@Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    @Select("SELECT COUNT(*) FROM px_search_log")
+    int countSearchLogs();
 }
