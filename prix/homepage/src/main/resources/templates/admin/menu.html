@@ -1,0 +1,54 @@
+<!-- src/main/resources/templates/admin/menu.html -->
+<div th:fragment="menu (currentSection)">
+  <style>
+    .rightAlign { text-align: right; }
+    .no-border {
+      border: none;
+    }
+  </style>
+  <div class="main-title">
+
+    <table id="TitTable" class="no-border">
+      <tr class="no-border">
+        <td>
+          <font class="drakBR" size="3">ADMINISTRATION&nbsp;&nbsp;</font>
+          <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px">
+          <span th:if="${currentSection == 'Configuration'}">
+                        &nbsp;<u>Configuration</u>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+          <span th:if="${currentSection != 'Configuration'}">
+                        &nbsp;<a th:href="@{configuration}" class="menu">Configuration</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+
+          <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px">
+          <span th:if="${currentSection == 'Search Log'}">
+                        &nbsp;<u>Search Log</u>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+          <span th:if="${currentSection != 'Search Log'}">
+                        &nbsp;<a th:href="@{searchlog}" class="menu">Search Log</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+
+          <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px">
+          <span th:if="${currentSection == 'Users'}">
+                        &nbsp;<u>Users</u>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+          <span th:if="${currentSection != 'Users'}">
+                        &nbsp;<a th:href="@{users}" class="menu">Users</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+
+          <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px">
+          <span th:if="${currentSection == 'Request Log'}">
+                        &nbsp;<u>Request Log</u>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+          <span th:if="${currentSection != 'Request Log'}">
+                        &nbsp;<a th:href="@{requestlog}" class="menu">Request Log</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+        </td>
+        <td class="rightAlign" style="padding-right:5px;">&nbsp;</td>
+      </tr>
+      <tr class="no-border">
+        <td><font color="blue"> &gt; <span th:text="${currentSection}"></span></font></td>
+      </tr>
+    </table>
+  </div>
+</div>

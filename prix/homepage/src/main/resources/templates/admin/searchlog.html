@@ -1,58 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{partials/fragment :: head}">
-    <style>
-        .grayTH {
-            background-color: #f3f3f3;
-            text-align: center;
-        }
-        .grayTD {
-            background-color: #f9f9f9;
-            text-align: center;
-        }
-        .verticalSpace {
-            margin: 1em 0;
-        }
-        .table-width {
-            width: 99%;
-        }
-    </style>
 </head>
 <body>
 <header th:replace="~{partials/fragment :: header0}"></header>
 <main>
-    <div class="main-contents">
-        <div class="main-title">
-            <table id="TitTable" class="table-width">
-                <tr>
-                    <td>
-                        <font class="drakBR" size="3">ADMINISTRATION&nbsp;&nbsp;</font>
-                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a th:href="@{/configuration}" class="menu">Configuration</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<u>Search Log</u>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a th:href="@{/users}" class="menu">Users</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a th:href="@{/requestlog}" class="menu">Request Log</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><font color="blue"> &gt; Search Log</font></td>
-                </tr>
-            </table>
-        </div>
 
-        <table class="table-width" border="0" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
+    <div class="main-contents">
+        <div th:replace="~{'admin/menu' :: menu(currentSection='Search Log')}"></div>
+
+        <table  border="0" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc; table-layout: fixed; width: 100%;">
             <tr>
-                <td class="grayTH"><div align="center">Index</div></td>
-                <td class="grayTH"><div align="center">User</div></td>
-                <td class="grayTH"><div align="center">Date</div></td>
-                <td class="grayTH"><div align="center">Title</div></td>
-                <td class="grayTH"><div align="center">MS/MS data</div></td>
-                <td class="grayTH"><div align="center">Database</div></td>
-                <td class="grayTH"><div align="center">Engine</div></td>
+                <td class="grayTH" style="width: 10%;"><div align="center">Index</div></td>
+                <td class="grayTH" style="width: 15%;"><div align="center">User</div></td>
+                <td class="grayTH" style="width: 15%;"><div align="center">Date</div></td>
+                <td class="grayTH" style="width: 25%;"><div align="center">Title</div></td>
+                <td class="grayTH" style="width: 10%;"><div align="center">MS/MS data</div></td>
+                <td class="grayTH" style="width: 15%;"><div align="center">Database</div></td>
+                <td class="grayTH" style="width: 10%;"><div align="center">Engine</div></td>
             </tr>
             <tr th:each="log, iterStat : ${searchLogs}">
                 <td class="grayTD"><div align="center"><a th:href="@{/modplus/result(file=${log.result})}" target="_blank" th:text="${totalRecords - (curPage * pageSize) - iterStat.index}"></a></div></td>
                 <td class="grayTD"><div align="center" th:text="${log.userName}"></div></td>
-                <td class="grayTD"><div align="center" th:text="${log.date}"></div></td>
+                <td class="grayTD"><div align="center" th:text="${#dates.format(log.date, 'yyyy.MM.dd')}"></div></td>
                 <td class="grayTD"><div align="center" th:text="${log.title != null ? log.title : '&nbsp;'}"></div></td>
                 <td class="grayTD"><div align="center" th:text="${log.msFile}"></div></td>
                 <td class="grayTD"><div align="center" th:text="${log.dbFile}"></div></td>
@@ -60,23 +30,23 @@
             </tr>
         </table>
 
+
         <div class="verticalSpace"></div>
 
         <div align="center">
             <span th:if="${curPage > 0}">
                 <a th:href="@{searchlog(p=${curPage - 1})}">&lt;</a>&nbsp;
             </span>
-                    <span th:each="i : ${#numbers.sequence(0, totalPage - 1)}">
+            <span th:each="i : ${#numbers.sequence(0, totalPage - 1)}">
                 <span th:if="${i != curPage}">
                     <a th:href="@{searchlog(p=${i})}" th:text="${i + 1}"></a>&nbsp;
                 </span>
                 <span th:if="${i == curPage}" th:text="${i + 1}"></span>&nbsp;
             </span>
-                    <span th:if="${curPage < totalPage - 1}">
+            <span th:if="${curPage < totalPage - 1}">
                 <a th:href="@{searchlog(p=${curPage + 1})}">&gt;</a>&nbsp;
             </span>
         </div>
-
 
     </div>
 </main>
