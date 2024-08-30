@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{partials/fragment :: head}">
+</head>
+<body>
+<header th:replace="~{partials/fragment :: header0}"></header>
+<main>
+    <style>
+        .rightAlign { text-align: right; }
+        .verticalSpace { margin: 1em 0; }
+        .table-width {
+            width: 80%;
+            border: none;
+        }
+        .no-border {
+            border: none;
+        }
+        .input-width {
+            width: 300px;
+        }
+        .grayTH {
+            background-color: #f3f3f3;
+            text-align: center;
+        }
+        .grayTD {
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+    </style>
+    <div class="main-contents">
+        <div class="main-title">
+            <table id="TitTable" class="no-border">
+                <tr class="no-border">
+                    <td>
+                        <font class="drakBR" size="3">ADMINISTRATION&nbsp;&nbsp;</font>
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<u>Search Log</u>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a href="configuration.html" class="menu">Configuration</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a href="users.html" class="menu">Users</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img src="/images/top_icon_01.gif" alt="" style="width:2px;height:9px"> &nbsp;<a href="requestlog.html" class="menu">Request Log</a>
+                    </td>
+                </tr>
+                <tr class="no-border">
+                    <td><font color="blue"> &gt; Search Log</font></td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table class="table-width">
+                <tr>
+                    <th class="grayTH">Index</th>
+                    <th class="grayTH">User</th>
+                    <th class="grayTH">Date</th>
+                    <th class="grayTH">Title</th>
+                    <th class="grayTH">MS/MS data</th>
+                    <th class="grayTH">Database</th>
+                    <th class="grayTH">Engine</th>
+                </tr>
+                <tr th:each="log, iterStat : ${searchLogs}">
+                    <td class="grayTD"><a th:href="@{/modplus/result(file=${log.result})}" target="_blank" th:text="${iterStat.count}"></a></td>
+                    <td class="grayTD" th:text="${log.userName}"></td>
+                    <td class="grayTD" th:text="${log.date}"></td>
+                    <td class="grayTD" th:text="${log.title != null ? log.title : '&nbsp;'}"></td>
+                    <td class="grayTD" th:text="${log.msFile}"></td>
+                    <td class="grayTD" th:text="${log.dbFile}"></td>
+                    <td class="grayTD" th:text="${log.engine}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="pagination" th:if="${totalPage > 1}">
+            <div align="center">
+                <a th:if="${curPage > 0}" th:href="@{/searchlog(p=${curPage - 1})}">&lt;</a>&nbsp;
+                <span th:each="i : ${#numbers.sequence(0, totalPage-1)}">
+                    <a th:if="${i != curPage}" th:href="@{/searchlog(p=${i})}" th:text="${i + 1}"></a>
+                    <span th:if="${i == curPage}" th:text="${i + 1}"></span>&nbsp;
+                </span>
+                <a th:if="${curPage < totalPage - 1}" th:href="@{/searchlog(p=${curPage + 1})}">&gt;</a>&nbsp;
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>

@@ -3,6 +3,8 @@ package com.prix.homepage.backend.admin;
 import com.prix.homepage.backend.admin.entity.Database;
 import com.prix.homepage.backend.admin.dto.UploadForm;
 import com.prix.homepage.backend.admin.entity.Enzyme;
+import com.prix.homepage.backend.admin.entity.SoftwareLog;
+import com.prix.homepage.backend.admin.entity.ModificationLog;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +29,30 @@ public class AdminController extends BaseController {
     @GetMapping("/configuration")
     public String configuration(Model model) {
 
-        Database [] database = adminService.selectAllFile();
+        Database[] database = adminService.selectAllFile();
         Enzyme[] enzyme = adminMapper.selectAllEnzyme();
+        SoftwareLog[] softwareLogs = adminMapper.selectAllSoftwareLogs();
+        ModificationLog[] modificationLogs = adminMapper.selectAllModificationLogs();
 
         model.addAttribute("databases", database);
         model.addAttribute("enzymes", enzyme);
+        model.addAttribute("softwareLogs", softwareLogs);
+        model.addAttribute("modificationLogs", modificationLogs);
+
+        // Optional: 메시지들 추가
+        model.addAttribute("modaMessage", adminMapper.selectModaMessage());
+        model.addAttribute("dbondMessage", adminMapper.selectDbondMessage());
+        model.addAttribute("nextsearchMessage", adminMapper.selectNextSearchMessage());
+        model.addAttribute("signatureMessage", adminMapper.selectSignatureMessage());
 
         return "admin/configuration";
     }
 
     @PostMapping("manage_file")
     public String manageFile(@ModelAttribute("UploadForm") UploadForm uploadForm) {
-
         adminService.uploadFile(uploadForm);
         return "redirect:/admin/configuration";
     }
-
 
     @PostMapping("/update_file")
     public String updateFile(
@@ -73,13 +83,10 @@ public class AdminController extends BaseController {
     @PostMapping("/add_enzyme")
     public String addEnzyme(
             @ModelAttribute("Enzyme") Enzyme enzyme,
-            Model model
-            ) {
+            Model model) {
 
-        int userId = (int)model.getAttribute(SESSION_KEY_ID);
-
+        int userId = (int) model.getAttribute(SESSION_KEY_ID);
         adminMapper.insertEnzyme(userId, enzyme.getName(), enzyme.getNtCleave(), enzyme.getCtCleave());
         return "redirect:/admin/configuration";
     }
-
 }
