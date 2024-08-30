@@ -96,6 +96,7 @@ public class AdminController extends BaseController {
 
 
 
+
     @GetMapping("/searchlog")
     public String searchLog(@RequestParam(value = "p", defaultValue = "0") int curPage,
                             HttpSession session,
@@ -105,14 +106,17 @@ public class AdminController extends BaseController {
             return "redirect:/index.html?url=searchlog.html";
         }
 
-        final int pageSize = 50;
+        final int pageSize = 10;
         int offset = curPage * pageSize;
 
         List<SearchLog> searchLogs = adminMapper.findSearchLogs(offset, pageSize);
-        int totalPage = (adminMapper.countSearchLogs() - 1) / pageSize + 1;
+        int totalRecords = adminMapper.countSearchLogs();
+        int totalPage = (totalRecords - 1) / pageSize + 1;
 
         model.addAttribute("searchLogs", searchLogs);
         model.addAttribute("curPage", curPage);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalRecords", totalRecords);
         model.addAttribute("totalPage", totalPage);
 
         return "admin/searchlog";

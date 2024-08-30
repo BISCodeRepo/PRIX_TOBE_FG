@@ -12,17 +12,22 @@ public class BaseController {
     public static final String SESSION_KEY_NAME = "name";
     public static final String SESSION_KEY_LEVEL = "level";
 
-
     public static final int ANONY = 4;
 
     @ModelAttribute(SESSION_KEY_ID)
     public int id(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
-            //로그인이 되어있지 않을 경우 기존 코드와 동일하게 4(anony)반환
+            // 로그인이 되어있지 않을 경우 4(anony) 반환
             return ANONY;
         }
-        return (int)session.getAttribute(SESSION_KEY_ID);
+        Integer sessionId = (Integer) session.getAttribute(SESSION_KEY_ID);
+        if (sessionId == null) {
+            // 세션에 ID가 없을 경우에도 ANONY 반환
+            log.warn("Session ID is null, returning ANONY");
+            return ANONY;
+        }
+        return sessionId;
     }
 
     @ModelAttribute(SESSION_KEY_NAME)
@@ -31,7 +36,12 @@ public class BaseController {
         if (session == null) {
             return "anonymous";
         }
-        return (String)session.getAttribute(SESSION_KEY_NAME);
+        String sessionName = (String) session.getAttribute(SESSION_KEY_NAME);
+        if (sessionName == null) {
+            log.warn("Session NAME is null, returning 'anonymous'");
+            return "anonymous";
+        }
+        return sessionName;
     }
 
     @ModelAttribute(SESSION_KEY_LEVEL)
@@ -40,6 +50,11 @@ public class BaseController {
         if (session == null) {
             return 0;
         }
-        return (int)session.getAttribute(SESSION_KEY_LEVEL);
+        Integer sessionLevel = (Integer) session.getAttribute(SESSION_KEY_LEVEL);
+        if (sessionLevel == null) {
+            log.warn("Session LEVEL is null, returning 0");
+            return 0;
+        }
+        return sessionLevel;
     }
 }

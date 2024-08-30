@@ -56,8 +56,15 @@ public interface AdminMapper {
     String selectSignatureMessage();
 
     // SearchLog 관련 메서드 추가
-    @Select("SELECT l.title, l.date, l.msfile, l.db, l.result, l.engine, a.name as userName, l.id " +
-            "FROM px_search_log l, px_account a WHERE l.user_id = a.id " +
+    @Select("SELECT l.title, l.date, " +
+            "COALESCE(msData.name, '') as msFile, " +
+            "COALESCE(dbData.name, '') as dbFile, " +
+            "l.result, l.engine, " +
+            "COALESCE(a.name, '') as userName, l.id " +
+            "FROM px_search_log l " +
+            "LEFT JOIN px_account a ON l.user_id = a.id " +
+            "LEFT JOIN px_data msData ON l.msfile = msData.id " +
+            "LEFT JOIN px_data dbData ON l.db = dbData.id " +
             "ORDER BY l.date DESC, l.id DESC " +
             "LIMIT #{offset}, #{pageSize}")
     List<SearchLog> findSearchLogs(@Param("offset") int offset, @Param("pageSize") int pageSize);
