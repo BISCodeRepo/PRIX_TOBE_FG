@@ -24,23 +24,24 @@
         <td class="grayTD" th:text="${user.affiliation != null ? user.affiliation : '&nbsp;'}"></td>
         <td class="grayTD" th:text="${user.email != null ? user.email : '&nbsp;'}"></td>
         <td class="grayTD"><div align="center" th:text="${user.level > 1 ? 'admin' : 'user'}"></div></td>
-        <td class="grayTD"><div align="center">
+
         <span th:if="${id == user.id}">
-            &nbsp;
+          <td class="grayTD"></td>
+          <td class="grayTD"></td>
         </span>
-          <span th:if="${id != user.id}">
+        <span th:if="${id != user.id}">
+          <td class="grayTD"><div align="center">
             <input name="btup" type="button" class="btnSmall" value=" up "
                    th:onclick="|location.href='/admin/update_user?up=${user.id}';|" />&nbsp;
             <input name="btdown" type="button" class="btnSmall" value=" dn "
                    th:onclick="|location.href='/admin/update_user?down=${user.id}';|" />&nbsp;
+          </div></td>
+          <td class="grayTD"><div align="center">
+            <input name="deluser" type="button" class="btnBlueSmall" value=" del "
+                   th:onclick="|if(window.confirm('Sure to delete it?')) location.href='/admin/update_user?del=${user.id}';|" />
+          </div></td>
         </span>
-        </div></td>
-        <td class="grayTD"><div align="center">
-          <input name="deluser" type="button" class="btnBlueSmall" value=" del "
-                 th:onclick="|if(window.confirm('Sure to delete it?')) location.href='/admin/update_user?del=${user.id}';|" />
-        </div></td>
       </tr>
-
     </table>
   </div>
 </main>
