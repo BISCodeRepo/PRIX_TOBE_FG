@@ -5,11 +5,17 @@
 <body>
 <header th:replace="~{partials/fragment :: header0}"></header>
 <main>
+    <style>
+        /* Hover effect for specific table */
+        .config-table-hover tr:hover {
+            background-color: #fafad2;
+        }
+    </style>
 
     <div class="main-contents">
         <div th:replace="~{'admin/menu' :: menu(currentSection='Search Log')}"></div>
 
-        <table  border="0" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc; table-layout: fixed; width: 100%;">
+        <table class="config-table-hover" border="0" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc; table-layout: fixed; width: 100%;">
             <tr>
                 <td class="grayTH" style="width: 10%;"><div align="center">Index</div></td>
                 <td class="grayTH" style="width: 15%;"><div align="center">User</div></td>
@@ -29,7 +35,6 @@
                 <td class="grayTD"><div align="center" th:text="${log.engine}"></div></td>
             </tr>
         </table>
-
 
         <div class="verticalSpace"></div>
 

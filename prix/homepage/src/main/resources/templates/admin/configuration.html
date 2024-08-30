@@ -18,6 +18,10 @@
         .input-width {
             width: 300px;
         }
+        /* Hover effect for table rows */
+        .config-table tr:hover {
+            background-color: #fafad2;
+        }
     </style>
     <div class="main-contents">
         <div th:replace="~{'admin/menu' :: menu(currentSection='Configuration')}"></div>
@@ -29,7 +33,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <table >
+                        <table class="config-table">
                             <tr>
                                 <th class="grayTH">Name</th>
                                 <th class="grayTH">File</th>
@@ -56,6 +60,7 @@
                                     <td class="grayTD"><input name="name" type="text" style="width:40em" /></td>
                                     <td class="grayTD"><input name="file" type="file" style="width:40em" /></td>
                                     <td class="grayTD"><input name="add_db" type="submit" class="btnSmall" value=" upload " /></td>
+                                    <td class="grayTD"></td>
                                 </form>
                             </tr>
                         </table>
@@ -65,19 +70,18 @@
                     <td class="verticalSpace">&nbsp;</td>
                 </tr>
             </table>
-            <table class="table-width">
-                    <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Enzymes</font><br/></td>
 
+            <table class="table-width">
+                <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Enzymes</font><br/></td>
                 <tr>
                     <td>
-                        <table class="innerTable">
+                        <table class="config-table">
                             <tr>
                                 <th class="grayTH">Name</th>
                                 <th class="grayTH">At Nterm</th>
                                 <th class="grayTH">At Cterm</th>
                                 <th class="grayTH">&nbsp;</th>
                                 <th class="grayTH">&nbsp;</th>
-
                             </tr>
                             <tr th:each="e : ${enzymes}">
                                 <form method="post" th:action="@{/admin/update_enzyme}" th:object="${Enzyme}">
@@ -105,6 +109,7 @@
                                     <td class="grayTD"><input name="ntCleave" type="text" class="input-width" /></td>
                                     <td class="grayTD"><input name="ctCleave" type="text" class="input-width" /></td>
                                     <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" add " /></td>
+                                    <td class="grayTD"></td>
                                 </form>
                             </tr>
                         </table>
@@ -114,24 +119,24 @@
                     <td class="verticalSpace">&nbsp;</td>
                 </tr>
             </table>
+
             <table class="table-width">
                 <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Modifications</font><br/></td>
-
                 <tr>
                     <td>
-                        <table class="innerTable">
+                        <table class="config-table">
                             <tr>
                                 <th class="grayTH">Date</th>
                                 <th class="grayTH">Version</th>
                                 <th class="grayTH">File</th>
                                 <th class="grayTH">&nbsp;</th>
-
                             </tr>
                             <tr th:each="m : ${modificationLogs}">
                                 <form method="post" th:action="@{/admin/update_modification}" th:object="${modificationLogs}">
-                                    <td class="grayTD" th:text="${m.date}"></td>
+                                    <td class="grayTD" th:text="${#dates.format(m.date, 'yyyy.MM.dd')}"></td>
                                     <td class="grayTD" th:text="${m.version}"></td>
                                     <td class="grayTD" th:text="${m.file}"></td>
+                                    <td class="grayTD"></td>
                                 </form>
                             </tr>
                             <tr>
@@ -149,13 +154,14 @@
                     <td class="verticalSpace">&nbsp;</td>
                 </tr>
             </table>
+
             <table class="table-width">
                 <tr>
                     <td><img src="/images/p_st1.GIF" alt="" style="width:4px;height:9px"><font class="drakBR"> Software</font><br/></td>
                 </tr>
                 <tr>
                     <td>
-                        <table class="innerTable">
+                        <table class="config-table">
                             <tr>
                                 <th class="grayTH">Name</th>
                                 <th class="grayTH">Release Date</th>
@@ -165,9 +171,10 @@
                             </tr>
                             <tr th:each="m : ${softwareLogs}">
                                 <td class="grayTD" th:text="${m.name}"></td>
-                                <td class="grayTD" th:text="${m.date}"></td>
+                                <td class="grayTD" th:text="${#dates.format(m.date, 'yyyy.MM.dd')}"></td>
                                 <td class="grayTD" th:text="${m.version}"></td>
                                 <td class="grayTD" th:text="${m.file}"></td>
+                                <td class="grayTD"></td>
                             </tr>
                             <tr>
                                 <form method="post" th:action="@{/admin/add_modification}" th:object="${Enzyme}">
@@ -197,18 +204,18 @@
                 <form name="swmg1234" method="post" th:action="@{/manage?modify_swmsg=1}">
                     <tr>
                         <td class="grayTH" width="70">
-                            <div align="right">
+                            <div style="text-align: right;">
                                 <input name="sftw_msg" type="submit" class="btnOrgSmall" value=" update "/>
                             </div>
                         </td>
                         <td class="grayTH">
-                            <div align="left">Email message to a recipient</div>
+                            <div style="text-align: left;">Email message to a recipient</div>
                         </td>
                     </tr>
 
                     <tr>
-                        <td class="grayTD" valign="top" width="70">
-                            <div align="right">MODa</div>
+                        <td class="grayTD" style="vertical-align: top;" width="70">
+                            <div style="text-align: right;">MODa</div>
                         </td>
                         <td class="grayTD">
                             <textarea name="modamsg" rows="8" style="width:100%" th:text="${modaMessage}"></textarea>
@@ -216,8 +223,8 @@
                     </tr>
 
                     <tr>
-                        <td class="grayTD" valign="top" width="70">
-                            <div align="right">DBond</div>
+                        <td class="grayTD" style="vertical-align: top;" width="70">
+                            <div style="text-align: right;">DBond</div>
                         </td>
                         <td class="grayTD">
                             <textarea name="dbondmsg" rows="8" style="width:100%" th:text="${dbondMessage}"></textarea>
@@ -225,8 +232,8 @@
                     </tr>
 
                     <tr>
-                        <td class="grayTD" valign="top" width="70">
-                            <div align="right">NextSearch</div>
+                        <td class="grayTD" style="vertical-align: top;" width="70">
+                            <div style="text-align: right;">NextSearch</div>
                         </td>
                         <td class="grayTD">
                             <textarea name="nextmsg" rows="8" style="width:100%" th:text="${nextsearchMessage}"></textarea>
@@ -234,8 +241,8 @@
                     </tr>
 
                     <tr>
-                        <td class="grayTD" valign="top" width="70">
-                            <div align="right">Signature</div>
+                        <td class="grayTD" style="vertical-align: top;" width="70">
+                            <div style="text-align: right;">Signature</div>
                         </td>
                         <td class="grayTD">
                             <textarea name="signature" rows="8" style="width:100%" th:text="${signatureMessage}"></textarea>
@@ -243,7 +250,6 @@
                     </tr>
                 </form>
             </table>
-
 
         </div>
     </div>

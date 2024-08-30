@@ -4,39 +4,45 @@
 <body>
 <header th:replace="~{partials/fragment :: header0}"></header>
 <main>
+  <style>
+    /* 특정 테이블 내부의 tr에만 hover 시 배경색 변경 */
+    .user-table tr:hover {
+      background-color: #fafad2;
+    }
+  </style>
 
   <div class="main-contents">
     <div th:replace="~{'admin/menu' :: menu(currentSection='Users')}"></div>
 
-    <table style="border: 0; border-collapse: collapse; width: 100%; table-layout: fixed; border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
+    <table class="user-table" style="border: none; border-collapse: collapse; width: 100%; table-layout: fixed; border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
       <tr>
-        <td class="grayTH"><div align="center">ID</div></td>
+        <td class="grayTH"><div style="text-align: center;">ID</div></td>
         <td class="grayTH">Name</td>
         <td class="grayTH">Affiliation</td>
         <td class="grayTH">E-mail</td>
-        <td class="grayTH"><div align="center">Group (user/admin)</div></td>
-        <td class="grayTH"><div align="center">Level</div></td>
-        <td class="grayTH"><div align="center">Delete</div></td>
+        <td class="grayTH"><div style="text-align: center;">Group (user/admin)</div></td>
+        <td class="grayTH"><div style="text-align: center;">Level</div></td>
+        <td class="grayTH"><div style="text-align: center;">Delete</div></td>
       </tr>
       <tr th:each="user : ${users}">
-        <td class="grayTD"><div align="center" th:text="${user.id}"></div></td>
+        <td class="grayTD"><div style="text-align: center;" th:text="${user.id}"></div></td>
         <td class="grayTD" th:text="${user.name != null ? user.name : '&nbsp;'}"></td>
         <td class="grayTD" th:text="${user.affiliation != null ? user.affiliation : '&nbsp;'}"></td>
         <td class="grayTD" th:text="${user.email != null ? user.email : '&nbsp;'}"></td>
-        <td class="grayTD"><div align="center" th:text="${user.level > 1 ? 'admin' : 'user'}"></div></td>
+        <td class="grayTD"><div style="text-align: center;" th:text="${user.level > 1 ? 'admin' : 'user'}"></div></td>
 
         <span th:if="${id == user.id}">
           <td class="grayTD"></td>
           <td class="grayTD"></td>
         </span>
         <span th:if="${id != user.id}">
-          <td class="grayTD"><div align="center">
+          <td class="grayTD"><div style="text-align: center;">
             <input name="btup" type="button" class="btnSmall" value=" up "
                    th:onclick="|location.href='/admin/update_user?up=${user.id}';|" />&nbsp;
             <input name="btdown" type="button" class="btnSmall" value=" dn "
                    th:onclick="|location.href='/admin/update_user?down=${user.id}';|" />&nbsp;
           </div></td>
-          <td class="grayTD"><div align="center">
+          <td class="grayTD"><div style="text-align: center;">
             <input name="deluser" type="button" class="btnBlueSmall" value=" del "
                    th:onclick="|if(window.confirm('Sure to delete it?')) location.href='/admin/update_user?del=${user.id}';|" />
           </div></td>
