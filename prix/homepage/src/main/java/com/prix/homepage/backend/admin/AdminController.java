@@ -6,6 +6,7 @@ import com.prix.homepage.backend.admin.entity.Enzyme;
 import com.prix.homepage.backend.admin.entity.SoftwareLog;
 import com.prix.homepage.backend.admin.entity.ModificationLog;
 import com.prix.homepage.backend.admin.entity.SearchLog;
+import com.prix.homepage.backend.user.domain.User;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,5 +112,29 @@ public class AdminController extends BaseController {
         model.addAttribute("totalPage", totalPage);
 
         return "admin/searchlog";
+    }
+
+
+    @GetMapping("/users")
+    public String showUsers(Model model) {
+        List<User> users = adminMapper.findAllUsers();
+        model.addAttribute("users", users);
+        return "admin/users";
+    }
+
+    @GetMapping("/update_user")
+    public String modifyUser(
+            @RequestParam(name = "up", required = false) Integer upId,
+            @RequestParam(name = "down", required = false) Integer downId,
+            @RequestParam(name = "del", required = false) Integer delId) {
+
+        if (upId != null) {
+            adminMapper.updateUserLevel(upId, 2);
+        } else if (downId != null) {
+            adminMapper.updateUserLevel(downId, 1);
+        } else if (delId != null) {
+            adminMapper.deleteUserById(delId);
+        }
+        return "redirect:/admin/users";
     }
 }

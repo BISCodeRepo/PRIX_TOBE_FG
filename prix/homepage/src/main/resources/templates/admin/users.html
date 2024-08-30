@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header0}"></header>
+<main>
+
+  <div class="main-contents">
+    <div th:replace="~{'admin/menu' :: menu(currentSection='Users')}"></div>
+
+    <table border="0" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc; table-layout: fixed; width: 100%;">
+      <tr>
+        <td class="grayTH"><div align="center">ID</div></td>
+        <td class="grayTH">Name</td>
+        <td class="grayTH">Affiliation</td>
+        <td class="grayTH">E-mail</td>
+        <td class="grayTH"><div align="center">Group (user/admin)</div></td>
+        <td class="grayTH"><div align="center">Level</div></td>
+        <td class="grayTH"><div align="center">Delete</div></td>
+      </tr>
+      <tr th:each="user : ${users}">
+        <td class="grayTD"><div align="center" th:text="${user.id}"></div></td>
+        <td class="grayTD" th:text="${user.name != null ? user.name : '&nbsp;'}"></td>
+        <td class="grayTD" th:text="${user.affiliation != null ? user.affiliation : '&nbsp;'}"></td>
+        <td class="grayTD" th:text="${user.email != null ? user.email : '&nbsp;'}"></td>
+        <td class="grayTD"><div align="center" th:text="${user.level > 1 ? 'admin' : 'user'}"></div></td>
+        <td class="grayTD"><div align="center">
+        <span th:if="${id == user.id}">
+            &nbsp;
+        </span>
+          <span th:if="${id != user.id}">
+            <input name="btup" type="button" class="btnSmall" value=" up "
+                   th:onclick="|location.href='/admin/update_user?up=${user.id}';|" />&nbsp;
+            <input name="btdown" type="button" class="btnSmall" value=" dn "
+                   th:onclick="|location.href='/admin/update_user?down=${user.id}';|" />&nbsp;
+        </span>
+        </div></td>
+        <td class="grayTD"><div align="center">
+          <input name="deluser" type="button" class="btnBlueSmall" value=" del "
+                 th:onclick="|if(window.confirm('Sure to delete it?')) location.href='/admin/update_user?del=${user.id}';|" />
+        </div></td>
+      </tr>
+
+    </table>
+  </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>

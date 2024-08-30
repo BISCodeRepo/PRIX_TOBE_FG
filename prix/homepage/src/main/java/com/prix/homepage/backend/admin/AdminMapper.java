@@ -1,6 +1,7 @@
 package com.prix.homepage.backend.admin;
 
 import com.prix.homepage.backend.admin.entity.*;
+import com.prix.homepage.backend.user.domain.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -71,4 +72,13 @@ public interface AdminMapper {
 
     @Select("SELECT COUNT(*) FROM px_search_log")
     int countSearchLogs();
+
+    @Select("SELECT id, name, affiliation, email, level FROM px_account")
+    List<User> findAllUsers();
+
+    @Update("UPDATE px_account SET level = #{level} WHERE id = #{id}")
+    void updateUserLevel(@Param("id") int id, @Param("level") int level);
+
+    @Delete("DELETE FROM px_account WHERE id = #{id}")
+    void deleteUserById(@Param("id") int id);
 }
