@@ -142,7 +142,7 @@ public class AdminController extends BaseController {
         return "admin/requestlog";
     }
 
-    @PostMapping("/update_request")
+    @GetMapping("/update_request")
     public String updateRequest(
             @RequestParam(name = "accept", required = false) Integer acceptId,
             @RequestParam(name = "reject", required = false) Integer rejectId,

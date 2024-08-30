@@ -5,7 +5,6 @@
 <header th:replace="~{partials/fragment :: header0}"></header>
 <main>
     <style>
-        /* 테이블 행에 마우스 오버 시 배경색 변경 */
         .request-log-table tr:hover {
             background-color: #fafad2;
         }
@@ -45,7 +44,7 @@
             <input name="btup" type="button" class="btnBlueSmall" value="Accept"
                    th:onclick="|location.href='/admin/update_request?accept=${request.id}';|" />
           </span>
-                    <span th:if="${request.state != 0}">
+          <span th:if="${request.state != 0}">
             <div th:text="${request.sentTime}"></div>
           </span>
                 </div></td>
