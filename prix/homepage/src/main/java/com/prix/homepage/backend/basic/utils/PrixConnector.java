@@ -1,9 +1,12 @@
 package com.prix.homepage.backend.basic.utils;
 
+import org.springframework.context.annotation.Primary;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
+
 
 public class PrixConnector {
     public static Connection getConnection() {
@@ -16,7 +19,7 @@ public class PrixConnector {
             return null;
         }
     }
-
+    @Primary
     public static void main(String[] args) {
         try {
             Connection conn = PrixConnector.getConnection();
