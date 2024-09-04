@@ -1,10 +1,10 @@
-package com.prix.homepage.frontend.controller.login;
+package com.prix.homepage.backend.account.controller;
 
-import com.prix.homepage.backend.user.domain.LoginForm;
-import com.prix.homepage.backend.user.domain.RegisterForm;
-import com.prix.homepage.backend.user.domain.User;
-import com.prix.homepage.backend.user.dto.RequestLoginDto;
-import com.prix.homepage.backend.user.service.UserService;
+import com.prix.homepage.backend.account.domain.LoginForm;
+import com.prix.homepage.backend.account.domain.RegisterForm;
+import com.prix.homepage.backend.account.domain.User;
+import com.prix.homepage.backend.account.dto.RequestLoginDto;
+import com.prix.homepage.backend.account.service.UserService;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

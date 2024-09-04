@@ -1,8 +1,8 @@
-package com.prix.homepage.backend.user.service;
+package com.prix.homepage.backend.account.service;
 
-import com.prix.homepage.backend.user.domain.User;
-import com.prix.homepage.backend.user.dto.RequestLoginDto;
-import com.prix.homepage.backend.user.mapper.UserMapper;
+import com.prix.homepage.backend.account.domain.User;
+import com.prix.homepage.backend.account.dto.RequestLoginDto;
+import com.prix.homepage.backend.account.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

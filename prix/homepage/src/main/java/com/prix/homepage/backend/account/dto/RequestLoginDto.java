@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.user.dto;
+package com.prix.homepage.backend.account.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

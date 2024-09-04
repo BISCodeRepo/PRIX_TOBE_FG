@@ -1,6 +1,6 @@
-package com.prix.homepage.backend.user.mapper;
+package com.prix.homepage.backend.account.mapper;
 
-import com.prix.homepage.backend.user.domain.User;
+import com.prix.homepage.backend.account.domain.User;
 import org.apache.ibatis.annotations.*;
 
 @Mapper

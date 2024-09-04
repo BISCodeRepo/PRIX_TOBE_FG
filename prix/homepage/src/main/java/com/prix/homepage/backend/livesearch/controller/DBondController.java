@@ -1,7 +1,6 @@
 package com.prix.homepage.backend.livesearch.controller;
 
 import com.prix.homepage.backend.basic.utils.PrixDataWriter;
-import com.prix.homepage.backend.livesearch.controller.LiveSearchController;
 import com.prix.homepage.backend.livesearch.dto.UserSettingDto;
 import com.prix.homepage.backend.livesearch.pojo.Modification;
 import com.prix.homepage.backend.livesearch.pojo.dbond.Enzyme;
@@ -11,12 +10,10 @@ import com.prix.homepage.backend.livesearch.service.UserModificationService;
 import com.prix.homepage.backend.livesearch.service.UserSettingService;
 import com.prix.homepage.backend.livesearch.service.dbond.DBondService;
 import com.prix.homepage.backend.livesearch.service.dbond.EnzymeService;
-import com.prix.homepage.backend.user.argumentResolver.LoginUserId;
+import com.prix.homepage.backend.account.argumentResolver.LoginUserId;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +32,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.prix.homepage.constants.prixConst.anony;
-import static com.prix.homepage.constants.prixConst.test;
 
 /**
  * https://prix.hanyang.ac.kr/livesearch의 DBond

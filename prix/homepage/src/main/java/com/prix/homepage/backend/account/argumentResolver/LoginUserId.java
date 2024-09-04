@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.user.argumentResolver;
+package com.prix.homepage.backend.account.argumentResolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,7 @@
 package com.prix.homepage.backend.admin;
 
 import com.prix.homepage.backend.admin.entity.*;
-import com.prix.homepage.backend.user.domain.User;
+import com.prix.homepage.backend.account.domain.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

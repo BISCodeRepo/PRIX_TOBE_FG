@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.user.argumentResolver;
+package com.prix.homepage.backend.account.argumentResolver;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

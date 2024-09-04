@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.user.domain;
+package com.prix.homepage.backend.account.domain;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.user.argumentResolver;
+package com.prix.homepage.backend.account.argumentResolver;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
