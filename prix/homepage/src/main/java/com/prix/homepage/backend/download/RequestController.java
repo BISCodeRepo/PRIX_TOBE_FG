@@ -38,6 +38,8 @@ public class RequestController {
         String agreement = requestForm.getAgreement();
         String email = requestForm.getEmail();
 
+        model.addAttribute("software", software);
+
 //        if (software == null || software.equals("xxx")) {
 //            return "redirect:/publications";
 //        }

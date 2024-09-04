@@ -16,6 +16,8 @@
                     <td>
                         <!-- RequestForm 사용 -->
                         <form name="req" th:action="@{/download/request}" method="post" th:object="${requestForm}" onsubmit="return validateAccept()">
+<!--                            <input type="hidden" name="software" value="${software}" />-->
+                            <input name="software" type="hidden" th:value="${software}" />
                             <table style="width: 560px; border-collapse: collapse; margin: 1px; border: none">
                                 <tr>
                                     <td><span class="blue" style="font-size: 1.5em;">License Agreement<br><br></span>
