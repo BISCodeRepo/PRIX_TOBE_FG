@@ -1,15 +1,13 @@
-package com.prix.homepage.backend.history.controller;
+package com.prix.homepage.backend.livesearch.controller;
 
 import com.prix.homepage.backend.admin.entity.SearchLog;
-import com.prix.homepage.backend.history.mapper.HistoryMapper;
+import com.prix.homepage.backend.livesearch.mapper.HistoryMapper;
 import com.prix.homepage.frontend.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -29,14 +27,12 @@ public class HistoryController extends BaseController {
      * @param model 뷰에 데이터를 전달하기 위한 모델 객체.
      * @return 히스토리 페이지
      */
-
-    @GetMapping("/searchlog")
+    @GetMapping("/livesearch/history")
     public String getHistory(Model model) {
 
         final int pageSize = 50;
 
-//        int id = (int)model.getAttribute(SESSION_KEY_ID);
-        int id = 778;
+        int id = (int)model.getAttribute(SESSION_KEY_ID);
 
         List<SearchLog> searchLogs = historyMapper.findSearchLogs(id);
 

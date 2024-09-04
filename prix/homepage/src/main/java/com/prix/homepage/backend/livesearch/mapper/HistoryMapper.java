@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.history.mapper;
+package com.prix.homepage.backend.livesearch.mapper;
 
 
 import com.prix.homepage.backend.admin.entity.SearchLog;
