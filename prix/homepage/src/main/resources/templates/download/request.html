@@ -8,50 +8,50 @@
     <div class="main-group">
         <aside th:replace="partials/download_fragment :: download-menus"></aside>
         <article>
-            <div th:replace="~{partials/template_fragment :: main-title('ACTG', '- Novel peptide mapping')}"></div>
+            <!-- software 파라미터로 제목의 DBond 부분을 동적으로 설정 -->
+            <div th:replace="~{partials/template_fragment :: main-title('SOFTWARE REQUEST (' + ${software} + ')', '')}"></div>
             <table style="width: 95%; border-collapse: collapse; border: none; margin: 0 auto;">
 
                 <tr th:if="${success == 0}">
                     <td>
-                        <form name="req" th:action="@{/request}" method="post">
-                            <input type="hidden" name="software" th:value="${software}" />
+                        <!-- RequestForm 사용 -->
+                        <form name="req" th:action="@{/download/request}" method="post" th:object="${requestForm}">
                             <table style="width: 560px; border-collapse: collapse; margin: 1px; border: none">
                                 <tr>
                                     <td><span class="blue" style="font-size: 1.5em;">License Agreement<br><br></span>
-                                        <!-- 라이선스 내용을 별도 파일에서 가져옴 -->
                                         <div th:replace="~{'download/license' :: license}"></div>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td style="text-align: right;">
-                                        <input name="agreement" value="0xno" type="radio" checked> Decline&nbsp;&nbsp;&nbsp;
-                                        <input name="agreement" value="1xyes" type="radio"> Accept
+                                        <!-- Decline 기본 선택 -->
+                                        <input type="radio" th:field="*{agreement}" value="0xno" checked> Decline&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" th:field="*{agreement}" value="1xyes"> Accept
                                     </td>
                                 </tr>
                             </table>
 
-
                             <table style="width: 560px; border-collapse: collapse; border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
                                 <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Name</th>
-                                    <td><input name="name" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{name}" type="text" style="width: 100%;"></td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Affiliation</th>
-                                    <td><input name="affiliation" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{affiliation}" type="text" style="width: 100%;"></td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Title</th>
-                                    <td><input name="title" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{title}" type="text" style="width: 100%;"></td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">E-mail (at the affiliated institute)</th>
-                                    <td><input name="email" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{email}" type="text" style="width: 100%;"></td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Instrument Type</th>
-                                    <td><input name="instrument" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{instrument}" type="text" style="width: 100%;"></td>
                                 </tr>
                             </table>
                             <br>
@@ -60,7 +60,7 @@
                                 <tr>
                                     <td style="text-align: right;">
                                         <input name="Cancel" type="button" class="btn" value="Cancel" onclick="window.location='/publications'">
-                                        <input name="Request" type="button" class="btn" value="Request" onclick="request()">
+                                        <input name="Request" type="submit" class="btn" value="Request">
                                     </td>
                                 </tr>
                             </table>
