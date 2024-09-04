@@ -1,52 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{partials/fragment :: head}"></head>
-  <body>
-  <header th:replace="~{partials/fragment :: header2}"></header>
+<head th:replace="~{partials/fragment :: head}">
+</head>
+<body>
+<header th:replace="~{partials/fragment :: header2}"></header>
 
-    <main>
-      <div class="main-group">
-        <style>
-          /* Hover effect for specific table */
-          .config-table-hover tr:hover {
-            background-color: #fafad2;
-          }
-        </style>
-        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
-        <article>
-          <div class="main-article">
-            <div th:replace="~{partials/template_fragment :: main-title('History ', '- MS/MS search')}"></div>
+<style>
+  /* 테이블 스타일 */
+  .config-table-hover {
+    width: 100%;
+    border-collapse: collapse; /* cellpadding, cellspacing 제거 */
+    border-top: 2px solid #d9dddc;
+    border-bottom: 1px solid #d9dddc;
+    table-layout: fixed;
+  }
 
-            <div class="main-contents">
-              <table class="config-table-hover" border="0" cellpadding="0" cellspacing="0" style="border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc; table-layout: fixed; width: 100%;">
-                <tr>
-                  <td class="grayTH" style="width: 10%;"><div align="center">Index</div></td>
-                  <td class="grayTH" style="width: 15%;"><div align="center">User</div></td>
-                  <td class="grayTH" style="width: 15%;"><div align="center">Date</div></td>
-                  <td class="grayTH" style="width: 25%;"><div align="center">Title</div></td>
-                  <td class="grayTH" style="width: 10%;"><div align="center">MS/MS data</div></td>
-                  <td class="grayTH" style="width: 15%;"><div align="center">Database</div></td>
-                  <td class="grayTH" style="width: 10%;"><div align="center">Engine</div></td>
-                </tr>
-                <tr th:each="log, iterStat : ${searchLogs}">
-                  <td class="grayTD"><div align="center"><a th:href="@{/modplus/result(file=${log.result})}" target="_blank" th:text="${iterStat.index + 1}"></a></div></td>
-                  <td class="grayTD"><div align="center" th:text="${log.userName}"></div></td>
-                  <td class="grayTD"><div align="center" th:text="${#dates.format(log.date, 'yyyy.MM.dd')}"></div></td>
-                  <td class="grayTD"><div align="center" th:text="${log.title != null ? log.title : '&nbsp;'}"></div></td>
-                  <td class="grayTD"><div align="center" th:text="${log.msFile}"></div></td>
-                  <td class="grayTD"><div align="center" th:text="${log.dbFile}"></div></td>
-                  <td class="grayTD"><div align="center" th:text="${log.engine}"></div></td>
-                </tr>
-              </table>
+  .config-table-hover th,
+  .config-table-hover td {
+    padding: 8px; /* cellpadding 대체 */
+    text-align: center; /* align 대체 */
+  }
 
-              <br>
-              <br>
-            </div>
-          </div>
-        </article>
+  /* Hover effect for specific table */
+  .config-table-hover tr:hover {
+    background-color: #fafad2;
+  }
+</style>
+<main>
+  <div class="main-group">
+    <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
+    <article>
+      <div class="main-article">
+        <div th:replace="~{partials/template_fragment :: main-title('History ', '- MS/MS search')}"></div>
+
+        <div class="main-contents">
+          <table class="config-table-hover">
+            <tr>
+              <th class="grayTH" style="width: 10%;">Index</th>
+              <th class="grayTH" style="width: 15%;">User</th>
+              <th class="grayTH" style="width: 15%;">Date</th>
+              <th class="grayTH" style="width: 25%;">Title</th>
+              <th class="grayTH" style="width: 10%;">MS/MS data</th>
+              <th class="grayTH" style="width: 15%;">Database</th>
+              <th class="grayTH" style="width: 10%;">Engine</th>
+            </tr>
+            <tr th:each="log, iterStat : ${searchLogs}">
+              <td class="grayTD" style="width: 10%;"><a th:href="@{/modplus/result(file=${log.result})}" target="_blank" th:text="${iterStat.index + 1}"></a></td>
+              <td class="grayTD" style="width: 15%;" th:text="${log.userName}"></td>
+              <td class="grayTD" style="width: 15%;" th:text="${#dates.format(log.date, 'yyyy.MM.dd')}"></td>
+              <td class="grayTD" style="width: 25%;" th:text="${log.title != null ? log.title : '&nbsp;'}"></td>
+              <td class="grayTD" style="width: 10%;" th:text="${log.msFile}"></td>
+              <td class="grayTD" style="width: 15%;" th:text="${log.dbFile}"></td>
+              <td class="grayTD" style="width: 10%;" th:text="${log.engine}"></td>
+            </tr>
+          </table>
+
+          <br>
+          <br>
+        </div>
       </div>
-    </main>
+    </article>
+  </div>
+</main>
 
-  </body>
-  <footer th:replace="~{partials/fragment :: footer}"></footer>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
 </html>
