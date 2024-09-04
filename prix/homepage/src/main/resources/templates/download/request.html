@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header3}"></header>
+
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/download_fragment :: download-menus"></aside>
+        <article>
+            <div th:replace="~{partials/template_fragment :: main-title('ACTG', '- Novel peptide mapping')}"></div>
+            <table style="width: 95%; border-collapse: collapse; border: none; margin: 0 auto;">
+
+                <tr th:if="${success == 0}">
+                    <td>
+                        <form name="req" th:action="@{/request}" method="post">
+                            <input type="hidden" name="software" th:value="${software}" />
+                            <table style="width: 560px; border-collapse: collapse; margin: 1px; border: none">
+                                <tr>
+                                    <td><span class="blue" style="font-size: 1.5em;">License Agreement<br><br></span>
+                                        <!-- 라이선스 내용을 별도 파일에서 가져옴 -->
+                                        <div th:replace="~{'download/license' :: license}"></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-align: right;">
+                                        <input name="agreement" value="0xno" type="radio" checked> Decline&nbsp;&nbsp;&nbsp;
+                                        <input name="agreement" value="1xyes" type="radio"> Accept
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                            <table style="width: 560px; border-collapse: collapse; border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
+                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                    <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Name</th>
+                                    <td><input name="name" type="text" style="width: 100%;"></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                    <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Affiliation</th>
+                                    <td><input name="affiliation" type="text" style="width: 100%;"></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                    <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Title</th>
+                                    <td><input name="title" type="text" style="width: 100%;"></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                    <th style="width: 250px; background-color: #f0f0f0; text-align: left;">E-mail (at the affiliated institute)</th>
+                                    <td><input name="email" type="text" style="width: 100%;"></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                    <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Instrument Type</th>
+                                    <td><input name="instrument" type="text" style="width: 100%;"></td>
+                                </tr>
+                            </table>
+                            <br>
+
+                            <table style="width: 560px; border-collapse: collapse; border: none">
+                                <tr>
+                                    <td style="text-align: right;">
+                                        <input name="Cancel" type="button" class="btn" value="Cancel" onclick="window.location='/publications'">
+                                        <input name="Request" type="button" class="btn" value="Request" onclick="request()">
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr th:if="${success == 1}">
+                    <td>
+                        <p class="blue">
+                            Your request has been successfully processed. You'll receive the software via email (<span th:text="${email}"></span>) in a few days.<br>
+                            If you don't receive the email, please contact <a class="under" href="mailto:prix@hanyang.ac.kr">Eunok Paek</a>.
+                        </p>
+                    </td>
+                </tr>
+
+                <tr th:if="${success == 2}">
+                    <td>
+                        <p class="blue">
+                            Your request has not been processed. Please retry.<br>
+                            If this problem is not resolved, please contact <a class="under" href="mailto:prix@hanyang.ac.kr">Eunok Paek</a>.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </article>
+    </div>
+</main>
+
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>
