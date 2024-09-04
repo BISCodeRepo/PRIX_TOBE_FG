@@ -29,6 +29,7 @@ public class UserService {
             return null;
         }
         User user = userMapper.findByEmailAndPassword(requestLoginDto.getEmail(), requestLoginDto.getPassword());
+
         if (!validateUserRole(user, level)) {
             return null;
         }
@@ -70,6 +71,12 @@ public class UserService {
         if (user == null) {
             return false;
         }
+
+        if (user.getLevel() == 2) {
+            //괸리자일 경우 일반 로그인화면으로 로그인도 허용
+            return true;
+        }
+
         return user.getLevel() == level;
     }
 
@@ -93,24 +100,24 @@ public class UserService {
         }
 
         // 비밀번호에 문자, 숫자, 특수문자가 포함되어 있는지 검증
-        boolean hasLetter = false;
-        boolean hasDigit = false;
-        boolean hasSpecialChar = false;
+//        boolean hasLetter = false;
+//        boolean hasDigit = false;
+//        boolean hasSpecialChar = false;
+//
+//        for (char c : password.toCharArray()) {
+//            if (Character.isLetter(c)) {
+//                hasLetter = true;
+//            } else if (Character.isDigit(c)) {
+//                hasDigit = true;
+//            } else if (!Character.isLetterOrDigit(c)) {
+//                hasSpecialChar = true;
+//            }
+//
+//            if (hasLetter && hasDigit && hasSpecialChar) {
+//                return true;
+//            }
+//        }
 
-        for (char c : password.toCharArray()) {
-            if (Character.isLetter(c)) {
-                hasLetter = true;
-            } else if (Character.isDigit(c)) {
-                hasDigit = true;
-            } else if (!Character.isLetterOrDigit(c)) {
-                hasSpecialChar = true;
-            }
-
-            if (hasLetter && hasDigit && hasSpecialChar) {
-                return true;
-            }
-        }
-
-        return false;
+        return true;
     }
 }

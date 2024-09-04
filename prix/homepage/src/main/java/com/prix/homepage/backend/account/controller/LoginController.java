@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginController extends BaseController {
 
+    public static final int SESSION_INACTIVATE = 1800; // 세션 만료 시간 30분 (1800초)
     private final UserService userService;
 
     @Autowired
@@ -46,7 +47,7 @@ public class LoginController extends BaseController {
             session.setAttribute(SESSION_KEY_ID, user.getId());
             session.setAttribute(SESSION_KEY_NAME, user.getName());
             session.setAttribute(SESSION_KEY_LEVEL, user.getLevel());
-            session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)
+            session.setMaxInactiveInterval(SESSION_INACTIVATE);
             log.info("login Success");
             return "redirect:/";
         } else {
@@ -56,7 +57,16 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/admin")
-    public String loginAdmin(@ModelAttribute("loginForm") LoginForm loginForm) {
+    public String loginAdmin(@ModelAttribute("loginForm") LoginForm loginForm, Model model ) {
+
+        int id = (int)model.getAttribute(SESSION_KEY_ID);
+        int level = (int)model.getAttribute(SESSION_KEY_LEVEL);
+
+
+        if (id != 4 && level >= 2) {
+            return "redirect:/admin/configuration";
+        }
+
         return "login/admin_login";
     }
 
@@ -74,7 +84,7 @@ public class LoginController extends BaseController {
             session.setAttribute(SESSION_KEY_ID, user.getId());
             session.setAttribute(SESSION_KEY_NAME, user.getName());
             session.setAttribute(SESSION_KEY_LEVEL, user.getLevel());
-            session.setMaxInactiveInterval(1800); // 세션 만료 시간 30분 (1800초)
+            session.setMaxInactiveInterval(SESSION_INACTIVATE); // 세션 만료 시간 30분 (1800초)
             return "redirect:/admin/configuration";
         } else {
             model.addAttribute("error", "Invalid username or password");
@@ -116,10 +126,8 @@ public class LoginController extends BaseController {
 
         int result = userService.signUp(requestLoginDto);
 
-        log.info(Integer.toString(result));
-
         if(result == 1) {
-            model.addAttribute("error", "Invalid username or password.");
+            model.addAttribute("error", "Invalid username or password. The password must be at least 8 characters long.");
             return "login/register";
         }
         else if (result == 2) {
@@ -128,7 +136,20 @@ public class LoginController extends BaseController {
         }
         else {
             //유저 등록 성공
-            return "redirect:/";
+            User user = userService.login(requestLoginDto, 1);
+
+            if (user != null) {
+                //세션에 계정 정보 등록
+                HttpSession session = request.getSession();
+                session.setAttribute(SESSION_KEY_ID, user.getId());
+                session.setAttribute(SESSION_KEY_NAME, user.getName());
+                session.setAttribute(SESSION_KEY_LEVEL, user.getLevel());
+                session.setMaxInactiveInterval(SESSION_INACTIVATE);
+                return "redirect:/";
+            } else {
+                model.addAttribute("error", "Invalid username or password");
+                return "login/login";
+            }
         }
     }
 
