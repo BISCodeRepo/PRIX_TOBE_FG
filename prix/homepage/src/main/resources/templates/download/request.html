@@ -15,7 +15,7 @@
                 <tr th:if="${success == 0}">
                     <td>
                         <!-- RequestForm 사용 -->
-                        <form name="req" th:action="@{/download/request}" method="post" th:object="${requestForm}">
+                        <form name="req" th:action="@{/download/request}" method="post" th:object="${requestForm}" onsubmit="return validateAccept()">
                             <table style="width: 560px; border-collapse: collapse; margin: 1px; border: none">
                                 <tr>
                                     <td><span class="blue" style="font-size: 1.5em;">License Agreement<br><br></span>
@@ -25,33 +25,32 @@
 
                                 <tr>
                                     <td style="text-align: right;">
-                                        <!-- Decline 기본 선택 -->
-                                        <input type="radio" th:field="*{agreement}" value="0xno" checked> Decline&nbsp;&nbsp;&nbsp;
-                                        <input type="radio" th:field="*{agreement}" value="1xyes"> Accept
+                                        <input type="radio" th:field="*{agreement}" value="0xno" th:checked="${requestForm.agreement == '0xno'}"> Decline&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" th:field="*{agreement}" value="1xyes" th:checked="${requestForm.agreement == '1xyes'}"> Accept
                                     </td>
                                 </tr>
                             </table>
 
                             <table style="width: 560px; border-collapse: collapse; border-bottom: 1px solid #d9dddc; border-top: 2px solid #d9dddc;">
-                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                <tr style="border-bottom: 1px solid #d9dddc;">
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Name</th>
-                                    <td><input th:field="*{name}" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{name}" type="text" style="width: 100%;" required></td>
                                 </tr>
-                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                <tr style="border-bottom: 1px solid #d9dddc;">
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Affiliation</th>
-                                    <td><input th:field="*{affiliation}" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{affiliation}" type="text" style="width: 100%;" required></td>
                                 </tr>
-                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                <tr style="border-bottom: 1px solid #d9dddc;">
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Title</th>
-                                    <td><input th:field="*{title}" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{title}" type="text" style="width: 100%;" required></td>
                                 </tr>
-                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                <tr style="border-bottom: 1px solid #d9dddc;">
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">E-mail (at the affiliated institute)</th>
-                                    <td><input th:field="*{email}" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{email}" type="email" style="width: 100%;" required></td>
                                 </tr>
-                                <tr style="border-bottom: 1px solid #d9dddc;"> <!-- 각 행에 가로 줄 추가 -->
+                                <tr style="border-bottom: 1px solid #d9dddc;">
                                     <th style="width: 250px; background-color: #f0f0f0; text-align: left;">Instrument Type</th>
-                                    <td><input th:field="*{instrument}" type="text" style="width: 100%;"></td>
+                                    <td><input th:field="*{instrument}" type="text" style="width: 100%;" required></td>
                                 </tr>
                             </table>
                             <br>
@@ -65,6 +64,7 @@
                                 </tr>
                             </table>
                         </form>
+
                     </td>
                 </tr>
 
@@ -93,3 +93,16 @@
 <footer th:replace="~{partials/fragment :: footer}"></footer>
 </body>
 </html>
+
+<script>
+    function validateAccept() {
+        var form = document.req;
+
+        // 'Accept' 라디오 버튼이 선택되었는지 확인
+        if (!form.agreement[1].checked) {
+            alert("You must accept the license agreement to download this software.");
+            return false;
+        }
+        return true;  // 'Accept'가 선택된 경우에만 제출
+    }
+</script>

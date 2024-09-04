@@ -20,9 +20,13 @@ public class RequestController {
             software = "xxx";
         }
         // 페이지에 소프트웨어 정보를 전달
+
+        RequestForm requestForm = new RequestForm();
+        requestForm.setAgreement("0xno");
+
         model.addAttribute("software", software);
         model.addAttribute("success", 0);  // 폼 초기 상태
-        model.addAttribute("requestForm", new RequestForm()); // 폼 초기 상태
+        model.addAttribute("requestForm", requestForm); // 폼 초기 상태
 
         return "download/request";  // request.html 템플릿 반환
     }
