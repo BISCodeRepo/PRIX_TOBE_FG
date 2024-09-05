@@ -14,7 +14,7 @@
   }
   .custom-container {
     width: 700px;
-    padding-left: 20px; /* 왼쪽 패딩 추가 */
+    padding-left: 60px; /* 왼쪽 패딩 추가 */
   }
   .styled-table {
     width: 100%; /* 테이블 너비 */
@@ -44,136 +44,134 @@
         <td>
           <table class="styled-table">
             <tr>
-              <td><img src="images/p_st1.GIF" width="4" height="9"/><font class="drakBR"> Search Parameters<br/><br/></td>
+              <td><img src="images/p_st1.GIF" width="4" height="9"/> Search Parameters<br/><br/></td>
             </tr>
             <tr>
-              <td><li><font class="drakBR"><a name="NAME">User Name</a></font><br/>&nbsp;Put your name or id.<br/><br/></td>
-            </tr>
-
-            <tr>
-              <td><li><font class="drakBR"><a name="TIT">Search Title</a></font><br/>&nbsp;Put title for the search. It will be printed at the top of result page. If the title is left blank, it will be named automatically.<br/><br></td>
+              <td><li><a id="NAME" class="drakBR">User Name</a><br/>&nbsp;Put your name or id.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="MSMS">MS/MS Data</a></font><br/>&nbsp;Select the spectra file to be searched. The size of upload file is allowed <font color="red">up to 500MB</font>.<br/><br/></td>
+              <td><li><a id="TIT" class="drakBR">Search Title</a><br/>&nbsp;Put title for the search. It will be printed at the top of result page. If the title is left blank, it will be named automatically.<br/><br></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="DATA_FORMAT">Data Format</a></font><br/>&nbsp;Supported MS/MS formats are<br><br>
-                &nbsp;&nbsp;<a class="under" href="#DTA">Sequest (*.dta)</a><br>
-                &nbsp;&nbsp;<a class="under" href="#PKL">Micromass (*.pkl)</a><br>
-                &nbsp;&nbsp;<a class="under" href="#MGF">Mascot Generic Format (*.mgf)</a>
-                <table id="gray">
-                  <tr>
-                    <td colspan="3"><br></td>
-                  </tr>
-                  <tr>
-                    <th class="grayTH"><font color="red"><a class="under" name="DTA">Sequest (*.dta)</a></th>
-                    <th class="grayTH" width="10">&nbsp;</th>
-                    <th class="grayTH"><font color="red">Example</th>
-                  </tr>
-                  <tr>
-                    <td valign="top">
-                      M+H&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 1)<br>
-                      m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br>
-                      <br>
-                      M+H&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 2)<br>
-                      m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br><br>
-                      The first line represents M+H and charge state of precursor ion from an MS scan.
-                      From the second line, m/z and intensity values of fragment ions are recorded.
-                      For multiple MS/MS scans, at least one blank line must be between each MS/MS scan.
-                    </td>
-                    <td width="10">&nbsp;</td>
-                    <td valign="center">
-                      1511.44&nbsp;&nbsp;&nbsp;2<br>
-                      339.2520&nbsp;&nbsp;&nbsp;191<br>343.2500&nbsp;&nbsp;&nbsp;1<br>344.6134&nbsp;&nbsp;&nbsp;138<br>345.3719&nbsp;&nbsp;&nbsp;15<br>346.2221&nbsp;&nbsp;&nbsp;9<br>
-                      <br>
-                      2568.16&nbsp;&nbsp;&nbsp;3<br>
-                      730.2723&nbsp;&nbsp;&nbsp;85<br>731.3793&nbsp;&nbsp;&nbsp;83<br>742.3622&nbsp;&nbsp;&nbsp;62<br>748.2934&nbsp;&nbsp;&nbsp;159<br>749.3618&nbsp;&nbsp;&nbsp;56<br>760.2417&nbsp;&nbsp;&nbsp;257<br>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th class="grayTH"><font color="red"><a class="under" name="PKL">Micromass (*.pkl)</a></th>
-                    <th class="grayTH" width="10">&nbsp;</th>
-                    <th class="grayTH"><font color="red">Example</th>
-                  </tr>
-                  <tr>
-                    <td valign="top">
-                      M/Z&nbsp;&nbsp;&nbsp;INTENSITY&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 1)<br>
-                      m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br>
-                      <br>
-                      M/Z&nbsp;&nbsp;&nbsp;INTENSITY&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 2)<br>
-                      m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br><br>
-                      The first line represents m/z, intensity and charge state of precursor ion from an MS scan.
-                      From the second line, m/z and intensity values of fragment ions are recorded.
-                    </td>
-                    <td width="10">&nbsp;</td>
-                    <td valign="center">
-                      756.22&nbsp;&nbsp;&nbsp;32457&nbsp;&nbsp;&nbsp;2<br>
-                      339.2520&nbsp;&nbsp;&nbsp;191<br>343.2500&nbsp;&nbsp;&nbsp;1<br>344.6134&nbsp;&nbsp;&nbsp;138<br>345.3719&nbsp;&nbsp;&nbsp;15<br>346.2221&nbsp;&nbsp;&nbsp;9<br>
-                      <br>
-                      856.72&nbsp;&nbsp;&nbsp;125341&nbsp;&nbsp;&nbsp;3<br>
-                      730.2723&nbsp;&nbsp;&nbsp;85<br>731.3793&nbsp;&nbsp;&nbsp;83<br>742.3622&nbsp;&nbsp;&nbsp;62<br>748.2934&nbsp;&nbsp;&nbsp;159<br>749.3618&nbsp;&nbsp;&nbsp;56<br>760.2417&nbsp;&nbsp;&nbsp;257<br>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="grayTH"><font color="red"><a class="under" name="MGF">Mascot Generic Format (*.mgf)</a></th>
-                    <th class="grayTH" width="10">&nbsp;</th>
-                    <th class="grayTH"><font color="red">Example</th>
-                  </tr>
-                  <tr>
-                    <td valign="top">BEGIN IONS<br>
-                      TITLE=Spectrum 1 name<br>
-                      PEPMASS=precursor ion M/Z<br>
-                      CHARGE=Charge<br>
-                      m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br>
-                      END IONS<br><br>
-
-                      BEGIN IONS<br>
-                      TITLE=Spectrum 2 name<br>
-                      PEPMASS=precursor ion M/Z<br>
-                      CHARGE=Charge<br>
-                      m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br>
-                      END IONS<br><br>
-                      An MS/MS scan delimited by a pair of statements: BEGIN IONS and END IONS.
-                    </td>
-                    <td width="10">&nbsp;</td>
-                    <td valign="center">BEGIN IONS<br>
-                      TITLE=my_sample_1.2<br>
-                      PEPMASS=756.22<br>
-                      CHARGE=2+<br>
-                      339.2520&nbsp;&nbsp;&nbsp;191<br>343.2500&nbsp;&nbsp;&nbsp;1<br>344.6134&nbsp;&nbsp;&nbsp;138<br>345.3719&nbsp;&nbsp;&nbsp;15<br>346.2221&nbsp;&nbsp;&nbsp;9<br>
-                      END IONS<br><br>
-                      BEGIN IONS<br>
-                      TITLE=my_sample_2.3<br>
-                      PEPMASS=856.72<br>
-                      CHARGE=3+<br>
-                      730.2723&nbsp;&nbsp;&nbsp;85<br>731.3793&nbsp;&nbsp;&nbsp;83<br>742.3622&nbsp;&nbsp;&nbsp;62<br>748.2934&nbsp;&nbsp;&nbsp;159<br>749.3618&nbsp;&nbsp;&nbsp;56<br>760.2417&nbsp;&nbsp;&nbsp;257<br>
-                      END IONS<br>
-                    </td>
-                  </tr>
-                </table>
-                <br/></td>
+              <td><li><a id="MSMS" class="drakBR">MS/MS Data</a><br/>&nbsp;Select the spectra file to be searched. The size of upload file is allowed <span class="red-text">up to 500MB</span>.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="INST">Instrument</a></font><br/>&nbsp;Select instrument type used for MS/MS.<br/><br/></td>
+              <td>
+                <li><a id="DATA_FORMAT" class="drakBR">Data Format</a><br/>&nbsp;Supported MS/MS formats are<br><br>
+                  &nbsp;&nbsp;<a class="under" href="#DTA">Sequest (*.dta)</a><br>
+                  &nbsp;&nbsp;<a class="under" href="#PKL">Micromass (*.pkl)</a><br>
+                  &nbsp;&nbsp;<a class="under" href="#MGF">Mascot Generic Format (*.mgf)</a>
+                  <table id="gray">
+                    <tr>
+                      <td colspan="3"><br></td>
+                    </tr>
+                    <tr>
+                      <th class="grayTH"><a class="under" id="DTA" style="color: red;">Sequest (*.dta)</a></th>
+                      <th class="grayTH" width="10">&nbsp;</th>
+                      <th class="grayTH" style="color: red;">Example</th>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align: top;">
+                        M+H&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 1)<br>
+                        m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br><br>
+                        M+H&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 2)<br>
+                        m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br><br>
+                        The first line represents M+H and charge state of precursor ion from an MS scan.
+                        From the second line, m/z and intensity values of fragment ions are recorded.
+                        For multiple MS/MS scans, at least one blank line must be between each MS/MS scan.
+                      </td>
+                      <td width="10">&nbsp;</td>
+                      <td style="vertical-align: top;">
+                        1511.44&nbsp;&nbsp;&nbsp;2<br>
+                        339.2520&nbsp;&nbsp;&nbsp;191<br>343.2500&nbsp;&nbsp;&nbsp;1<br>344.6134&nbsp;&nbsp;&nbsp;138<br>345.3719&nbsp;&nbsp;&nbsp;15<br>346.2221&nbsp;&nbsp;&nbsp;9<br><br>
+                        2568.16&nbsp;&nbsp;&nbsp;3<br>
+                        730.2723&nbsp;&nbsp;&nbsp;85<br>731.3793&nbsp;&nbsp;&nbsp;83<br>742.3622&nbsp;&nbsp;&nbsp;62<br>748.2934&nbsp;&nbsp;&nbsp;159<br>749.3618&nbsp;&nbsp;&nbsp;56<br>760.2417&nbsp;&nbsp;&nbsp;257<br>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th class="grayTH"><a class="under" id="PKL" style="color: red;">Micromass (*.pkl)</a></th>
+                      <th class="grayTH" width="10">&nbsp;</th>
+                      <th class="grayTH" style="color: red;">Example</th>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align: top;">
+                        M/Z&nbsp;&nbsp;&nbsp;INTENSITY&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 1)<br>
+                        m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br><br>
+                        M/Z&nbsp;&nbsp;&nbsp;INTENSITY&nbsp;&nbsp;&nbsp;CHARGE (precursor ion 2)<br>
+                        m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br><br>
+                        The first line represents m/z, intensity and charge state of precursor ion from an MS scan.
+                        From the second line, m/z and intensity values of fragment ions are recorded.
+                      </td>
+                      <td width="10">&nbsp;</td>
+                      <td style="vertical-align: top;">
+                        756.22&nbsp;&nbsp;&nbsp;32457&nbsp;&nbsp;&nbsp;2<br>
+                        339.2520&nbsp;&nbsp;&nbsp;191<br>343.2500&nbsp;&nbsp;&nbsp;1<br>344.6134&nbsp;&nbsp;&nbsp;138<br>345.3719&nbsp;&nbsp;&nbsp;15<br>346.2221&nbsp;&nbsp;&nbsp;9<br><br>
+                        856.72&nbsp;&nbsp;&nbsp;125341&nbsp;&nbsp;&nbsp;3<br>
+                        730.2723&nbsp;&nbsp;&nbsp;85<br>731.3793&nbsp;&nbsp;&nbsp;83<br>742.3622&nbsp;&nbsp;&nbsp;62<br>748.2934&nbsp;&nbsp;&nbsp;159<br>749.3618&nbsp;&nbsp;&nbsp;56<br>760.2417&nbsp;&nbsp;&nbsp;257<br>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th class="grayTH"><a class="under" id="MGF" style="color: red;">Mascot Generic Format (*.mgf)</a></th>
+                      <th class="grayTH" width="10">&nbsp;</th>
+                      <th class="grayTH" style="color: red;">Example</th>
+                    </tr>
+                    <tr>
+                      <td style="vertical-align: top;">BEGIN IONS<br>
+                        TITLE=Spectrum 1 name<br>
+                        PEPMASS=precursor ion M/Z<br>
+                        CHARGE=Charge<br>
+                        m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br>
+                        END IONS<br><br>
+                        BEGIN IONS<br>
+                        TITLE=Spectrum 2 name<br>
+                        PEPMASS=precursor ion M/Z<br>
+                        CHARGE=Charge<br>
+                        m/z&nbsp;&nbsp;&nbsp;intensity (fragment ion) [1..*]<br>
+                        END IONS<br><br>
+                        An MS/MS scan delimited by a pair of statements: BEGIN IONS and END IONS.
+                      </td>
+                      <td width="10">&nbsp;</td>
+                      <td style="vertical-align: top;">
+                        BEGIN IONS<br>
+                        TITLE=my_sample_1.2<br>
+                        PEPMASS=756.22<br>
+                        CHARGE=2+<br>
+                        339.2520&nbsp;&nbsp;&nbsp;191<br>343.2500&nbsp;&nbsp;&nbsp;1<br>344.6134&nbsp;&nbsp;&nbsp;138<br>345.3719&nbsp;&nbsp;&nbsp;15<br>346.2221&nbsp;&nbsp;&nbsp;9<br>
+                        END IONS<br><br>
+                        BEGIN IONS<br>
+                        TITLE=my_sample_2.3<br>
+                        PEPMASS=856.72<br>
+                        CHARGE=3+<br>
+                        730.2723&nbsp;&nbsp;&nbsp;85<br>731.3793&nbsp;&nbsp;&nbsp;83<br>742.3622&nbsp;&nbsp;&nbsp;62<br>748.2934&nbsp;&nbsp;&nbsp;159<br>749.3618&nbsp;&nbsp;&nbsp;56<br>760.2417&nbsp;&nbsp;&nbsp;257<br>
+                        END IONS<br>
+                      </td>
+                    </tr>
+                  </table>
+                  <br/>
+              </td>
+            </tr>
+
+
+            <tr>
+              <td><li><a id="INST" class="drakBR">Instrument</a><br/>&nbsp;Select instrument type used for MS/MS.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="DB">Database</a></font><br/>&nbsp;Select a protein sequence database to be searched or upload the FASTA file including the protein sequences. The size of upload file is allowed <font color="red">up to 100MB</font>.<br/><br/></td>
+              <td><li><a id="DB" class="drakBR">Database</a><br/>&nbsp;Select a protein sequence database to be searched or upload the FASTA file including the protein sequences. The size of upload file is allowed <span class="red-text">up to 100MB</span>.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="TARDEC">Target-Decoy Search</a></font><br/>&nbsp;Check for target-decoy search. Then, the ms/ms search will be conducted against the normal proteins (selected or uploaded) database <font color="red">appended with their reverse sequences</font>. This target-decoy search assumes that the distribution of incorrect peptide-spectrum matches (PSMs) from the target database is similar to that of PSMs from the decoy database. With this assumption, an optimized score cut-off for the corresponding <font color="red">false discovery rate (FDR)</font> is calculated. FDR was calculated as FDR = D/T, where D and T are the numbers of the decoy hits and the target hits above the given score threshold, respectively. T is reported to search summary.<br/><br/></td>
+              <td><li><a id="TARDEC" class="drakBR">Target-Decoy Search</a><br/>&nbsp;Check for target-decoy search. Then, the ms/ms search will be conducted against the normal proteins (selected or uploaded) database <span class="red-text">appended with their reverse sequences</span>. This target-decoy search assumes that the distribution of incorrect peptide-spectrum matches (PSMs) from the target database is similar to that of PSMs from the decoy database. With this assumption, an optimized score cut-off for the corresponding <span class="red-text">false discovery rate (FDR)</span> is calculated. FDR was calculated as FDR = D/T, where D and T are the numbers of the decoy hits and the target hits above the given score threshold, respectively. T is reported to search summary.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="ENZYME">Enzyme</a></font><br/>&nbsp;Select enzyme used for protein digestion. Users can also add new enzyme rules to their own list, and can use them (Login required).<br/><br/>
+              <td><li><a id="ENZYME" class="drakBR">Enzyme</a><br/>&nbsp;Select enzyme used for protein digestion. Users can also add new enzyme rules to their own list, and can use them (Login required).<br/><br/>
 
-                <font color="red">Predefined Enzymes</font>
-                <font color="red">Predefined Enzymes</font>
+                <span class="red-text">Predefined Enzymes</span>
                 <table style="border-bottom: #d9dddc 2px solid; border-top: #d9dddc 2px solid; width: 60%; table-layout: fixed;">
                   <tr>
                     <th class="grayTH" style="text-align: left; width: 33%;">Name</th>
@@ -211,49 +209,47 @@
                     <td style="text-align: center;">Cterm</td>
                   </tr>
                 </table>
-
-
                 <br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="MISSCLEAVE">Max No. of Missed Cleavages</a></font><br/>&nbsp;Select the maximum number of missed cleavages permitted in a peptide. If this is set to 2, a peptide can have zero, one or two cleavage residues at other positions than the last position of the peptide in case that cleavage Term of used enzyme is Cterm.<br/><br/></td>
+              <td><li><a id="MISSCLEAVE" class="drakBR">Max No. of Missed Cleavages</a></font><br/>&nbsp;Select the maximum number of missed cleavages permitted in a peptide. If this is set to 2, a peptide can have zero, one or two cleavage residues at other positions than the last position of the peptide in case that cleavage Term of used enzyme is Cterm.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="NTT">Min No. of Enzyme Termini</a></font><br/>&nbsp;Select minimum number of termini fragmented by the selected enzyme rule. When Trypsin is selected, set 2 to only consider fully tryptic peptides and set 1 to include partially tryptic peptides.</font><br/><br/></td>
+              <td><li><a id="NTT" class="drakBR">Min No. of Enzyme Termini</a><br/>&nbsp;Select minimum number of termini fragmented by the selected enzyme rule. When Trypsin is selected, set 2 to only consider fully tryptic peptides and set 1 to include partially tryptic peptides.</a><br/><br/></td>
             </tr>
             <tr>
-              <td><li><font class="drakBR"><a name="PEPTTOL">Peptide Tolerance</a></font><br/>&nbsp;Specify the error tolerance on experimental peptide mass values. Peptides would be found within the specified tolerance range to either side of the theoretical mass. The peptide mass tolerance is specified in dalton or in ppm.<br/><br/></td>
+              <td><li><a id="PEPTTOL" class="drakBR">Peptide Tolerance</a><br/>&nbsp;Specify the error tolerance on experimental peptide mass values. Peptides would be found within the specified tolerance range to either side of the theoretical mass. The peptide mass tolerance is specified in dalton or in ppm.<br/><br/></td>
             </tr>
             <tr>
-              <td><li><font class="drakBR"><a name="ISOERR">#<sup>13</sup>C (Isotope error)</a></font><br/>&nbsp;Specify the isotope error of precursors. Sometimes, the <sup>13</sup>C peak is selected for fragmentation rather than the <sup>12</sup>C even though you are using a high accuracy-instrument. In extreme cases, the <sup>13</sup>C<sub>2</sub> peak may be selected. This option is effective if you are using a high-accuracy instrument (that is you're using ppm-tolerance for Peptide Tolerance). If you're using a low-accuracy instrument, use quite wide dalton-tolerance (e.g. 3 Da) for Peptide Tolerance  <br/><br/></td>
+              <td><li><a id="ISOERR" class="drakBR">#<sup>13</sup>C (Isotope error)</a><br/>&nbsp;Specify the isotope error of precursors. Sometimes, the <sup>13</sup>C peak is selected for fragmentation rather than the <sup>12</sup>C even though you are using a high accuracy-instrument. In extreme cases, the <sup>13</sup>C<sub>2</sub> peak may be selected. This option is effective if you are using a high-accuracy instrument (that is you're using ppm-tolerance for Peptide Tolerance). If you're using a low-accuracy instrument, use quite wide dalton-tolerance (e.g. 3 Da) for Peptide Tolerance  <br/><br/></td>
             </tr>
             <tr>
-              <td><li><font class="drakBR"><a name="FRAGTOL">Fragment Ion Tolarance</a></font><br/>&nbsp;Specify the error tolerance on experimental fragment ion mass values. Experimental fragment ions would be found within the specified tolerance range to either side of the theoretical position. The fragment ion mass tolerance is specified in dalton.<br/><br/></td>
-            </tr>
-
-            <tr>
-              <td><li><font class="drakBR"><a name="MODRANGE">Modified Mass</a></font><br/>&nbsp;Specify minimum and maximum masses of peptides to be modified.<br/><br/></td>
+              <td><li><a id="FRAGTOL" class="drakBR">Fragment Ion Tolerance</a><br/>&nbsp;Specify the error tolerance on experimental fragment ion mass values. Experimental fragment ions would be found within the specified tolerance range to either side of the theoretical position. The fragment ion mass tolerance is specified in dalton.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="FIXMOD">Fixed Modifications</a></font><br/>&nbsp;Fixed modifications are applied to every amino acid specified. For example, if Carbamidomethyl (+57 Da) is fixed to 'Cys', the mass of all the 'Cys' in a peptide is changed to 160 Da. In a result page, fixed modified amino acids are not explicitly labeled as modified. Fixed modifications are restricted to amino acids, and single fixed modification per amino acid is allowed. Variable modifications are not allowed on fixed modified amino acids. PRIX ms/ms search provides the modification list from <a href="http://www.unimod.org" target="_blank" class="under">Unimod (www.unimod.org)</a>. Additionally, users can add new modifications to their own list, and use them (Login required).<br/><br/></td>
+              <td><li><a id="MODRANGE" class="drakBR">Modified Mass</a><br/>&nbsp;Specify minimum and maximum masses of peptides to be modified.<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="VARMOD">Variable Modifications</a></font><br/>&nbsp;Variable modifications may or may not be present in a peptide, and thus, would enlarge search space exponentially by enumeration of all possible modifications. <font color="red">MODPlus has no limitation on the number of modifications to be selected, and hundreds of modifications can be taken as input. DBond allows up to 20 variable modifications to be selected.</font> PRIX ms/ms search provides the modification list from <a href="http://www.unimod.org" target="_blank" class="under">Unimod (www.unimod.org)</a>. Default list consists of modifications from Post-, Co-, and Pre-translational, Chemical derivative, Artefact, Multiple, and Other classifications (All: default list + modifications from N-linked, O-linked, and Other glycosylation, Synth. pep. protect. gp., Isotopic label, Non-standard residue, and AA substitution classifications). Additionally, users can add new modifications to their own list, and can use them (Login required).<br/><br/></td>
+              <td><li><a id="FIXMOD" class="drakBR">Fixed Modifications</a><br/>&nbsp;Fixed modifications are applied to every amino acid specified. For example, if Carbamidomethyl (+57 Da) is fixed to 'Cys', the mass of all the 'Cys' in a peptide is changed to 160 Da. In a result page, fixed modified amino acids are not explicitly labeled as modified. Fixed modifications are restricted to amino acids, and single fixed modification per amino acid is allowed. Variable modifications are not allowed on fixed modified amino acids. PRIX ms/ms search provides the modification list from <a href="http://www.unimod.org" target="_blank" class="under">Unimod (www.unimod.org)</a>. Additionally, users can add new modifications to their own list, and use them (Login required).<br/><br/></td>
+            </tr>
+
+            <tr>
+              <td><li><a id="VARMOD" class="drakBR">Variable Modifications</a><br/>&nbsp;Variable modifications may or may not be present in a peptide, and thus, would enlarge search space exponentially by enumeration of all possible modifications. <span class="red-text">MODPlus has no limitation on the number of modifications to be selected, and hundreds of modifications can be taken as input. DBond allows up to 20 variable modifications to be selected.</span> PRIX ms/ms search provides the modification list from <a href="http://www.unimod.org" target="_blank" class="under">Unimod (www.unimod.org)</a>. Default list consists of modifications from Post-, Co-, and Pre-translational, Chemical derivative, Artefact, Multiple, and Other classifications (All: default list + modifications from N-linked, O-linked, and Other glycosylation, Synth. pep. protect. gp., Isotopic label, Non-standard residue, and AA substitution classifications). Additionally, users can add new modifications to their own list, and can use them (Login required).<br/><br/></td>
             </tr>
 
             <tr>
               <td>
                 <li>
-                    <a id="MODMAP" class="drakBR">MODmap</a>
+                  <a id="MODMAP" class="drakBR">MODmap</a>
                   <br />&nbsp;Blind search predicts new delta masses, from MS/MS spectra, other than modifications in your search list.
                   Predicted delta masses could be modifications present in the sample. User can re-submit ms/ms search with abundant ones of
                   predicted delta masses. Notably, if you used all the modifications in search, they may be novel modification candidates.<br /><br />
 
-                  <font color="red">PTM Frequency Matrix</font>
+                  <span class="red-text">PTM Frequency Matrix</span>
                   <table style="border-bottom: #d9dddc 2px solid; border-top: #d9dddc 2px solid; width: 100%; table-layout: fixed;">
                     <thead>
                     <tr>
@@ -292,7 +288,7 @@
                   </table>
 
 
-                  <br />A MODmap result is shown as PTM Frequency Matrix. Each entry of the matrix represents the number of the corresponding modifications predicted in a sample. For example, in above matrix, the mass shift of +12 Da on Nterm was observed 27 times during the ms/ms search. Cells with abundant number (shown in <font color="red"><b>Bold Red</b></font>) can be defined as candidate modifications allowing 'delta' for 'AA'.<br /><br />
+                  <br />A MODmap result is shown as PTM Frequency Matrix. Each entry of the matrix represents the number of the corresponding modifications predicted in a sample. For example, in above matrix, the mass shift of +12 Da on Nterm was observed 27 times during the ms/ms search. Cells with abundant number (shown in <span class="red-text"><b>Bold Red</b></span>) can be defined as candidate modifications allowing 'delta' for 'AA'.<br /><br />
                 </li>
               </td>
             </tr>
@@ -301,11 +297,11 @@
               <td>&nbsp;</td>
             </tr>
             <tr>
-              <td><img src="images/p_st1.GIF" width="4" height="9"/><font class="drakBR"> MISC<br/><br/></td>
+              <td><img src="images/p_st1.GIF" width="4" height="9"/> MISC<br/><br/></td>
             </tr>
 
             <tr>
-              <td><li><font class="drakBR"><a name="BONDION">DBond Viewer Fragment Ion Annotation</a></font><br/>&nbsp;'P*', one strand (top) of a dipeptide; 'p*', the other strand (bottom) of a dipeptide; 'capital letters', fragment ions from peptide P*; 'small letters', fragment ions from peptide p*; 'C-34', dehydroalanine ion; 'C+32', persulfide ion (formed by S-S or C-S bond cleavage reactions); 'AA*' represents immonium ion of the amino acid AA. Matched peaks are shown in red. The ion types of matched peaks were written in red for b- and y-ions, blue for ions from C-S and S-S bonds, and green for bond-specific ions.<br/></td>
+              <td><li><a id="BONDION" class="drakBR">DBond Viewer Fragment Ion Annotation</a><br/>&nbsp;'P*', one strand (top) of a dipeptide; 'p*', the other strand (bottom) of a dipeptide; 'capital letters', fragment ions from peptide P*; 'small letters', fragment ions from peptide p*; 'C-34', dehydroalanine ion; 'C+32', persulfide ion (formed by S-S or C-S bond cleavage reactions); 'AA*' represents immonium ion of the amino acid AA. Matched peaks are shown in red. The ion types of matched peaks were written in red for b- and y-ions, blue for ions from C-S and S-S bonds, and green for bond-specific ions.<br/></td>
             </tr>
 
           </table>
