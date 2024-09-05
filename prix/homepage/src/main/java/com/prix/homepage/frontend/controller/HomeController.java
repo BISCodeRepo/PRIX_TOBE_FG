@@ -56,4 +56,9 @@ public class HomeController extends BaseController {
         return "modplus";
     }
 
+    @GetMapping("/use")
+    public String use(){
+        return "redirect:/use-index.html";
+    }
+
 }
