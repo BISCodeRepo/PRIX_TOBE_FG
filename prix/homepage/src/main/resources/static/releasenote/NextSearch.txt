@@ -1,0 +1,23 @@
+/********************************************************/
+/*                                                      */
+/*       NextSearch v1.2: Exon Graph Search		*/
+/*                Release: Feb 20, 2017		        */
+/*             Hanyang University, Seoul, Korea         */
+/*                                                      */
+/********************************************************/
+
+Feb 20, 2017: NextSearch version 1.2
+    - Added intron search. NextSearch provides intron search if a user sets intron boundary from the end of two exons.
+    - Fixed hadoop support option.
+
+Apr 22, 2016: NextSearch version 1.11
+    - Fixed bugs about ambiguous base 'N'
+
+Dec 15, 2015: NextSearch version 1.1
+    - Decoupled exon graph construction and peptide identification so that the same exon graph database may be used for many searches for peptide identification. 
+    - Optimized NextSearch algorithm
+    - Altered the parameter 'iTRAQSearch=[ON/OFF]' to 'Protocol=[iTRAQ4plex/iTRAQ8plex/TMT2plex/TMT6plex/NONE]'. NextSearch supports 4 isobaric tags: iTRAQ4plex, iTRAQ8plex, TMT2plex, TMT6plex.
+
+June 10, 2015: NextSearch version 1.0
+    - First release
+

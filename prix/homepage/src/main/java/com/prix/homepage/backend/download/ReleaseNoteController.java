@@ -22,13 +22,16 @@ public class ReleaseNoteController extends BaseController {
             @RequestHeader(value = "Referer", required = false) String referer
             ) throws IOException {
 
-        // 파일 이름이 없을 경우 기본 파일 설정
+        // 파일 이름이 없을 경우 예외처리
         if (fileName == null || fileName.isEmpty()) {
-            fileName = "MutCombinator";  // 기본 파일 이름
+            if (referer != null && !referer.isEmpty()) {
+                return ResponseEntity.status(302).header("Location", referer).build();
+            }
+            return ResponseEntity.status(302).header("Location", "/").build();
         }
 
         // 파일 경로 설정 (동적으로 전달받은 파일 이름 사용)
-        String filePath = "static/releasenote/" + fileName + "_ReleaseNote.txt";
+        String filePath = "static/releasenote/" + fileName + ".txt";
         Resource resource = new ClassPathResource(filePath);
 
         // 파일이 존재하지 않으면 예외 처리

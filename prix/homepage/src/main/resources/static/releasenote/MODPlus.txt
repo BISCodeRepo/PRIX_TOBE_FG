@@ -1,0 +1,13 @@
+/*********************************************************************/
+/*                                                                   */
+/*      MODplus v1.01                                                */
+/*      Release: September 29, 2020                                  */
+/*      Hanyang University, Seoul, Korea                             */
+/*                                                                   */
+/*      Robust and unrestrictive identification of                   */
+/*      post-translational modifications using mass spectrometry     */
+/*                                                                   */
+/*********************************************************************/
+
+##ver1.01
+ - First release!

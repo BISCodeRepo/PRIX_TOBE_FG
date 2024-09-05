@@ -1,0 +1,121 @@
+/******************************************************************/
+/*                                                                */
+/*      deMix v1.01  : Hydrogen Deuterium eXchange Analysis       */
+/*                     Release: April 5, 2019                     */
+/*                  Hanyang University, Seoul, Korea              */
+/*                                                                */
+/*    deMix: Decoding Deuterated Distributions                    */
+/*               from Heterogeneous Protein States via HDX-MS.    */
+/*                                                                */
+/******************************************************************/
+
+
+1. Requirement
+deMix requires Java 1.7 or later. Visit http://www.oracle.com/technetwork/java/index.html 
+
+
+2. Usage
+Command  : java -jar deMix.jar <options> <file>
+Options  :
+  -i <parameter_file> : Config file path for search parameters [Required]
+  -o <results_name>   : Name of analysis results [Optional]
+                      : If not specified, the file name in 'Peptide=' parameter is used as the results_name.
+                      : results_name_DdeuAnal.tsv and results_name_HDXProfile.tsv are generated.
+
+
+Example1 : java -jar deMix.jar -i foo.params -o hdx.foo
+Example2 : java -jar deMix.jar -i foo.params
+Test data is available at https://prix.hanyang.ac.kr/demix/TestSample.zip
+
+3. Configure parameters
+A deMix config file has to be given as text file (See foo.params in the current directory).
+Each line of the file has the form of parameter=[VALUE].
+
+ Example)
+   Peptide= testdata/foo_pept.tsv
+   CTRLData= testdata/ctrl_ms.mzXML
+   HDXData=30s, testdata/d2o_30s.mzXML
+   HDXData=60m, testdata/d2o_60m.mzXML
+   MassTolerance= 0.1da
+
+Peptide=[FILENAME]: Specifies path to the file of peptides (in TSV format)
+                    The TSV file must include three columns for peptides, charge states, mz values.  
+                    Make sure that their column names (in the header) are 'peptide', 'charge', 'mz'. 
+                    They can be in any order. (See a sample file, foo_pept.tsv in the testdata directory)
+                    The TSV file may include different columns (they will be ignored).
+
+CTRLData= [FILENAME]: Specifies the spectra file of a control experiment without HDX
+                      mzXML (centroid) file is allowed. 
+		      Elution time spans of input peptides are determined using this file.
+
+HDXData=[Label],[spectra file]: Specifies the spectra file of HDX experiments with the D2O labeling
+                                mzXML (centroid) file is allowed. 
+                                Multiple files can be specified using different labeling as below.
+                                e.g., HDXData=30s, D:/mydir/my_d2o_30s.mzXML
+                                      HDXData=20m, D:/mydir/my_d2o_10m.mzXML
+                                      HDXData=30m, D:/mydir/my_d2o_30m.mzXML
+
+MassTolerance=[MASS_TOLERANCE]: Sets a peptide mass tolerance in dalton or ppm. The default value is 10ppm.
+                                e.g., MassTolerance=15ppm
+                                e.g., MassTolerance=0.4da
+
+Protein=[FILENAME]: Specifies path to the file of protein sequences (*.fasta format)
+                    Optional. If it's specified, start and end positons of peptides will be reported.
+                    e.g., Protein= D:/mydir/my_protein.fasta
+
+
+4. Output (tab-separated)
+1) *_HDXProfile.tsv : HDX analysis results. Each cell represents the deuterated numbers of input peptides under different conditions.
+Column Name : Description
+Id          : Index 
+mz          : m/z value of the peptide ion
+Charge      : Charge state of the peptide ion
+Peptide     : Peptide
+Protein     : Protein name [Shown only when a file of protein sequence is specified]                
+PosFrom     : Start site of the peptide in the protein
+PosTo       : End site of the peptide in the protein
+StartScan   : Scan number when the peptide elution starts
+EndScan     : Scan number when the peptide elution finishes
+ApexScan    : Scan number when the peptide elution is at the peak
+ApexRT(m)   : Retention time in minutes when the peptide elution is at the peak
+D2OLabel    : Deuterated number of the peptide under D2O labeling conditions
+            : If multiple conditions were analyzed, multiple columns will be shown with different names of D2O labeling contidions. 
+            : Num1~Num2 means that two deuterated forms are observed for the peptide (more abundant form precedes).
+
+2) *_DdeuAnal.tsv : For each peptide, detailed analysis results are shown including theoretical and observed deuterated isotopic distributions of input peptides. 
+Column Name   : Description
+Id            : Index 
+mz            : m/z value of the peptide ion
+Charge        : Charge state of the peptide ion
+Peptide       : Peptide
+D2OLabel      : D2O labeling names specified by an user
+1stDeuNum     : Deuterated number under the D2O labeling condition
+1stDeu%       : Proportion of the deuterated form by 1stDeuNum
+2ndDeuNum     : Second deuterated number if two deuterated forms are simultaneously observed
+2ndDeu%       : Proportion of the deuterated form by 2ndDeuNum
+PredictedDdeu : Theoretical deuterated distributions generated using predicted deuterated numbers (1stDeuNum or 2ndDeuNum) and their weights (1stDeu% or 2ndDeu%).       
+              : Intentity values separated by ';' are shown. The first value is an intensity at the m/z of the mono-isotope, the second value is an intensity at the m/z of the second-isotope, etc.
+StartScan     : Scan number when the deuterated peptide elution starts
+EndScan       : Scan number when the deuterated peptide elution finishes
+StartRT(m)    : Retention time in minutes when the deuterated peptide elution starts
+EndRT(m)      : Retention time in minutes when the deuterated peptide elution finishes
+ObservedDdeu  : Observed deuterated distributions, aggregated over elution time (StartScan~EndScan)
+              : Intentity values separated by ';' are shown. The first value is an intensity at the m/z of the mono-isotope, the second value is an intensity at the m/z of the second-isotope, etc.
+MatchedScore  : Match quailty between 'PredictedDdeu' and 'ObservedDdeu' (0.0~1.0, 1.0 is the best)
+
+
+5. Citation
+If you want to refer to deMix software, please cite
+Na S, Lee JJ, Joo JWJ, Lee KJ, Paek E.
+deMix: Decoding Deuterated Distributions from Heterogeneous Protein States via HDX-MS.
+Scientific Reports, 2019 , 9, 3176.
+
+
+6. Lisence
+deMix is licensed only for academic research purposes. It is not permitted 
+to distribute this program to other users. We grant a personal, non-exclusive, 
+non-transferable, royalty-free and indivisible license.
+
+
+7. Contact
+For feedback, questions and comments, contact us at eunokpaek@hanyang.ac.kr.
