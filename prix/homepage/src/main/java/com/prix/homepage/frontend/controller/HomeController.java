@@ -58,7 +58,7 @@ public class HomeController extends BaseController {
 
     @GetMapping("/use")
     public String use(){
-        return "redirect:/use-index.html";
+        return "redirect:/use/use-index.html";
     }
 
 }
