@@ -34,6 +34,11 @@ public class PatternMatchService {
     private ArrayList<SwissProtData> swissProtDataList;
     private ArrayList<GenBankData> genBankDataList;
 
+
+    private static final int itemsPerBatch = 10;
+    private int displayedIndex = 0;
+
+
     private final SqlSessionTemplate swissProtSqlSessionTemplate;
     private final SqlSessionTemplate genbankSqlSessionTemplate;
 
@@ -68,6 +73,7 @@ public class PatternMatchService {
     }
 
     public void MainMethod() throws Exception {
+        displayedIndex = 0;
         if (this.dataBase.equals("swiss_prot")){
             this.sqlSessionTemplate = this.swissProtSqlSessionTemplate;
 
@@ -100,58 +106,79 @@ public class PatternMatchService {
         } else if (this.dataBase.equals("genbank")) {
             this.genBankDataList = this.db.getGenbankSequenceWithoutSpecies(this.inputPattern, this.checkOrder);
         }
-
-        System.out.println(this.swissProtDataList);
+//        if (this.dataBase.equals("swiss_prot"))
+//            System.out.println(this.swissProtDataList);
+//        else
+//            System.out.println(this.genBankDataList);
         System.out.println("여기까지");
 
     }
 
-    public String getOneProtein() throws IOException, SQLException {
+    public String generateNextBatch() throws IOException, SQLException {
         StringBuilder htmlOutput = new StringBuilder();
-        if (this.dataBase.equals("swiss_prot")) {
-            for (SwissProtData data : this.swissProtDataList) {
-                String sequence = data.getSequence();
 
-                if (!this.checkWithoutSq)
-                    sequence = this.match.Match(sequence, this.inputPattern);
-                else
-                    this.match.Count(sequence, this.inputPattern);
-
-                String singleEntryHtml = make_html.getOneProtein(
-                        this.dataBase,
-                        data.getPrimary_ac(),
-                        data.getDescription(),
-                        data.getSpecies(),
-                        sequence,
-                        this.checkWithoutSq
-                );
-                htmlOutput.append(singleEntryHtml);
+        if (this.dataBase.equals("swiss_prot")){
+            for (int i = 0; /*i < itemsPerBatch &&*/  displayedIndex < swissProtDataList.size(); i++, displayedIndex++) {
+                SwissProtData data = swissProtDataList.get(displayedIndex);
+                htmlOutput.append(getOneProtein(data));
             }
-
-            return htmlOutput.toString();
-        } else if (this.dataBase.equals("genbank")) {
-            for ( GenBankData data : this.genBankDataList ){
-                String sequence = data.getSequence();
-
-                if (!this.checkWithoutSq)
-                    sequence = this.match.Match(sequence, this.inputPattern);
-                else
-                    this.match.Count(sequence, this.inputPattern);
-
-                String singleEntryHtml = make_html.getOneProtein(
-                        this.dataBase,
-                        data.getGi_number(),
-                        data.getDefinition(),
-                        data.getSpecies(),
-                        sequence,
-                        this.checkWithoutSq
-                );
-                htmlOutput.append(singleEntryHtml);
-            }
-            return htmlOutput.toString();
         }
+        else if (this.dataBase.equals("genbank")){
+            for (int i = 0; /*i < itemsPerBatch &&*/ displayedIndex < genBankDataList.size(); i++, displayedIndex++) {
+                GenBankData data = genBankDataList.get(displayedIndex);
+                htmlOutput.append(getOneProtein(data));
+            }
+        }
+
+
+        return htmlOutput.toString();
+    }
+
+    public String getOneProtein(SwissProtData data) throws IOException, SQLException {
+        StringBuilder htmlOutput = new StringBuilder();
+        String sequence = data.getSequence();
+
+        if (!this.checkWithoutSq)
+            sequence = this.match.Match(sequence, this.inputPattern);
         else
-            return null;
+            this.match.Count(sequence, this.inputPattern);
+
+        String singleEntryHtml = make_html.getOneProtein(
+                this.dataBase,
+                data.getPrimary_ac(),
+                data.getDescription(),
+                data.getSpecies(),
+                sequence,
+                this.checkWithoutSq
+        );
+        htmlOutput.append(singleEntryHtml);
+
+
+        return htmlOutput.toString();
+    }
+
+    public String getOneProtein(GenBankData data) throws IOException, SQLException {
+        StringBuilder htmlOutput = new StringBuilder();
+
+        String sequence = data.getSequence();
+
+        if (!this.checkWithoutSq)
+            sequence = this.match.Match(sequence, this.inputPattern);
+        else
+            this.match.Count(sequence, this.inputPattern);
+
+        String singleEntryHtml = make_html.getOneProtein(
+                this.dataBase,
+                data.getGi_number(),
+                data.getDefinition(),
+                data.getSpecies(),
+                sequence,
+                this.checkWithoutSq
+        );
+        htmlOutput.append(singleEntryHtml);
+
+        return htmlOutput.toString();
+
     }
 
 

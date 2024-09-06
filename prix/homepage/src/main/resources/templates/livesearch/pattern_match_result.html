@@ -2,6 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Protein Data</title>
+    <script>
+        let loading = false;
+
+        function loadMoreData() {
+            if (loading) return;  // 동시 요청 방지
+            loading = true;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/loadMoreProteinData', true);  // next batch 요청
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('proteinData').innerHTML += xhr.responseText;  // new content 추가
+                    loading = false;  // Allow further requests
+                }
+            };
+            xhr.send();
+        }
+
+        // 2초마다 컨텐츠 추가
+        setInterval(loadMoreData, 2000);
+    </script>
 </head>
 <body>
 <div th:utext="${proteinData}"></div>

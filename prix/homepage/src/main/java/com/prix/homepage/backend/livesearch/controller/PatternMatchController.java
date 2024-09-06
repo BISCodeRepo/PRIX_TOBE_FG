@@ -35,11 +35,11 @@ public class PatternMatchController extends BaseController {
             @RequestParam(value = "pattern3", required = false) String pattern3,
             @RequestParam(value = "pattern4", required = false) String pattern4,
             @RequestParam(value = "pattern5", required = false) String pattern5,
-            @RequestParam(value = "format_type", required = false) String formatType,
-            @RequestParam(value = "check_species", required = false) Boolean checkSpecies,
+            @RequestParam("format_type") String formatType,
+            @RequestParam(value = "check_species", defaultValue = "0") Boolean checkSpecies,
             @RequestParam(value = "species", required = false) String species,
-            @RequestParam(value = "checkWithoutSq", required = false) Boolean checkWithoutSq,
-            @RequestParam(value = "check_order", required = false) Boolean checkOrder,
+            @RequestParam(value = "checkWithoutSq", defaultValue = "0") Boolean checkWithoutSq,
+            @RequestParam(value = "check_order", defaultValue = "0") Boolean checkOrder,
             Model model) {
 
         String[] pattern = null;
@@ -97,8 +97,7 @@ public class PatternMatchController extends BaseController {
 
         try {
             patternMatchService.MainMethod();
-            htmlOutput = patternMatchService.getOneProtein();
-            htmlOutput += patternMatchService.getParameter();
+            htmlOutput = patternMatchService.generateNextBatch();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,26 +107,21 @@ public class PatternMatchController extends BaseController {
 
 
 
-//        print("통과");
-//        // DB에서 데이터 가져오기
-//        UpdateTable updateTable = patternMatchService.getUpdateTable(dbType);
-//        model.addAttribute("dbType", dbType.equals("1") ? "swiss_prot" : "genbank");
-//        model.addAttribute("date", updateTable.getDate());
-
-//        // 패턴 처리
-//        String[] patterns = patternMatchService.getPatterns(pattern1, pattern2, pattern3, pattern4, pattern5);
-//        model.addAttribute("patterns", patterns);
-
-//        // 기타 옵션 처리
-//        model.addAttribute("formatType", formatType);
-//        model.addAttribute("checkSpecies", checkSpecies);
-//        model.addAttribute("species", species);
-//        model.addAttribute("checkExcept", checkExcept);
-//        model.addAttribute("checkOrder", checkOrder);
-
-
-
         return "livesearch/pattern_match_result";  // patternMatchResult.html로 결과를 전달
+    }
+
+    @GetMapping("/loadMoreProteinData")
+    @ResponseBody
+    public String loadMoreProteinData() {
+        String htmlOutput = "";
+
+        try {
+            htmlOutput = patternMatchService.generateNextBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return htmlOutput;
     }
 
 }
