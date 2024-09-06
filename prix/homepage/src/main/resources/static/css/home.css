@@ -1,6 +1,4 @@
-.table-container {
-	width: 100%;
-}
+.table-container { width: 100%;}
 
 .row {
 	display: flex;
@@ -1782,3 +1780,7 @@ aside{width: 190px; padding-left: 30px; padding-right: 10px; font-family: Arial,
 .width-650{width: 650px;}
 .width-730{width: 730px;}
 .width-5{width:5px}
+
+
+
+iframe{width: 1100px; height: 1100px; border: 0;}
