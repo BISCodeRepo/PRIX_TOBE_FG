@@ -124,3 +124,131 @@
 
 </body>
 </html>
+
+
+<script>
+
+    function adjustIFrameSize(iframeWindow) {
+        var iframeElement = document.getElementById("IFRM_Result");
+        var wid = 0;
+        var hei = 0;
+        if (iframeWindow.document.height) {
+            hei = iframeWindow.document.height;
+        } else if (document.all) { // ie
+            if (iframeWindow.document.compatMode && iframeWindow.document.compatMode != 'BackCompat') {
+                hei = iframeWindow.document.documentElement.scrollHeight;
+            } else {
+                hei = iframeWindow.document.body.scrollHeight;
+            }
+        }
+        iframeElement.style.height = hei + 'px';
+        document.getElementById("RIGHT").style.height = hei + 'px';
+    }
+    function reset() {
+        location.href="http://prix.hanyang.ac.kr/ACTG/search.jsp";
+    }
+
+    function process() {
+        var form = document.search;
+        // Exception Inspector
+
+        // User name, and Title
+        if( !validateText(form.user.value, form.title.value ) ){
+            alert("Sorry! Character ' | ' and ' & ' cannot be used in UserName or Search Title field.");
+            return;
+        }
+
+
+        // Peptide list
+        if( form.peptideFile.value == '' ){
+            alert("Please upload a peptide list.");
+            return;
+        }
+
+
+        var size = document.getElementById("filePeptide").files[0].size;
+        if( size > 1024*100){
+            alert("Peptide list is limited by 100 KB");
+            return;
+        }
+
+        // Is mutation checked?
+        if( $("#divMutation").css("display") != "none"){
+            if( $("#fileMutation").val().length == 0){
+                alert("Please upload a vcf.");
+                return;
+            }
+
+            size = document.getElementById("fileMutation").files[0].size;
+            if( size > 20*1024*1024 ){
+                alert("VCF file is limited by 20 MB");
+                return;
+            }
+        }
+
+
+        form.submit();
+    }
+
+    function validateText(user, title) {
+        if( user.indexOf("|") > -1 || title.indexOf("|") > -1 ) return false;
+        if( user.indexOf("&") > -1 || title.indexOf("&") > -1 ) return false;
+        return true;
+    }
+
+    function validateDataFormat(data, format) {
+        var tmp = data.substring(data.lastIndexOf(".")+1).toLowerCase();
+
+        if( tmp != format )
+            return false;
+
+        return true;
+    }
+
+
+    // When click the mutation check box
+    function mutationCheck(){
+        if($("#divMutation").css("display") == "none"){
+            $("#divMutation").css("display", "block");
+        }else{
+            $("#divMutation").css("display", "none");
+            $("#fileMutation").val("");
+        }
+    }
+
+    function changeMethod(){
+        var method = $("#method").val();
+
+        switch (method)	{
+            case "PV":
+                showID("methodProteinDatabase");
+                showID("methodVariantSpliceGraph");
+                hideID("methodSixFrameTranslation");
+                break;
+            case "PS":
+                showID("methodProteinDatabase");
+                showID("methodSixFrameTranslation");
+                hideID("methodVariantSpliceGraph");
+                break;
+            case "VO":
+                showID("methodVariantSpliceGraph");
+                hideID("methodProteinDatabase");
+                hideID("methodSixFrameTranslation");
+                break;
+            case "SO":
+                showID("methodSixFrameTranslation");
+                hideID("methodProteinDatabase");
+                hideID("methodVariantSpliceGraph");
+                break;
+        }
+    }
+
+    function showID(ID){
+        $("#"+ID).css("display", "table-row-group");
+    }
+
+    function hideID(ID){
+        $("#"+ID).css("display", "none");
+    }
+
+</script>
