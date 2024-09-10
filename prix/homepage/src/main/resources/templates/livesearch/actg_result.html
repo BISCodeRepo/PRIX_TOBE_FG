@@ -1,10 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<head th:replace="~{partials/fragment :: head}">
 </head>
 <body>
-$END$
+<header th:replace="~{partials/fragment :: header2}"></header>
+
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
+        <article>
+            <table class="no-border">
+                <tr>
+                </tr>
+                <tr>
+                    <td>
+                        <p><h2>PRIX Search Results</h2></p>
+                        <br>
+                        <table class="no-border">
+                            <tr>
+                                <td><b>Search Engine</b></td>
+                                <td>: ACTG ( version 1.00 )</td>
+                            </tr>
+                            <tr>
+                                <td><b>Date</b></td>
+                                <td>:
+                                    <span th:if="${result.date != null}" th:text="${#temporals.format(result.date, 'yyyy-MM-dd')}"></span>
+                                    <span th:if="${result.date == null}">No date available</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>User</b></td>
+                                <td>: <span th:text="${result.userName}"></span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Search title</b></td>
+                                <td>: <span th:text="${result.title}"></span></td>
+                            </tr>
+                        </table>
+                        <br><br>
+
+                        <h3>Environment (for all mapping phases)</h3>
+                        <table class="no-border">
+                            <tr>
+                                <td><b>Mapping method</b></td>
+                                <td>: <span th:text="${result.method}"></span></td>
+                            </tr>
+                            <tr th:if="${result.IL != ''}">
+                                <td><b>Mapping options</b></td>
+                                <td>: <span th:text="${result.IL}"></span></td>
+                            </tr>
+                        </table>
+
+                        <div th:if="${result.method.contains('P')}">
+                            <br>
+                            <div><b>Protein database mapping</b></div>
+                            <table class="no-border">
+                                <tr>
+                                    <td><b>Protein database</b></td>
+                                    <td>: <span th:text="${result.proteinDB}"></span></td>
+                                </tr>
+                                <tr th:if="${result.proteinOption != ''}">
+                                    <td><b>Mapping options</b></td>
+                                    <td>: <span th:text="${result.proteinOption}"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div th:if="${result.method.contains('V')}">
+                            <br>
+                            <div><b>Variant splice graph mapping</b></div>
+                            <table class="no-border">
+                                <tr>
+                                    <td><b>Graph database</b></td>
+                                    <td>: <span th:text="${result.variantSpliceGraphDB}"></span></td>
+                                </tr>
+                                <tr th:if="${result.VSGOption != ''}">
+                                    <td><b>Mapping options</b></td>
+                                    <td>: <span th:text="${result.VSGOption}"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <br><br>
+                        <br>
+                        <h3>Search Summary</h3>
+                        <a th:href="@{${resultFileDownloadPath}}" target="_blank">Download the result (zip file)</a>
+                        <h3>Notice</h3>
+                        Please open the results using Excel because basic text applications cannot decode it well.
+                    </td>
+                </tr>
+            </table>
+
+
+        </article>
+    </div>
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+
+
+
 </body>
-</html>
+
+

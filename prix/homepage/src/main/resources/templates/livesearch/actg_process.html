@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<head th:replace="~{partials/fragment :: head}"></head>
+
 <body>
-$END$
+
+<!-- Header Section -->
+<header th:replace="~{partials/fragment :: header2}"></header>
+
+<!-- Main Content -->
+<main>
+    <div class="main-group">
+        <aside th:replace="partials/template_fragment :: livesearch-menu"></aside>
+
+        <table width="95%" border="0" align="center" cellpadding="1">
+            <tr>
+                <td><font size="3">Processing... <font class="blue"><em th:text="${result.rate}">0%</em></font></font></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td><font class="dark"><pre id="content-" th:text="${result.output}"></pre></font></td></tr>
+        </table>
+
+
+    </div>
+
+</main>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+
+<!-- JavaScript Section -->
+<script th:inline="javascript">
+    var timerID = null;
+    function initTimer() {
+        timerID = self.setTimeout("timeOut()", 3000);
+    }
+    function timeOut() {
+        var fail = /*[[${result.failed}]]*/ false;
+        var finish = /*[[${result.finished}]]*/ false;
+
+        if (fail || finish) {
+            return;
+        }
+        clearTimeout(timerID);
+        let processName = /*[[${result.processName}]]*/ '';
+        let title = /*[[${result.title}]]*/ '';
+        window.location = /*[[@{/livesearch/ACTG/Process(execute='no', process=${result.processName}, title=${result.title})}]]*/'';
+    }
+    initTimer();
+</script>
+
 </body>
 </html>

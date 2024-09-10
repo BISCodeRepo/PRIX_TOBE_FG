@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <method>[METHOD]</method>
+    <il>[IL]</il>
+    <peptideFile>[PEPTIDE_FILE]</peptideFile>
+    <proteinDb>[PROTEIN_DB]</proteinDb>
+    <sav>[SAV]</sav>
+    <variantSpliceGraphDb>[VARIANT_SPLICE_GRAPH_DB]</variantSpliceGraphDb>
+    <altAd>[ALT_AD]</altAd>
+    <exonSkipping>[EXON_SKIPPING]</exonSkipping>
+    <intron>[INTRON]</intron>
+    <mutation>[MUTATION]</mutation>
+    <mutationFile>[MUTATION_FILE]</mutationFile>
+    <referenceGenome>[REFERENCE_GENOME]</referenceGenome>
+    <output>[OUTPUT]</output>
+</configuration>

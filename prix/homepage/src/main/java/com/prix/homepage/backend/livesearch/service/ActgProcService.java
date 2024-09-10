@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Enumeration;
@@ -66,16 +67,13 @@ public class ActgProcService {
 
         // processName 파라미터 가져오기
         String processName = params.get("process");
-        String processPath;
-        if(processName == null) processPath = logDir + processName;
-        else processPath = processName;
-
+        String processPath = logDir + processName;
         if (params.get("execute") == null) {
             Date date = new Date();
             String key = id + "_" + date.getTime();
-            processPath = logDir + "process_" + key + ".proc";
+            processPath = "process_" + key + ".proc";
             processName = processPath;
-            String xmlPath = logDir + "param_" + key + ".xml";
+            String xmlPath = "param_" + key + ".xml";
             String proteinDBPath = "";
             String peptideFilePath = "";
             String variantSpliceGraphDBPath = "";
@@ -211,11 +209,86 @@ public class ActgProcService {
                 }
             }
 
+            try {
+                // template.xml이라는 파일 필요 2024
+                FileReader FR = new FileReader(dbDir + "template.xml");
+                BufferedReader BR = new BufferedReader(FR);
+
+                File xmlFile = new File(logDir + xmlPath);
+                File parentDir = xmlFile.getParentFile();
+                if (parentDir != null && !parentDir.exists()) {
+                    parentDir.mkdirs();  // 상위 디렉토리 생성
+                }
+
+                FileWriter FW = new FileWriter(logDir + xmlPath);
+                BufferedWriter BW = new BufferedWriter(FW);
+
+                String line_ = null;
+
+                while ((line_ = BR.readLine()) != null) {
+                    if (line_.contains("[METHOD]")) {
+                        line_ = line_.replace("[METHOD]", method);
+                    } else if (line_.contains("[IL]")) {
+                        line_ = line_.replace("[IL]", IL);
+                    } else if (line_.contains("[PEPTIDE_FILE]")) {
+                        line_ = line_.replace("[PEPTIDE_FILE]", peptideFilePath);
+                    } else if (line_.contains("[PROTEIN_DB]")) {
+                        line_ = line_.replace("[PROTEIN_DB]", proteinDBPath);
+                    } else if (line_.contains("[SAV]")) {
+                        line_ = line_.replace("[SAV]", SAV);
+                    } else if (line_.contains("[VARIANT_SPLICE_GRAPH_DB]")) {
+                        line_ = line_.replace("[VARIANT_SPLICE_GRAPH_DB]", variantSpliceGraphDBPath);
+                    } else if (line_.contains("[ALT_AD]")) {
+                        line_ = line_.replace("[ALT_AD]", altAD);
+                    } else if (line_.contains("[EXON_SKIPPING]")) {
+                        line_ = line_.replace("[EXON_SKIPPING]", exonSkipping);
+                    } else if (line_.contains("[INTRON]")) {
+                        line_ = line_.replace("[INTRON]", intron);
+                    } else if (line_.contains("[MUTATION]")) {
+                        line_ = line_.replace("[MUTATION]", mutation);
+                    } else if (line_.contains("[MUTATION_FILE]")) {
+                        line_ = line_.replace("[MUTATION_FILE]", mutationFilePath);
+                    } else if (line_.contains("[REFERENCE_GENOME]")) {
+                        line_ = line_.replace("[REFERENCE_GENOME]", referenceGenomePath);
+                    } else if (line_.contains("[OUTPUT]")) {
+                        line_ = line_.replace("[OUTPUT]", outputPath);
+                    }
+
+                    BW.append(line_);
+                    BW.newLine();
+                }
+
+                BR.close();
+                FR.close();
+                BW.close();
+                FW.close();
+            } catch (IOException e) {
+                output = e + "\n";
+                log.error("error = {}",e.getMessage());
+            }
+
+
             if (!failed) {
                 Runtime runtime = Runtime.getRuntime();
+                String logXmlPath = logDir + xmlPath;
+                String logProcessPath = logDir + processPath;
+                Path logXmlFilePath = Paths.get(logXmlPath);
+                if (Files.exists(logXmlFilePath)) {
+                    System.out.println("logDir + xmlPath 파일이 존재합니다: " + logXmlPath);
+                } else {
+                    System.out.println("logDir + xmlPath 파일이 존재하지 않습니다: " + logXmlPath);
+                }
+
+                // logDir + processPath 파일 존재 여부 확인
+                Path logProcessFilePath = Paths.get(logProcessPath);
+                if (Files.exists(logProcessFilePath)) {
+                    System.out.println("logDir + processPath 파일이 존재합니다: " + logProcessPath);
+                } else {
+                    System.out.println("logDir + processPath 파일이 존재하지 않습니다: " + logProcessPath);
+                }
                 String jarPath = "/Users/wook/Downloads/prix_test/ACTG_Search.jar";
                 String[] command = {"/bin/bash", "-c",
-                        "java -Xss2M -Xmx10G -jar " + jarPath + " " + logDir + xmlPath + " " + logDir + processPath};
+                        "java -Xss2M -Xmx10G -jar " + jarPath + " " + logDir + xmlPath + " " + logDir +processPath};
                 Process process = runtime.exec(command);
             }
 
@@ -276,8 +349,16 @@ public class ActgProcService {
                     searchLogMapper.insertSearchLog(
                             Integer.parseInt(id), title.replace("'", "\\'"), 0, 0, prixIndex, "ACTG");
 
-                    ActgDto processDto = ActgDto.builder().failed(failed).finished(finished).output(output)
-                            .processName(processName).prixIndex(prixIndex).rate((rate)).title(title).build();
+                    ActgDto processDto =
+                            ActgDto.builder()
+                            .failed(failed)
+                            .finished(finished)
+                            .output(output)
+                            .processName(processName)
+                            .prixIndex(prixIndex)
+                            .rate((rate))
+                            .title(title)
+                            .build();
 
                     return processDto;
                 }

@@ -120,4 +120,8 @@ public class UserService {
 
         return true;
     }
+
+    public String getname(Integer id){
+        return userMapper.getUserName(id);
+    }
 }

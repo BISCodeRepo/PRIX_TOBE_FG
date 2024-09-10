@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
         "com.prix.homepage.backend.account.mapper",
         "com.prix.homepage.backend.admin",
         "com.prix.homepage.backend.download",
+        "com.prix.homepage.backend.livesearch.mapper.ACTG",
+
 })
 public class MyBatisConfig {
 

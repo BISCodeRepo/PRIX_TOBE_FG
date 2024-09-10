@@ -23,6 +23,12 @@ public interface UserMapper {
     @Select("SELECT * FROM px_account WHERE email = #{email}")
     User findByEmail(@Param("email") String email);
 
+
+    @Select("SELECT name FROM px_account WHERE id = #{id}")
+    String getUserName(@Param("id") Integer id);
+
+
+
     /**
      * 새로운 사용자를 삽입합니다.
      * @param email 사용자의 이메일
