@@ -18,13 +18,13 @@ public class UserSettingDto {
     @Builder.Default
     private String minNumEnzTerm = "2";
     @Builder.Default
-    private String pTolerance = "10";
+    private String pTolerance = "0.5";
     @Builder.Default
     private String minChar = "2";
     @Builder.Default
-    private String pUnit = "ppm";
+    private String pUnit = "Da";
     @Builder.Default
-    private String fTolerance = "0.05";
+    private String fTolerance = "0.5";
     @Builder.Default
     private String minIE = "0";
     @Builder.Default

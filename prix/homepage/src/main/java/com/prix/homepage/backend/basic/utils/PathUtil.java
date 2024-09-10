@@ -8,6 +8,7 @@ public class PathUtil {
 
     private static String libraryPath;
 
+    //실제 위치로 수정해야합니다!
     @Value("${library.path}")
     public void setLibraryPath(String libraryPath) {
         PathUtil.libraryPath = libraryPath;

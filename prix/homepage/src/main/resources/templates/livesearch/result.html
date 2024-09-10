@@ -1,116 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{partials/fragment :: head}"></head>
+<head th:replace="~{partials/fragment :: head2}"></head>
 <body>
 <header th:replace="~{partials/fragment :: header2}"></header>
 <h2>PRIX Search Results</h2>
 
-<table>
-    <tr>
-        <td><b>Search Engine</b></td>
-        <td>: <span th:text="${engineName}"></span> (version <span th:text="${version}"></span>)</td>
-    </tr>
-    <tr>
-        <td><b>Date</b></td>
-        <td>: <span th:text="${date}"></span></td>
-    </tr>
-    <tr>
-        <td><b>User</b></td>
-        <td>: <span th:text="${userName}"></span></td>
-    </tr>
-    <tr>
-        <td><b>Search title</b></td>
-        <td>: <span th:text="${title}"></span></td>
-    </tr>
-    <tr>
-        <td><b>MS/MS data</b></td>
-        <td>: <span th:text="${fileName}"></span></td>
-    </tr>
-    <tr>
-        <td><b>Database</b></td>
-        <td>: <span th:text="${databaseName}"></span> (<span th:text="${numberOfUserProteins}"></span> proteins / <span th:text="${numberOfUserResidues}"></span> residues)</td>
-    </tr>
-</table>
+<!-- 권한이 없는 경우 메시지 출력 -->
+<div th:if="${result.notauthorized}">
+    <table border="0" width="100%">
+        <tr>
+            <td width="5">&nbsp;</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <p>You are not authorized to see this result.</p>
+            </td>
+        </tr>
+    </table>
+</div>
 
-<div class="section-title"><b>Search Parameters</b></div>
-<table>
-    <tr>
+<!-- 권한이 있는 경우 검색 결과 출력 -->
+<div th:if="${!result.notauthorized}">
+    <table>
+        <tr th:if="${result.summary.engineName}">
+            <td><b>Search Engine</b></td>
+            <td>: <span th:text="${result.summary.engineName}"></span> (version <span th:text="${result.summary.version}"></span>)</td>
+        </tr>
+        <tr th:if="${result.summary.date}">
+            <td><b>Date</b></td>
+            <td>: <span th:text="${result.summary.date}"></span></td>
+        </tr>
+        <tr th:if="${result.summary.userName}">
+            <td><b>User</b></td>
+            <td>: <span th:text="${result.summary.userName}"></span></td>
+        </tr>
+        <tr th:if="${result.summary.title}">
+            <td><b>Search title</b></td>
+            <td>: <span th:text="${result.summary.title}"></span></td>
+        </tr>
+        <tr th:if="${result.summary.fileName}">
+            <td><b>MS/MS data</b></td>
+            <td>: <span th:text="${result.summary.fileName}"></span></td>
+        </tr>
+        <tr th:if="${result.summary.databaseName}">
+            <td><b>Database</b></td>
+            <td>: <span th:text="${result.summary.databaseName}"></span>
+                (<span th:text="${result.summary.numberOfUserProteins}"></span> proteins /
+                <span th:text="${result.summary.numberOfUserResidues}"></span> residues)
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- JavaScript 추가 -->
+<script type="text/javascript">
+    function checkAll(obj, flag) {
+        if (obj != null) {
+            if (obj.length > 0) {
+                for (var i = 0; i < obj.length; i++) {
+                    obj[i].checked = flag;
+                }
+            } else {
+                obj.checked = flag;
+            }
+        }
+    }
+
+    var checkAllClickProtein = false;
+    function checkAllProtein() {
+        checkAllClickProtein = !checkAllClickProtein;
+        checkAll(document.result.protein_list, checkAllClickProtein);
+        checkAll(document.result.peptide_list, checkAllClickProtein);
+        return true;
+    }
+
+    function uncheckAllProtein(obj) {
+        if (checkAllClickProtein && !obj.checked) {
+            checkAllClickProtein = false;
+            document.result.check_all.checked = false;
+        }
+    }
+
+    function checkMutual(group, obj) {
+        var target;
+        if (group === 'protein') {
+            target = document.result.peptide_list;
+        } else {
+            target = document.result.protein_list;
+        }
+
+        if (target.length > 0) {
+            for (var i = 0; i < target.length; i++) {
+                if (target[i].value === obj.value) {
+                    target[i].checked = obj.checked;
+                }
+            }
+        } else {
+            target.checked = obj.checked;
+        }
+        uncheckAllProtein(obj);
+    }
+
+    function getChecked(form) {
+        var obj = form.protein_list;
+        var list = '';
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i].checked) {
+                list += obj[i].value + '|';
+            }
+        }
+        return list;
+    }
+
+    function checkSubmit() {
+        var form = document.view_as;
+        //if (!confirm("want to refresh?"))
+        //    return;
+
+        if (/* check if isDBond variable is available */ false) {
+            if (form.minscore.value < 0 || form.minscore.value > 1) {
+                alert("PSM min score should be between 0.0 and 1.0.");
+                return;
+            }
+        }
+
+        if (/* check if summary.isTargetDecoyed() is available */ false) {
+            if (form.minfdr.value < 0 || form.minfdr.value > 100) {
+                alert("min FDR should be between 0.0 and 100.0.");
+                return;
+            }
+        }
+
+        if (!(form.maxhit.value === 'All' || form.maxhit.value > 0)) {
+            alert("Max No. of protein hits should be positive number or 'All'");
+            return;
+        }
+        form.submit();
+    }
+
+    function doSearch() {
+        var form = document.result;
+        form.method = "post";
+        form.action = "dbond_search.jsp";
+
+        var count = 0;
+        if (form.protein_list.length > 0) {
+            for (var i = 0; i < form.protein_list.length; i++) {
+                if (form.protein_list[i].checked) {
+                    count++;
+                }
+            }
+        } else {
+            if (form.protein_list.checked) {
+                count++;
+            }
+        }
+        if (count === 0) {
+            alert("Please select proteins.");
+            return;
+        }
+        form.submit();
+    }
+</script>
+
+
+<p><font size="4"><b>Search Parameters</b></font></p>
+<table border="0">
+    <tr th:if="${result.summary.enzymeName}">
         <td><b>Enzyme</b></td>
-        <td>: <span th:text="${enzymeName}"></span></td>
+        <td>: <span th:text="${result.summary.enzymeName}"></span></td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.maxMissedCleavages}">
         <td><b>Max Missed Cleavages</b></td>
-        <td>: <span th:text="${maxMissedCleavages}"></span></td>
+        <td>: <span th:text="${result.summary.maxMissedCleavages}"></span></td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.minTerminiNumber}">
         <td><b>No. of enzyme termini</b></td>
-        <td>: <span th:text="${minTerminiNumber}"></span></td>
+        <td>: <span th:text="${result.summary.minTerminiNumber}"></span></td>
     </tr>
-    <tr th:if="${variableModifications != null and #lists.size(variableModifications) > 0}">
+    <tr th:if="${result.mods != null && result.mods.length > 0}">
         <td><b>Variable Modifications</b></td>
         <td>
-        <span th:if="${#lists.size(variableModifications) >= 10}">
-            <a th:href="@{/modification(type=0)}" th:text="${#lists.size(variableModifications)}"></a>
-        </span>
-            <span th:if="${#lists.size(variableModifications) < 10}">
-            <span th:each="mod : ${variableModifications}">
-                <span th:text="${mod.type}"></span> (<span th:text="${mod.position}"></span>)
-                <span th:if="${!#lists.isLast(mod)}">, </span>
+            <span th:if="${result.mods.length >= 10}">
+                <a th:href="'modification.jsp?file=' + ${result.fileName} + '&type=0'" target="_blank">
+                    <span th:text="${result.mods.length}"></span>
+                </a>
             </span>
-        </span>
+            <span th:if="${result.mods.length < 10}">
+                <span th:each="modi, stat : ${result.mods}">
+                    <span th:text="${modi.type}"></span> (<span th:text="${modi.position}"></span>)
+                    <span th:if="${!stat.last}">, </span>
+                </span>
+            </span>
         </td>
     </tr>
-    <tr>
+    <tr th:if="${result.isDBond}">
         <td>&nbsp;</td>
-        <td>: <font color="red">* indicates disulfide bond.</font></td>
+        <td><font color="red"> * indicates disulfide bond.</font></td>
     </tr>
-    <tr th:if="${fixedModifications != null and #lists.size(fixedModifications) > 0}">
+    <tr th:if="${result.summary.fixedModifications != null && result.summary.fixedModifications.length > 0}">
         <td><b>Fixed Modifications</b></td>
         <td>
-        <span th:if="${#lists.size(fixedModifications) >= 10}">
-            <a th:href="@{/modification(type=1)}" th:text="${#lists.size(fixedModifications)}"></a>
-        </span>
-            <span th:if="${#lists.size(fixedModifications) < 10}">
-            <span th:each="mod : ${fixedModifications}">
-                <span th:text="${mod.type}"></span> (<span th:text="${mod.position}"></span>)
-                <span th:if="${!#lists.isLast(mod)}">, </span>
+            <span th:if="${result.summary.fixedModifications.length >= 10}">
+                <a th:href="'modification.jsp?file=' + ${result.fileName} + '&type=1'" target="_blank">
+                    <span th:text="${result.summary.fixedModifications.length}"></span>
+                </a>
             </span>
-        </span>
+            <span th:if="${result.summary.fixedModifications.length < 10}">
+                <span th:each="modi, stat : ${result.summary.fixedModifications}">
+                    <span th:text="${modi.type}"></span> (<span th:text="${modi.position}"></span>)
+                    <span th:if="${!stat.last}">, </span>
+                </span>
+            </span>
         </td>
     </tr>
-    <tr>
+    <tr th:if="${!result.isDBond}">
         <td><b>Modified Mass Range</b></td>
-        <td>: <span th:text="${proteinMassMin}"></span> ~ <span th:text="${proteinMassMax < 0 ? 'Unrestricted' : '+' + proteinMassMax}"></span> Da</td>
+        <td>:
+            <span th:text="${result.summary.proteinMassMin}"></span> ~
+            <span th:text="${result.summary.proteinMassMax >= 0 ? '+' + result.summary.proteinMassMax : 'Unrestricted'}"></span> Da
+        </td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.peptideTolerance}">
         <td><b>Peptide Mass Tolerance</b></td>
-        <td>: &#177; <span th:text="${peptideTolerance}"></span> <span th:text="${ptUnit}"></span></td>
+        <td>: &#177; <span th:text="${result.summary.peptideTolerance}"></span>
+            <span th:text="${result.summary.pTUnit}"></span>
+        </td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.fragmentTolerance}">
         <td><b>Fragment Mass Tolerance</b></td>
-        <td>: &#177; <span th:text="${fragmentTolerance}"></span> <span th:text="${ftUnit}"></span></td>
+        <td>: &#177; <span th:text="${result.summary.fragmentTolerance}"></span>
+            <span th:text="${result.summary.fTUnit}"></span>
+        </td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.instrumentName}">
         <td><b>Instrument type</b></td>
-        <td>: <span th:text="${instrumentName}"></span> <span th:if="${msResolution != null}">(Resolution: <span th:text="${msResolution}"></span>-MS / <span th:text="${msmsResolution}"></span>-MS/MS)</span></td>
+        <td>: <span th:text="${result.summary.instrumentName}"></span>
+            <span th:if="${!result.isDBond && result.summary.msResolution}">
+                (Resolution: <span th:text="${result.summary.msResolution}"></span>-MS /
+                <span th:text="${result.summary.msmsResolution}"></span>-MS/MS)
+            </span>
+        </td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.numberOfQueries}">
         <td><b>Number of queries</b></td>
-        <td>: <span th:text="${numberOfQueries}"></span></td>
+        <td>: <span th:text="${result.summary.numberOfQueries}"></span></td>
     </tr>
-    <tr th:if="${isModMapRun}">
+    <tr th:if="${result.summary.mODMapRun}">
         <td><b>MODmap</b></td>
         <td>: <a href="#PTMAP">Checked</a></td>
     </tr>
-    <tr th:if="${isMultiStage}">
+    <tr th:if="${result.summary.multiStage}">
         <td><b>MultiStages search</b></td>
         <td>: Checked</td>
     </tr>
-    <tr>
+    <tr th:if="${result.summary.targetDecoyed}">
         <td><b>Decoy search</b></td>
-        <td>: <span th:if="${isTargetDecoyed}" th:text="'Checked (' + decoyFilePath + ')'"></span><span th:if="${!isTargetDecoyed}">No</span></td>
+        <td>
+            <span th:text="${result.summary.targetDecoyed ? 'Checked (' + result.summary.decoyFilePath + ')' : 'No'}"></span>
+        </td>
+    </tr>
+    <tr th:if="${result.summary.targetDecoyed && result.summary.decoyHits != null}">
+        <td>&nbsp;</td>
+        <td>:
+            <font color="red"> No. of identifications at FDR estimated by Target-Decoy</font>
+            <table border="0" align="center" cellpadding="0" cellspacing="0" style="BORDER-BOTTOM: #d9dddc 1px solid; BORDER-TOP: #d9dddc 2px solid;">
+                <tr>
+                    <td class="grayTD" align="right" bgcolor="#f3f3f3">FDR (%)</td>
+                    <td th:each="hit, stat : ${result.summary.decoyHits}" class="grayTD" align="center">
+                        &nbsp;&nbsp;<span th:text="${stat.index + 1}"></span>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td class="grayTD" bgcolor="#f3f3f3">No. of identifications</td>
+                    <td th:each="hit : ${result.summary.decoyHits}" class="grayTD" align="center">
+                        &nbsp;<span th:text="${hit}"></span>&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </td>
     </tr>
 </table>
+
+
+
+<br>
+<br>
+
+<p><font size="4"><b>Search Summary</b></font></p>
+
+<table border="0" bgcolor="#D2D2D2" width="90%">
+    <!--table border="0" width="90%" style="BORDER-BOTTOM: #d9dddc 1px solid; BORDER-TOP: #d9dddc 2px solid;"-->
+    <form name="view_as" th:action="@{/dbond/result}" th:onsubmit="checkSubmit()" method="post">
+        <input type="hidden" name="file" th:value="${result.fileName}"/>
+        <tr>
+            <td width="100" valign="top"><input type="submit" class="btnSmall" value="View As"/></td>
+            <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;PSM min score <input type="text" name="minscore" th:value="${result.minScore}"/>&nbsp;&nbsp;&nbsp;<font class="red">PSMs &gt; specified score would be summarized in result.</font><br/>
+        <tr th:if="${result.summary.targetDecoyed}">
+            <td>
+                <input type="checkbox" class="CHECK" name="targetdecoy" value="yes" th:checked="${result.useTargetDecoy ? 'checked' : ''}"/>
+                <b>By Target-decoy</b> &nbsp;&nbsp;&nbsp;&nbsp;min FDR (%) &nbsp;
+                <input type="text" name="minfdr" th:value="${result.minFDR}"/><br/><br/>
+            </td>
+        </tr>
+        &nbsp;&nbsp;&nbsp;&nbsp;Max No. of protein hits <input type="text" name="maxhit" th:value="${result.maxHit}"/> &nbsp;&nbsp;&nbsp;&nbsp; Sort by
+        <select name="sort">
+            <option value="pm" th:selected="${result.sort == 'pm'}">Peptides matched</option>
+            <option value="pi" th:selected="${result.sort == 'pi'}">Protein ID</option>
+            <option value="sc" th:selected="${result.sort == 'sc'}">Sequence coverage</option>
+            <option value="psm" th:selected="${result.sort == 'psm'}">PSMs matched</option>
+        </select>
+        </td>
+        </tr>
+    </form>
+    <form name="extract_as">
+        <script type="text/javascript">
+            function download() {
+                var url = '/downloader?path=' + encodeURIComponent([[${result.summary.fileName}]]);
+                if (document.extract_as.extract[0].checked)
+                    url = url + '&name=prix.xml&type=xml';
+                else
+                    url = url + '&name=prix.csv&type=csv';
+                window.open(url, 'Download');
+            }
+        </script>
+        <tr>
+            <td><input type="button" class="btnSmall" value="Extract As" onclick="download()"/></td>
+            <td>&nbsp;&nbsp;<input type="radio" class="CHECK" name="extract" value="pepxml" checked/>XML (for viewer)&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" class="CHECK" name="extract" value="excel"/>CSV</td>
+        </tr>
+    </form>
+</table>
+
+<br/><br/>
+<table border="0" width="100%" style="border-collapse: collapse; margin-bottom: 20px;">
+    <tr>
+        <td style="font-size: 18px; font-weight: bold; padding: 10px;">
+            Protein hits
+        </td>
+    </tr>
+    <tr th:if="${!result.isDBond}">
+        <td style="padding: 10px;">
+            <div><a href="#in_depth" style="text-decoration: none; color: #000;">Check for in-depth search</a></div>
+        </td>
+    </tr>
+</table>
+
+<form name="result" th:if="${result.infos != null and #lists.size(result.infos) > 0}">
+    <table border="1" width="100%" style="border-collapse: collapse; text-align: left; table-layout: fixed;">
+        <tr>
+            <th style="padding: 10px; background-color: #f0f0f0; border: 1px solid #ddd; width: 5%;">
+                <input type="checkbox" class="CHECK" name="check_all" id="pr_check_all" onclick="checkAllProtein();" />
+            </th>
+            <th style="padding: 10px; background-color: #f0f0f0; border: 1px solid #ddd; width: 30%;">Protein ID</th>
+        </tr>
+        <th:block th:if="${result != null and result.proteins != null}">
+            <th:block th:each="info, iterStat : ${result.infos}">
+                <th:block th:if="${info != null}">
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; width: 5%;">
+                            <input type="checkbox" class="CHECK" name="protein_list"
+                                   th:value="${info.name}" onclick="checkMutual('protein', this);" />
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #ddd; width: 30%;">
+                            <a th:href="'#protein' + ${iterStat.index}" style="text-decoration: none; color: #000;">
+                                <span th:text="${info.name}">Protein Name</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${info.description != null and info.description != ''}">
+                        <td></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">
+                            <span th:text="${info.description}">Protein Description</span>
+                        </td>
+                    </tr>
+                </th:block>
+            </th:block>
+        </th:block>
+    </table>
+</form>
+
+
+    <br/>
+
+<table class="custom-table" border="0">
+    <colgroup>
+        <col style="width: 10%;"> <!-- 체크박스 열 너비 -->
+        <col style="width: 15%;"> <!-- 번호 열 너비 -->
+        <col style="width: 75%;"> <!-- 정보 열 너비 -->
+    </colgroup>
+    <tr>
+        <td colspan="5" class="custom-section">
+            <font size="3"><b>Peptide hits</b></font>
+        </td>
+    </tr>
+
+    <th:block th:each="info, iterStat : ${result.peptideHitsInfos}" th:if="${result.peptideHitsInfos.size() > 0}">
+        <th:block th:if="${info != null}">
+            <tr>
+                <!-- 체크박스 열 -->
+                <td>
+                    <input type="checkbox" class="CHECK" name="peptide_list" th:value="${info.name}" onclick="checkMutual('peptide', this);" />
+                </td>
+
+                <!-- 번호 열 -->
+                <td><span th:text="${iterStat.index + 1}">1</span>.&nbsp;&nbsp;</td>
+
+                <!-- 정보 열 -->
+                <td colspan="3">
+                    <a target="_blank" th:text="${info.name}">Protein Name</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="3" th:text="${info.description}">Protein Description</td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="3">
+                    <font color="red">Peptides matched:</font> <span th:text="${info.numberOfMatchedPeptides}">0</span>&nbsp;&nbsp;
+                    <font color="red">PSMs matched:</font> <span th:text="${info.peptideLines.length}">0</span>&nbsp;&nbsp;
+                    <font color="red">Sequence coverage:</font> <span th:text="${result.coveragePercentages[iterStat.index]}">0</span>%
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="3">
+                    <table class="custom-table" border="0">
+                        <colgroup>
+                            <col style="width: 10%;">
+                            <col style="width: 15%;">
+                            <col style="width: 20%;">
+                            <col style="width: 15%;">
+                            <col style="width: 10%;">
+                            <col style="width: 15%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                        </colgroup>
+                        <tr>
+                            <th><font size="2">Index</font></th>
+                            <th><font size="2">Observed</font></th>
+                            <th><font size="2">Calc MW</font></th>
+                            <th><font size="2">DeltaM</font></th>
+                            <th>
+                                <th:block th:if="${result.isDBond}">Score</th:block>
+                                <th:block th:if="${!result.isDBond}">Probability</th:block>
+                            </th>
+                            <th><font size="2">Start-End</font></th>
+                            <th><font size="2">Peptide</font></th>
+                            <th><font size="2">Modified</font></th>
+                        </tr>
+
+                        <th:block th:each="peptide : ${info.peptideLines}">
+                            <tr>
+                                <td align="center" style="min-width: 50px;"><span th:text="${result.summary.getSpectrum(peptide.getIndex()).getId()}">0</span></td>
+                                <td align="right" style="min-width: 50px;"><span th:text="${peptide.mass}">0</span>(<span th:text="${peptide.charge}">0</span>+)</td>
+                                <td align="center" style="min-width: 50px;"><span th:text="${peptide.getMWCalc()}">0</span></td>
+                                <td align="center" style="min-width: 50px;"><span th:text="${peptide.getMWDelta()}">0</span></td>
+                                <td align="center" style="min-width: 50px;"><span th:text="${peptide.score}">0</span></td>
+                                <td align="center" style="min-width: 50px;"><span th:text="${peptide.start}">0</span>-<span th:text="${peptide.end}">0</span></td>
+                                <td align="left" style="min-width: 50px;"><span th:utext="${peptide.peptide}">Peptide</span></td>
+                                <td style="min-width: 50px;"><span th:text="${peptide.modification}">Modified</span></td>
+                            </tr>
+
+
+                            <th:block th:if="${result.isDBond && peptide.second != null}">
+                                <tr>
+                                    <td colspan="6" align="center">
+                                        <span th:text="${peptide.second.start}">0</span>-<span th:text="${peptide.second.end}">0</span>&nbsp;&nbsp;<span th:utext="${peptide.second.peptide}">Peptide</span>&nbsp;&nbsp;<span th:text="${peptide.second.modification}">Modified</span>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </th:block>
+                    </table>
+                </td>
+            </tr>
+        </th:block>
+    </th:block>
+</table>
+
+
+<br/>
+
+<div th:if="${!result.isDBond}">
+    <hr/>
+
+    <input type="hidden" name="ms" th:value="${result.summary.filePath}" />
+    <input type="hidden" name="db" th:value="${result.summary.databasePath}" />
+    <input type="hidden" name="msfile" th:value="${result.summary.fileName}" />
+    <input type="hidden" name="mstype" th:value="${result.summary.fileType}" />
+    <input type="hidden" name="dbfile" th:value="${result.summary.databaseName}" />
+    <input type="hidden" name="inst" th:value="${result.summary.instrumentName}" />
+
+    <table class="custom-table" border="0" style="width: 100%;">
+        <tr>
+            <td><font size="4"><b>In-depth Search</b></font></td>
+        </tr>
+        <tr>
+            <td><div>First, you have to select proteins.<br>This search will be conducted only for selected proteins</div></td>
+        </tr>
+    </table>
+
+    <table border="0" bgcolor="#D2D2D2" width="90%">
+        <tr>
+            <td width="100" valign="top">
+                <input type="button" class="custom-button" value="DBond Search" onclick="doSearch();" />
+            </td>
+            <td>
+                <font class="custom-warning">&nbsp;&nbsp;Disulfide bond analysis</font><br />
+            </td>
+        </tr>
+    </table>
+</div>
+
+
 <footer th:replace="~{partials/fragment :: footer}"></footer>
 </body>
 </html>

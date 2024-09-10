@@ -7,8 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class PxData {
+    private String type;
     private String name;
-    private String content;
-
+    private byte[] content;
 }

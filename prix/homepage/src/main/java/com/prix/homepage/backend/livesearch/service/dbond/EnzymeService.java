@@ -27,9 +27,9 @@ public class EnzymeService {
         }
 
         // 2. ntCleave 또는 ctCleave가 비어있거나, 문자가 아닌 문자가 포함된 경우
-        if (ntCleave.isEmpty() || ctCleave.isEmpty()) {
-            return 0; // addState = 0
-        }
+//        if (ntCleave.isEmpty() || ctCleave.isEmpty()) {
+//            return 0; // addState = 0
+//        }
         if (!ctCleave.chars().allMatch(Character::isLetter)) {
             return 3; // addState = 3
         }

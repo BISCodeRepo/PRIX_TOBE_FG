@@ -38,7 +38,7 @@ public class DBondService {
     private final ModificationMapper modificationMapper;
     private final UserSettingMapper userSettingMapper;
     private final SearchLogMapper searchLogMapper;
-    //주소 관리
+    //주소 관리 (libraryPath는 실제 주소로 바꿔야함)
     private final PathUtil pathUtil;
 
     public List<Enzyme> getUserEnzymes(Integer userId) {

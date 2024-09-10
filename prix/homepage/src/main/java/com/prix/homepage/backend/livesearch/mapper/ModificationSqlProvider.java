@@ -1,11 +1,13 @@
 package com.prix.homepage.backend.livesearch.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class ModificationSqlProvider {
     
     public String findModByUserAndCond(final Map<String, Object> params) {
