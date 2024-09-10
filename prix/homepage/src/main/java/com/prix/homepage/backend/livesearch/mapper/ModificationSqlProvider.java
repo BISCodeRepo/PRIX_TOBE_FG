@@ -1,16 +1,18 @@
 package com.prix.homepage.backend.livesearch.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class ModificationSqlProvider {
     
     public String findModByUserAndCond(final Map<String, Object> params) {
         return new SQL() {{
-            SELECT("id, name, mass_diff, residue, position");
+            SELECT("id, name, mass_diff AS massDiff, residue, position");
             FROM("px_modification");
             WHERE("id IN (SELECT mod_id FROM px_user_modification WHERE user_id = #{userId} AND variable = #{variable} AND engine = #{engine})");
             if (params.get("sortBy") != null && !params.get("sortBy").toString().isEmpty()) {
@@ -26,7 +28,7 @@ public class ModificationSqlProvider {
         Integer userId = (Integer) params.get("userId");
 
         return new SQL() {{
-            SELECT("c.class, m.id, m.name, m.mass_diff, m.residue, m.position");
+            SELECT("c.class, m.id, m.name, m.mass_diff AS massDiff, m.residue, m.position");
             FROM("px_modification m");
             JOIN("px_classification c ON c.id = m.class");
             WHERE("m.user_id = 0");
@@ -68,7 +70,7 @@ public class ModificationSqlProvider {
 
     public String findUserModifications(@Param("userId") Integer userId, @Param("var") Integer var, @Param("engine") Integer engine) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT id, name, mass_diff, residue, position FROM px_modification WHERE user_id = #{userId}");
+        sql.append("SELECT id, name, mass_diff AS massDiff, residue, position FROM px_modification WHERE user_id = #{userId}");
 
         if (!var.equals(1)) {
             sql.append(" AND position = 'ANYWHERE'");
@@ -78,4 +80,5 @@ public class ModificationSqlProvider {
 
         return sql.toString();
     }
+
 }

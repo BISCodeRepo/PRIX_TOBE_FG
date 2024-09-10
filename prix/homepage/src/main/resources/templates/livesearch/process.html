@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}">
+</head>
+<header th:replace="~{partials/fragment :: header2}"></header>
+<body th:onload="${process.finished or process.failed} ? '' : 'initTimer();'">
+
+
+<table width="95%" border="0" align="center" cellpadding="1">
+  <tr>
+    <td><font size="3">Processing... <font class="blue"><em th:text="${process.rate + '%'}"></em></font></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>to stop, click <a th:href="${process.engine == 'dbond' ? '/dbond/dbond_search' : '/search'}">here</a></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><font class="dark"><pre th:utext="${process.output}"></pre></font></td>
+  </tr>
+</table>
+
+<script th:inline="javascript">
+  let timerID = null;
+
+  function initTimer() {
+    console.log("타이머 시작");
+    timerID = setTimeout(() => timeOut(), 3000);
+  }
+
+  function timeOut() {
+    clearTimeout(timerID);
+    console.log("이동전");
+    window.location = /*[[@{/dbond/process(execute='no', log=${process.logPath}, xml=${process.xmlPath}, ms=${process.msPath}, db=${process.dbPath}, dec=${process.decoyPath}, title=${process.title}, mi=${process.msIndex}, di=${process.dbIndex}, mul=${process.multiPath}, engine=${process.engine})}]]*/;
+    console.log("이동후");
+  }
+</script>
+
+</body>
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</body>
+</html>
