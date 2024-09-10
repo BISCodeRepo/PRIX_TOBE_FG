@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan(basePackages = {
         "com.prix.homepage.backend",
-//        "com.prix.homepage.backend.livesearch.mapper",
-//        "com.prix.homepage.backend.livesearch.mapper.PatternMatch",
-//        "com.prix.homepage.backend.livesearch.mapper.dbond",
-//        "com.prix.homepage.backend.account.mapper",
-//        "com.prix.homepage.backend.admin",
-//        "com.prix.homepage.backend.download",
+        "com.prix.homepage.backend.livesearch.mapper",
+        "com.prix.homepage.backend.livesearch.mapper.PatternMatch",
+        "com.prix.homepage.backend.livesearch.mapper.dbond",
+        "com.prix.homepage.backend.account.mapper",
+        "com.prix.homepage.backend.admin",
+        "com.prix.homepage.backend.download",
 })
 public class MyBatisConfig {
 
