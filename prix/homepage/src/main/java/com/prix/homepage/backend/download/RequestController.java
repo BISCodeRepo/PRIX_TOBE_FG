@@ -1,7 +1,6 @@
 package com.prix.homepage.backend.download;
 
-import com.prix.homepage.backend.basic.utils.mail.Mailer;
-import com.prix.homepage.backend.download.RequestForm;
+import com.prix.homepage.backend.basic.utils.Mailer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

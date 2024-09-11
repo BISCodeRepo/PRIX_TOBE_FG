@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.basic.utils.mail;
+package com.prix.homepage.backend.basic.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
