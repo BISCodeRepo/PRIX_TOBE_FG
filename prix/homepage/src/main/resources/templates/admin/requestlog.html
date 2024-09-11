@@ -43,6 +43,9 @@
           <span th:if="${request.state == 0}">
             <form th:action="@{/admin/requestlog/accept}" method="post" style="display:inline;">
                 <input type="hidden" name="id" th:value="${request.id}" />
+                <input type="hidden" name="name" th:value="${request.name}" />
+                <input type="hidden" name="email" th:value="${request.email}" />
+                <input type="hidden" name="software" th:value="${request.software}" />
                 <input name="btup" type="submit" class="btnBlueSmall" value="Accept" />
             </form>
           </span>

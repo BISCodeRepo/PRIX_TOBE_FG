@@ -147,11 +147,20 @@ public class AdminController extends BaseController {
 
     @PostMapping("/requestlog/accept")
     public String updateRequest(
-            @RequestParam(name = "id", required = false) Integer id
-            ) {
+        @RequestParam(name = "id", required = false) Integer id,
+        @RequestParam(name = "name", required = false) String name,
+        @RequestParam(name = "email", required = false) String email,
+        @RequestParam(name = "software", required = false) String software
+        ) {
 
-//            mailer.sendEmailToUser();
-            adminMapper.updateRequestState(id, 1); // 1 for accepted
+        final String sendMsg = "hello";
+        final String sig = "sig";
+        final String path = "path";
+
+
+
+        mailer.sendEmailToUser(name, email, software, sendMsg, sig, path);
+        adminMapper.updateRequestState(id, 1); // 1 for accepted
         return "redirect:/admin/requestlog";
     }
 

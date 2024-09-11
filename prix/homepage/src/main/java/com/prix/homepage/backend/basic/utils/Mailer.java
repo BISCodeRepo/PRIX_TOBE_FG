@@ -39,9 +39,9 @@ public class Mailer {
             helper.setText(greeting.toString());
 
             // 첨부 파일이 있을 경우 추가
-            if (path != null && !path.isEmpty()) {
-//                helper.addAttachment("Attachment", new File(path));
-            }
+//            if (path != null && !path.isEmpty()) {
+////                helper.addAttachment("Attachment", new File(path));
+//            }
 
             mailSender.send(message);
             System.out.println("Email sent successfully to user");
