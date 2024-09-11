@@ -52,7 +52,7 @@ public class Mailer {
         }
     }
 
-    public void sendEmailToMe(String subject, String name, String affiliation, String title, String email, String instrument) {
+    public boolean sendEmailToMe(String subject, String name, String affiliation, String title, String email, String instrument) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -70,16 +70,19 @@ public class Mailer {
             userInfo.append("Email: ").append(email).append("\r\n");
             userInfo.append("Instrument Type: ").append(instrument).append("\r\n");
             userInfo.append("\r\n");
-            userInfo.append("https://prix.hanyang.ac.kr/admin/requestlog.jsp");
+            userInfo.append("https://prix.hanyang.ac.kr/admin/requestlog");
 
             helper.setText(userInfo.toString());
 
             mailSender.send(message);
             System.out.println("Email sent successfully to me");
 
+            return true;
+
         } catch (Exception e) {
             System.out.println("Error in sendEmailToMe");
             e.printStackTrace();
+            return false;
         }
     }
 }

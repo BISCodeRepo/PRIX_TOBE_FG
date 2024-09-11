@@ -3,6 +3,7 @@ package com.prix.homepage.backend.admin;
 import com.prix.homepage.backend.admin.entity.*;
 import com.prix.homepage.backend.admin.dto.UploadForm;
 import com.prix.homepage.backend.account.domain.User;
+import com.prix.homepage.backend.basic.utils.Mailer;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,13 @@ public class AdminController extends BaseController {
     private final AdminService adminService;
     private final AdminMapper adminMapper;
 
+    private final Mailer mailer;
+
     @Autowired
-    public AdminController(AdminService adminService, AdminMapper adminMapper) {
+    public AdminController(AdminService adminService, AdminMapper adminMapper, Mailer mailer) {
         this.adminService = adminService;
         this.adminMapper = adminMapper;
+        this.mailer = mailer;
     }
 
     @GetMapping("/configuration")
@@ -141,21 +145,27 @@ public class AdminController extends BaseController {
         return "admin/requestlog";
     }
 
-    @GetMapping("/update_request")
+    @PostMapping("/requestlog/accept")
     public String updateRequest(
-            @RequestParam(name = "accept", required = false) Integer acceptId,
-            @RequestParam(name = "reject", required = false) Integer rejectId,
-            @RequestParam(name = "delete", required = false) Integer deleteId) {
+            @RequestParam(name = "id", required = false) Integer id
+            ) {
 
-        if (acceptId != null) {
-            adminMapper.updateRequestState(acceptId, 1); // 1 for accepted
-        } else if (rejectId != null) {
-            adminMapper.updateRequestState(rejectId, 2); // 2 for rejected
-        } else if (deleteId != null) {
-            adminMapper.deleteRequestById(deleteId);
-        }
+//            mailer.sendEmailToUser();
+            adminMapper.updateRequestState(id, 1); // 1 for accepted
         return "redirect:/admin/requestlog";
     }
+
+    @GetMapping("/requestlog/delete")
+    public String deleteRequest(
+            @RequestParam(name = "id", required = false) Integer id) {
+
+
+        adminMapper.deleteRequestById(id);
+
+        return "redirect:/admin/requestlog";
+    }
+
+
 
 
 }

@@ -19,8 +19,8 @@ public class RequestController {
     @GetMapping
     public String showRequestPage(@RequestParam(required = false) String software, Model model) {
         // software 파라미터가 없을 경우 기본값 설정
-        if (software == null || software.isEmpty()) {
-            software = "xxx";
+        if (software == null || software.equals("xxx")) {
+            return "redirect:/download";
         }
         // 페이지에 소프트웨어 정보를 전달
 
@@ -47,17 +47,14 @@ public class RequestController {
 
         model.addAttribute("software", software);
 
-//        if (software == null || software.equals("xxx")) {
-//            return "redirect:/publications";
-//        }
+        if (software == null || software.equals("xxx")) {
+            return "redirect:/download";
+        }
 
         if (agreement.equals("1xyes") && email != null && !email.isEmpty()) {
             String subject = software + " software request from " + name;
 
-            mailer.sendEmailToMe(subject, name, affliation, title, email, instrument);
-
-            // Mail 전송 생략
-            boolean mailSent = true;
+            boolean mailSent = mailer.sendEmailToMe(subject, name, affliation, title, email, instrument);
 
             if (mailSent) {
                 requestMapper.insertSoftwareRequest(
