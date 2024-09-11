@@ -1,5 +1,6 @@
 package com.prix.homepage.backend.download;
 
+import com.prix.homepage.backend.basic.utils.mail.Mailer;
 import com.prix.homepage.backend.download.RequestForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,9 @@ public class RequestController {
 
     @Autowired
     private RequestMapper requestMapper;
+
+    @Autowired
+    private Mailer mailer;
 
     @GetMapping
     public String showRequestPage(@RequestParam(required = false) String software, Model model) {
@@ -36,7 +40,11 @@ public class RequestController {
 
         String software = requestForm.getSoftware();
         String agreement = requestForm.getAgreement();
+        String affliation = requestForm.getAffiliation();
+        String title = requestForm.getTitle();
         String email = requestForm.getEmail();
+        String name = requestForm.getName();
+        String instrument = requestForm.getInstrument();
 
         model.addAttribute("software", software);
 
@@ -45,7 +53,9 @@ public class RequestController {
 //        }
 
         if (agreement.equals("1xyes") && email != null && !email.isEmpty()) {
-            String subject = software + " request from " + requestForm.getName();
+            String subject = software + " software request from " + name;
+
+            mailer.sendEmailToMe(subject, name, affliation, title, email, instrument);
 
             // Mail 전송 생략
             boolean mailSent = true;
