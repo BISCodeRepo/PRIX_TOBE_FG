@@ -7,9 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-public class PxData {
-    private String type;
-    private String name;
-    private byte[] content;
+public class DatabaseInfo {
+    private int dataId;
+    private String fileName;
 }

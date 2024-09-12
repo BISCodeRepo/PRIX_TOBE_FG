@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.time.LocalDate;
 
 @Mapper
-public interface SearchLogMapper {
+public interface ActgSearchLogMapper {
 
     @Insert("INSERT INTO px_search_log (user_id, title, date, msfile, db, result, engine) " +
             "VALUES (#{userId}, #{title}, NOW(), #{msFile}, #{db}, #{result}, #{engine})")

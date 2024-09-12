@@ -3,7 +3,7 @@ package com.prix.homepage.backend.livesearch.service;
 import com.prix.homepage.backend.account.service.UserService;
 import com.prix.homepage.backend.basic.utils.PathUtil;
 import com.prix.homepage.backend.livesearch.dto.ActgResultDto;
-import com.prix.homepage.backend.livesearch.mapper.ACTG.SearchLogMapper;
+import com.prix.homepage.backend.livesearch.mapper.ACTG.ActgSearchLogMapper;
 import com.prix.homepage.backend.livesearch.pojo.SearchLog;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class ActgResultService {
 
-    private final SearchLogMapper searchLogMapper; // 검색 로그 데이터를 조회하기 위한 매퍼
+    private final ActgSearchLogMapper searchLogMapper; // 검색 로그 데이터를 조회하기 위한 매퍼
     private final UserService userService; // 사용자 정보를 가져오기 위한 서비스
     private final PathUtil pathUtil; // 파일 경로를 처리하는 유틸리티 클래스
 

@@ -2,7 +2,7 @@ package com.prix.homepage.backend.livesearch.service;
 
 import com.prix.homepage.backend.basic.utils.PathUtil;
 import com.prix.homepage.backend.livesearch.dto.ActgDto;
-import com.prix.homepage.backend.livesearch.mapper.ACTG.SearchLogMapper;
+import com.prix.homepage.backend.livesearch.mapper.ACTG.ActgSearchLogMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class ActgProcService {
 
     private final PathUtil pathUtil;
-    private final SearchLogMapper searchLogMapper;
+    private final ActgSearchLogMapper searchLogMapper;
 
 
     /**

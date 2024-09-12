@@ -2,15 +2,19 @@ package com.prix.homepage.backend.livesearch.controller;
 
 import com.prix.homepage.backend.basic.utils.PrixDataWriter;
 import com.prix.homepage.backend.livesearch.dto.UserSettingDto;
+import com.prix.homepage.backend.livesearch.dto.dbond.DBondResultDto;
+import com.prix.homepage.backend.livesearch.dto.dbond.ProcessRequestDto;
 import com.prix.homepage.backend.livesearch.pojo.Modification;
 import com.prix.homepage.backend.livesearch.pojo.dbond.Enzyme;
 import com.prix.homepage.backend.livesearch.pojo.dbond.PxData;
 import com.prix.homepage.backend.livesearch.service.ModificationService;
 import com.prix.homepage.backend.livesearch.service.UserModificationService;
 import com.prix.homepage.backend.livesearch.service.UserSettingService;
+import com.prix.homepage.backend.livesearch.service.dbond.DBondResultService;
 import com.prix.homepage.backend.livesearch.service.dbond.DBondService;
 import com.prix.homepage.backend.livesearch.service.dbond.EnzymeService;
 import com.prix.homepage.backend.account.argumentResolver.LoginUserId;
+import com.prix.homepage.constants.DBond.ProteinInfo;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +24,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.prix.homepage.constants.prixConst.anony;
@@ -45,6 +49,7 @@ public class DBondController extends BaseController {
     private final UserSettingService userSettingService;
     private final ModificationService modificationService;
     private final UserModificationService userModificationService;
+    private final DBondResultService dBondResultService;
     private final EnzymeService enzymeService;
 
     /**
@@ -61,6 +66,10 @@ public class DBondController extends BaseController {
                             @RequestParam(required = false) String mstype,
                             @RequestParam(required = false) String inst,
                             @RequestParam(required = false) String[] protein_list) {
+
+
+        log.info("Received dbondForm request with parameters: id={}, entry={}, ms={}, db={}, msfile={}, dbfile={}, mstype={}, inst={}, protein_list={}",
+                id, entry, ms, db, msfile, dbfile, mstype, inst, protein_list);
 
         String userName;
         if (id == 4) userName = "annoymous";
@@ -82,10 +91,11 @@ public class DBondController extends BaseController {
         model.addAttribute("userSetting", userSetting);
 
         int dbNewIndex = -1;
+
         if (ms != null) {
             String fasta = "";
             PxData pxData = dBondService.getDataById(Integer.parseInt(db));
-
+            log.info("pxData = {}",pxData);
             if (pxData != null) {
                 String pwd = pxData.getName();
                 File file = new File(pwd);
@@ -222,6 +232,7 @@ public class DBondController extends BaseController {
 
         List<Modification> modifications = modificationService.findModifications(var==1,engine==1,sort,filter,id);
 
+        log.info("필터 = {}",filter);
         model.addAttribute("modifications", modifications);
 
         return "livesearch/unimod_ptms_list";
@@ -244,6 +255,7 @@ public class DBondController extends BaseController {
 
         boolean finished = false;
         ModFinder modFinder = new ModFinder(modValues);
+        log.info("필터 = {}",filter);
 
         if (id != null && modValues != null && submit != null) {
             List<Integer> modValuesList = modValues.stream()
@@ -365,6 +377,9 @@ public class DBondController extends BaseController {
     public String getEnzymeList(@LoginUserId Integer id,HttpSession session, Model model) {
 
         List<Enzyme> enzymes = enzymeService.getEnzymesByUserId(id);
+        for(Enzyme enzyme : enzymes){
+            log.info("enzyme = {}",enzyme);
+        }
         model.addAttribute("enzymes", enzymes);
         model.addAttribute("id", id);
 
@@ -406,11 +421,114 @@ public class DBondController extends BaseController {
     @ResponseBody
     public String getUserEnzymes(@LoginUserId Integer id, HttpSession session) {
         log.info("Get user_enzyme");
-        List<Enzyme> enzymes = dBondService.getUserEnzymes(id);
+        List<Enzyme> adminEnzymes = dBondService.getUserEnzymes(0);
+        List<Enzyme> userEnzymes = dBondService.getUserEnzymes(id);
+        List<Enzyme> enzymes = new ArrayList<>(adminEnzymes);
+
+        enzymes.addAll(userEnzymes);
         return enzymes.stream()
                 .map(e -> e.getName() + ":" + e.getId())
                 .collect(Collectors.joining(","));
     }
+
+    /**
+     * DBond에서 process에서 진행사항을 알기위해 timer에 의해 3초마다 새로고침 요청할때
+     * @return String address
+     **/
+    @GetMapping("/dbond/process")
+    public String processData2(@LoginUserId Integer id,
+                              HttpServletRequest request,
+                              Model model) {
+
+        if(id == 4) return "redirect:/login/user?url=modi/search";
+
+        Map<String, String> paramsMap = new HashMap<>();
+        request.getParameterMap().forEach((key, value) -> {
+            if (value.length > 0) {
+                paramsMap.put(key, value[0]);
+            }
+        });
+//
+        log.info("ParamsMap Contents: ");
+        paramsMap.forEach((key, value) -> {
+            log.info(key + " : " + value);
+        });
+
+        ProcessRequestDto dto = dBondService.processFilesAndData(id, paramsMap, new MultipartFile[]{});
+
+        log.info("Dto = {}",dto.toString());
+
+        model.addAttribute("process",dto);
+
+        return dto.getAddress();
+    }
+
+
+    /**
+     * DBond에서 submit버튼을 처음누를때 process창으로 이동
+     * @return String adress
+     **/
+    @PostMapping("/dbond/process")
+    public String processData(@LoginUserId Integer id,
+                              HttpServletRequest request,
+                              @RequestParam("ms_file") MultipartFile msFile,
+                              @RequestParam("fasta") MultipartFile fasta,
+                              Model model) {
+
+        if(id == 4) return "redirect:/login/user?url=modi/search";
+
+        Map<String, String> paramsMap = new HashMap<>();
+        request.getParameterMap().forEach((key, value) -> {
+            if (value.length > 0) {
+                paramsMap.put(key, value[0]);
+            }
+        });
+
+//        log.info("ParamsMap Contents: ");
+//        paramsMap.forEach((key, value) -> {
+//            log.info(key + " : " + value);
+//        });
+//
+//        log.info("hasMsFile = {}",!msFile.isEmpty());
+//        log.info("hasFasta = {}",!fasta.isEmpty());
+
+        ProcessRequestDto dto = dBondService.processFilesAndData(id, paramsMap, new MultipartFile[]{msFile, fasta});
+
+        log.info("Dto = {}",dto.toString());
+
+        model.addAttribute("process",dto);
+
+        return dto.getAddress();
+    }
+
+    /**
+     * DBond에서 process가 끝나고 결과창을 처음 보여줄때
+     * @return String "livesearch/result"
+     **/
+    @GetMapping("/dbond/result")
+    public String getDBondResultPage(@LoginUserId Integer id,Model model, HttpServletRequest request) {
+        DBondResultDto result = dBondResultService.getResult(id, request);
+        log.info("summary ={}",result.getSummary());
+        log.info("result ={}",result);
+        model.addAttribute("result", result);
+
+        return "livesearch/result";
+    }
+
+    /**
+     * DBond에서 결과창에서 View_As등을 눌러서 다시 렌더링할때
+     * @return String "livesearch/result"
+     **/
+    @PostMapping("/dbond/result")
+    public String postDBondResultPage(@LoginUserId Integer id,Model model, HttpServletRequest request) {
+        DBondResultDto result = dBondResultService.getResult(id, request);
+        log.info("summary ={}",result.getSummary());
+        log.info("result ={}",result);
+        model.addAttribute("result", result);
+
+        return "livesearch/result";
+    }
+
 }
 
 
