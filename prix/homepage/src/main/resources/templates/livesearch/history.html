@@ -46,7 +46,7 @@
             </tr>
             <tr th:each="log, iterStat : ${searchLogs}">
               <td class="grayTD" style="width: 10%;">
-                <a th:href="@{${log.engine == 'dbond' ? '/dbond/result?file=' + log.result : '/actg/result?file=' + log.result}}"
+                <a th:href="@{${log.engine == 'dbond' ? '/dbond/result?file=' + log.result : '/livesearch/ACTG/Result?index=' + log.result}}"
                    target="_blank"
                    th:text="${iterStat.index + 1}">
                 </a>
