@@ -31,6 +31,11 @@ import java.util.List;
 import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW;
 import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW_RELEASE;
 
+/**
+ * ADMINISTRATION 기능
+ * configuration, search log, users, request log 4개의 페이지 담당
+ * admin으로 시작되는 url은 관리자 계정만 접근 가능. SessionLevelInterceptor에서 처리.
+ */
 @Controller
 @RequestMapping("/admin")
 @Slf4j

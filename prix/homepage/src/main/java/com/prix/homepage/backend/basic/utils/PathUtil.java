@@ -10,12 +10,13 @@ public class PathUtil {
     public final static String PATH_CONFIG =
             "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/";
     public final static String PATH_SW =
-//            "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/download/software_archive/";
+            "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/download/software_archive/";
 //            "D:\\code\\GitHub\\PRIX_TOBE_FG2\\prix\\homepage\\src\\main\\resources\\static\\software_archive";
-    "D:\\";
+//    "D:\\";
 
     public final static String PATH_SW_RELEASE =
-            "D:\\release\\";
+//            "D:\\release\\";
+            "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/download/software_archive/release/";
 
 
 

@@ -17,10 +17,16 @@ import java.nio.file.Paths;
 
 import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW_RELEASE;
 
+
 @Controller
 @RequestMapping("/download/software")
 public class FileDownloadController {
 
+    /**
+     * URL 접속을 통해 소프트웨어를 직접 다운로드
+     * @param fileName 다운로드 받을 파일 명.
+     * @return 파일이 존재할 경우 파일 다운로드.
+     */
     @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> downloadFileFromExternal(@PathVariable String fileName) {
         try {

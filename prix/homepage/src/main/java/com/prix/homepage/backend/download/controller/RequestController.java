@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ *  소프트웨어 다운로드 요청 기능
+ */
 @Controller
 @RequestMapping("/download/request")
 public class RequestController {
@@ -18,6 +21,12 @@ public class RequestController {
     @Autowired
     private Mailer mailer;
 
+    /**
+     * 소프트웨어 요청 페이지
+     * @param software 요청할 software
+     * @param model
+     * @return request.html 템플릿 반환
+     */
     @GetMapping
     public String showRequestPage(@RequestParam(required = false) String software, Model model) {
         // software 파라미터가 없을 경우 기본값 설정
@@ -36,6 +45,12 @@ public class RequestController {
         return "download/request";  // request.html 템플릿 반환
     }
 
+    /**
+     * 소프트웨어 요청 메일 전송
+     * @param requestForm 요청 메일에 들어갈 내용
+     * @param model
+     * @return 요청 완료 페이지
+     */
     @PostMapping
     public String processRequest(@ModelAttribute("requestForm") RequestForm requestForm, Model model) {
 
