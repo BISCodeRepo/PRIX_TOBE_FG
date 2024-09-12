@@ -4,12 +4,14 @@ import com.prix.homepage.backend.admin.entity.*;
 import com.prix.homepage.backend.admin.dto.UploadForm;
 import com.prix.homepage.backend.account.domain.User;
 import com.prix.homepage.backend.basic.utils.Mailer;
+import com.prix.homepage.backend.basic.utils.PrixDataWriter;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
@@ -19,14 +21,12 @@ import java.util.List;
 @Slf4j
 public class AdminController extends BaseController {
 
-    private final AdminService adminService;
     private final AdminMapper adminMapper;
 
     private final Mailer mailer;
 
     @Autowired
     public AdminController(AdminService adminService, AdminMapper adminMapper, Mailer mailer) {
-        this.adminService = adminService;
         this.adminMapper = adminMapper;
         this.mailer = mailer;
     }
@@ -44,7 +44,6 @@ public class AdminController extends BaseController {
         model.addAttribute("softwareLogs", softwareLogs);
         model.addAttribute("modificationLogs", modificationLogs);
 
-        // Optional: 메시지들 추가
         model.addAttribute("modaMessage", adminMapper.getMessageBySoftware("mode"));
         model.addAttribute("dbondMessage", adminMapper.getMessageBySoftware("dbond"));
         model.addAttribute("nextsearchMessage", adminMapper.getMessageBySoftware("nextsearch"));
@@ -53,9 +52,39 @@ public class AdminController extends BaseController {
         return "admin/configuration";
     }
 
-    @PostMapping("manage_file")
-    public String manageFile(@ModelAttribute("UploadForm") UploadForm uploadForm) {
-        adminService.uploadFile(uploadForm);
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("db_name") String dbName,
+                                   @RequestParam("db_file") MultipartFile dbFile) {
+        try {
+            // 파일 저장 경로 설정
+//            final String root = "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/";
+            String root = "D:\\";
+            String originalFilename = dbFile.getOriginalFilename();
+//            String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
+            String dbPath = originalFilename;
+
+
+            // 파일 저장 처리
+            if (!dbFile.isEmpty()) {
+                String path = root + dbPath;
+                File dest = new File(path);
+                dbFile.transferTo(dest);  // 파일 저장
+
+                // 데이터베이스에 삽입할 때 파일명에서 확장자를 제거하여 이름 설정
+                if (dbName == null || dbName.isEmpty()) {
+                    int last = dbPath.lastIndexOf('.');
+                    dbName = (last < 0) ? dbPath : dbPath.substring(0, last);
+                }
+
+                // 데이터베이스 처리
+//                int dataId = PrixDataWriter.write("fasta", dbPath, dbFile.getInputStream());
+                adminMapper.insertDatabaseFile(dbName, dbPath, 0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";  // 에러 발생 시 처리
+        }
+
         return "redirect:/admin/configuration";
     }
 
@@ -66,7 +95,7 @@ public class AdminController extends BaseController {
 
         if (" edit name ".equals(action)) {
             adminMapper.updateDatabase(database.getId(), database.getName());
-        } else if ("unlink".equals(action)) {
+        } else if (" unlink ".equals(action)) {
             adminMapper.deleteDatabase(database.getId());
         }
         return "redirect:/admin/configuration";

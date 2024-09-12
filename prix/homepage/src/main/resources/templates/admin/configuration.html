@@ -48,7 +48,7 @@
                                     </td>
                                     <td class="grayTD" th:text="${db.file}"></td>
                                     <td class="grayTD">
-                                        <input name="action" type="submit" class="btnSmall" style="margin-right: 10px;" value="edit name" />
+                                        <input name="action" type="submit" class="btnSmall" style="margin-right: 10px;" value=" edit name " />
                                     </td>
                                     <td class="grayTD">
                                         <input name="action" type="submit" class="btnSmall" value=" unlink " />
@@ -56,12 +56,14 @@
                                 </form>
                             </tr>
                             <tr>
-                                <form method="post" th:action="@{/admin/manage_file}" th:object="${UploadForm}" enctype="multipart/form-data">
-                                    <td class="grayTD"><input name="name" type="text" style="width:40em" /></td>
-                                    <td class="grayTD"><input name="file" type="file" style="width:40em" /></td>
-                                    <td class="grayTD"><input name="add_db" type="submit" class="btnSmall" value=" upload " /></td>
-                                    <td class="grayTD"></td>
+                                <form method="post" th:action="@{/admin/upload}" enctype="multipart/form-data">
+                                    <td class="grayTD"><input name="db_name" type="text" size="40" /></td>
+                                    <td class="grayTD"><input name="db_file" type="file" size="40" /></td>
+                                    <td class="grayTD">
+                                        <div align="right"><input name="add_db" type="submit" class="btnSmall" value="Upload" /></div>
+                                    </td>
                                 </form>
+
                             </tr>
                         </table>
                     </td>

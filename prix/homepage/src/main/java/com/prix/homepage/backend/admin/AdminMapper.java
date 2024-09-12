@@ -90,4 +90,7 @@ public interface AdminMapper {
     @Update("UPDATE px_software_msg SET message = #{message} WHERE id = #{id}")
     void updateSoftwareMessage(@Param("id") String id, @Param("message") String message);
 
+    @Insert("INSERT INTO px_database (name, file, data_id) VALUES (#{dbName}, #{dbPath}, #{dataId})")
+    void insertDatabaseFile(@Param("dbName") String dbName, @Param("dbPath") String dbPath, @Param("dataId") int dataId);
+
 }
