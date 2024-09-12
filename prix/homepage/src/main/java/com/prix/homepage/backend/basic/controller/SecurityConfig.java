@@ -20,6 +20,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 필요 시에만 세션 생성
+                .and()
+                .headers()
+                .frameOptions().disable() // X-Frame-Options 비활성화
                 .and().build();
     }
 }

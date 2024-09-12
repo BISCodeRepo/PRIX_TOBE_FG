@@ -7,6 +7,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class SessionLevelInterceptor implements HandlerInterceptor {
 
+    /**
+     *  관리자 계정(level 2이상)만 접근 가능
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        HttpSession session = request.getSession(false);

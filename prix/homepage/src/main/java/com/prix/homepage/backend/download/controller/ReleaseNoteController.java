@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.download;
+package com.prix.homepage.backend.download.controller;
 
 import com.prix.homepage.frontend.controller.BaseController;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +16,13 @@ import java.nio.file.Files;
 @RequestMapping("/download/releasenote")
 public class ReleaseNoteController extends BaseController {
 
+    /**
+     * release note 보기
+     * @param fileName release note  이름
+     * @param referer 이전 위치로 돌아가기 위함
+     * @return 새 창에 release note 반환
+     * @throws IOException
+     */
     @GetMapping()
     public ResponseEntity<Resource> getReleaseNote(
             @RequestParam(name = "fileName", required = false) String fileName,

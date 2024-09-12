@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.download;
+package com.prix.homepage.backend.download.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

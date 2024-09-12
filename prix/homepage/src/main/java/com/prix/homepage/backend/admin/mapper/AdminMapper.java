@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.admin;
+package com.prix.homepage.backend.admin.mapper;
 
 import com.prix.homepage.backend.admin.entity.*;
 import com.prix.homepage.backend.account.domain.User;
@@ -43,19 +43,6 @@ public interface AdminMapper {
     @Select("SELECT date, version, file FROM px_modification_log")
     ModificationLog[] selectAllModificationLogs();
 
-    // 특정 메시지 가져오기
-    @Select("SELECT message FROM px_software_msg WHERE id = 'mode'")
-    String selectModaMessage();
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'dbond'")
-    String selectDbondMessage();
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'nextsearch'")
-    String selectNextSearchMessage();
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'signature'")
-    String selectSignatureMessage();
-
     // SearchLog 관련 메서드 추가
     @Select("SELECT l.title, l.date, " +
             "COALESCE(msData.name, '') as msFile, " +
@@ -92,4 +79,43 @@ public interface AdminMapper {
 
     @Delete("DELETE FROM px_software_request WHERE id = #{requestId}")
     void deleteRequestById(@Param("requestId") int requestId);
+
+//    mail
+    @Select("SELECT message FROM px_software_msg WHERE id = #{softwareId}")
+    String getMessageBySoftware(@Param("softwareId") String softwareId);
+
+    @Update("UPDATE px_software_request SET state = #{state}, version = #{version}, senttime = NOW() WHERE id = #{requestId}")
+    void updateRequestStateWithVersion(@Param("requestId") Integer requestId, @Param("state") int state, @Param("version") String version);
+
+    @Update("UPDATE px_software_msg SET message = #{message} WHERE id = #{id}")
+    void updateSoftwareMessage(@Param("id") String id, @Param("message") String message);
+
+    @Insert("INSERT INTO px_database (name, file, data_id) VALUES (#{dbName}, #{dbPath}, #{dataId})")
+    void insertDatabaseFile(@Param("dbName") String dbName, @Param("dbPath") String dbPath, @Param("dataId") int dataId);
+
+    // classification 조회
+    @Select("SELECT id FROM px_classification WHERE class = #{classification}")
+    Integer getClassificationId(@Param("classification") String classification);
+
+    // 새로운 classification 삽입
+    @Insert("INSERT INTO px_classification (class) VALUES (#{classification})")
+    void insertClassification(@Param("classification") String classification);
+
+    // PTM 데이터 삽입
+    @Insert("INSERT INTO px_modification (name, fullname, class, mass_diff, avg_mass_diff, residue, position) "
+            + "VALUES (#{modName}, #{fullName}, #{classId}, #{md}, #{amd}, #{residue}, #{position})")
+    void insertPTM(@Param("modName") String modName, @Param("fullName") String fullName,
+                   @Param("classId") Integer classId, @Param("md") String md,
+                   @Param("amd") String amd, @Param("residue") String residue,
+                   @Param("position") String position);
+
+    // Modification 로그 삽입
+    @Insert("INSERT INTO px_modification_log (date, version, file) VALUES (#{modDate}, #{modVersion}, #{modFile})")
+    void insertModificationLog(@Param("modDate") String modDate, @Param("modVersion") String modVersion, @Param("modFile") String modFile);
+
+    @Insert("INSERT INTO px_software_log (name, date, version, file) VALUES (#{name}, #{date}, #{version}, #{file})")
+    void insertSoftwareLog(@Param("name") String name,
+                           @Param("date") String date,
+                           @Param("version") String version,
+                           @Param("file") String file);
 }
