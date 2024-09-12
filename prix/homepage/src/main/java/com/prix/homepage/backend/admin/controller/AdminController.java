@@ -46,6 +46,11 @@ public class AdminController extends BaseController {
         this.mailer = mailer;
     }
 
+    /**
+     * 관리자 설정 페이지를 보여줌
+     * @param model : 설정 페이지에 필요한 데이터를 전달하는 모델
+     * @return 설정 페이지 뷰
+     */
     @GetMapping("/configuration")
     public String configuration(Model model) {
 
@@ -67,6 +72,12 @@ public class AdminController extends BaseController {
         return "admin/configuration";
     }
 
+    /**
+     * 파일 업로드를 처리
+     * @param dbName : 파일의 이름
+     * @param dbFile : 업로드할 파일
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("db_name") String dbName,
                                    @RequestParam("db_file") MultipartFile dbFile) {
@@ -101,6 +112,12 @@ public class AdminController extends BaseController {
         return "redirect:/admin/configuration";
     }
 
+    /**
+     * 데이터베이스 파일 수정 및 삭제 처리
+     * @param database : 데이터베이스 객체
+     * @param action : 수정 또는 삭제 작업
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/update_file")
     public String updateFile(
             @ModelAttribute("Database") Database database,
@@ -114,6 +131,12 @@ public class AdminController extends BaseController {
         return "redirect:/admin/configuration";
     }
 
+    /**
+     * enzyme 수정 및 삭제 처리
+     * @param enzyme
+     * @param action : 수정 또는 삭제 작업
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/update_enzyme")
     public String updateEnzymes(
             @ModelAttribute("Enzyme") Enzyme enzyme,
@@ -127,6 +150,12 @@ public class AdminController extends BaseController {
         return "redirect:/admin/configuration";
     }
 
+    /**
+     * 새로운 enzyme 추가 처리
+     * @param enzyme
+     * @param model : 세션에서 사용자 정보를 가져오기 위한 모델
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/add_enzyme")
     public String addEnzyme(
             @ModelAttribute("Enzyme") Enzyme enzyme,
@@ -137,6 +166,13 @@ public class AdminController extends BaseController {
         return "redirect:/admin/configuration";
     }
 
+    /**
+     * 수정된 PTM 정보와 XML 파일을 업로드하고 처리
+     * @param modDate : 수정 날짜
+     * @param modVersion : 수정 버전
+     * @param file : 업로드할 파일
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/add_modification")
     public String addModification(@RequestParam("date") String modDate,
                                   @RequestParam("version") String modVersion,
@@ -230,6 +266,9 @@ public class AdminController extends BaseController {
         return "redirect:/admin/configuration";
     }
 
+    /**
+     * null 방지 처리 및 인코딩 처리 함수
+     */
     public static String getSafeString(Node node) {
         try {
             if (node != null) {
@@ -241,7 +280,14 @@ public class AdminController extends BaseController {
         return "";
     }
 
-
+    /**
+     * 소프트웨어 업로드 처리
+     * @param sftwName : 소프트웨어 이름
+     * @param sftwVersion : 소프트웨어 버전
+     * @param sftwDate : 소프트웨어 배포 날짜
+     * @param sftwFile : 업로드할 소프트웨어 파일
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/upload_software")
     public String handleSoftwareUpload(@RequestParam("sftw_name") String sftwName,
                                        @RequestParam("sftw_version") String sftwVersion,
@@ -284,6 +330,14 @@ public class AdminController extends BaseController {
     }
 
 
+    /**
+     * 소프트웨어 메시지 수정 처리
+     * @param modaMessage : MODa 소프트웨어 메시지
+     * @param dbondMessage : DBond 소프트웨어 메시지
+     * @param nextMessage : NextSearch 소프트웨어 메시지
+     * @param signatureMessage : 서명 메시지
+     * @return 설정 페이지로 리다이렉트
+     */
     @PostMapping("/update_software_message")
     public String modifySoftwareMessages(
             @RequestParam(name = "modamsg", required = false) String modaMessage,
@@ -300,6 +354,12 @@ public class AdminController extends BaseController {
         return "redirect:/admin/configuration";
     }
 
+    /**
+     * 검색 로그 조회
+     * @param curPage : 현재 페이지
+     * @param model : 검색 로그 데이터를 담는 모델
+     * @return 검색 로그 페이지 뷰
+     */
     @GetMapping("/searchlog")
     public String searchLog(@RequestParam(value = "p", defaultValue = "0") int curPage, Model model) {
 
@@ -319,7 +379,11 @@ public class AdminController extends BaseController {
         return "admin/searchlog";
     }
 
-
+    /**
+     * 사용자 목록 조회
+     * @param model : 사용자 목록 데이터를 담는 모델
+     * @return 사용자 목록 페이지 뷰
+     */
     @GetMapping("/users")
     public String showUsers(Model model) {
         List<User> users = adminMapper.findAllUsers();
@@ -327,6 +391,13 @@ public class AdminController extends BaseController {
         return "admin/users";
     }
 
+    /**
+     * 사용자 권한 수정 또는 삭제 처리
+     * @param upId : 권한 상향 대상 사용자 ID
+     * @param downId : 권한 하향 대상 사용자 ID
+     * @param delId : 삭제 대상 사용자 ID
+     * @return 사용자 목록 페이지로 리다이렉트
+     */
     @GetMapping("/update_user")
     public String modifyUser(
             @RequestParam(name = "up", required = false) Integer upId,
@@ -343,6 +414,11 @@ public class AdminController extends BaseController {
         return "redirect:/admin/users";
     }
 
+    /**
+     * 요청 로그 조회
+     * @param model : 요청 로그 데이터를 담는 모델
+     * @return 요청 로그 페이지 뷰
+     */
     @GetMapping("/requestlog")
     public String showRequestLog(Model model) {
         List<SoftwareRequest> requests = adminMapper.findAllRequests();
@@ -351,6 +427,14 @@ public class AdminController extends BaseController {
         return "admin/requestlog";
     }
 
+    /**
+     * 요청 수락 처리
+     * @param id : 요청 ID
+     * @param name : 요청한 사용자 이름
+     * @param email : 요청한 사용자 이메일
+     * @param software : 요청된 소프트웨어 이름
+     * @return 요청 로그 페이지로 리다이렉트
+     */
     @PostMapping("/requestlog/accept")
     public String updateRequest(
         @RequestParam(name = "id", required = false) Integer id,
@@ -391,17 +475,18 @@ public class AdminController extends BaseController {
         return "redirect:/admin/requestlog";
     }
 
+    /**
+     * 요청 삭제 처리
+     * @param id : 삭제할 요청 ID
+     * @return 요청 로그 페이지로 리다이렉트
+     */
     @GetMapping("/requestlog/delete")
     public String deleteRequest(
             @RequestParam(name = "id", required = false) Integer id) {
-
 
         adminMapper.deleteRequestById(id);
 
         return "redirect:/admin/requestlog";
     }
-
-
-
 
 }
