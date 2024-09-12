@@ -180,19 +180,29 @@
                                 <td class="grayTD"></td>
                             </tr>
                             <tr>
-                                <form method="post" th:action="@{/admin/add_modification}">
-                                    <td class="grayTD">
-                                        <select name="name">
-                                            <option value="">Select --</option>
-                                            <option value="MODa">MODa</option>
-                                            <option value="DBond">DBond</option>
-                                            <option value="NextSearch">NextSearch</option>
-                                        </select>
-                                    </td>
-                                    <td class="grayTD"><input name="date" type="date" size="20" required/></td>
-                                    <td class="grayTD"><input name="version" type="text" size="20" required /></td>
-                                    <td class="grayTD"><input name="file" type="file" size="50" required /></td>
-                                    <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" update " /></td>
+                                <form method="post" th:action="@{/admin/upload_software}" enctype="multipart/form-data">
+                                    <tr>
+                                        <td class="grayTD">
+                                            <select name="sftw_name" required>
+                                                <option value="">Select --</option>
+                                                <option value="MODa">MODa</option>
+                                                <option value="DBond">DBond</option>
+                                                <option value="NextSearch">NextSearch</option>
+                                            </select>
+                                        </td>
+                                        <td class="grayTD">
+                                            <input name="sftw_date" type="date" size="20" required />
+                                        </td>
+                                        <td class="grayTD">
+                                            <input name="sftw_version" type="text" size="20" required />
+                                        </td>
+                                        <td class="grayTD">
+                                            <input name="sftw_file" type="file" size="50" required />
+                                        </td>
+                                        <td class="grayTD">
+                                            <input name="action" type="submit" class="btnSmall" value="upload" />
+                                        </td>
+                                    </tr>
                                 </form>
                             </tr>
                         </table>

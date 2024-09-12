@@ -8,6 +8,7 @@ public class PathUtil {
 
     private static String libraryPath;
     public final static String ROOT_CONFIG = "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/";
+    public final static String ROOT_SW = "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/";
 
     //실제 위치로 수정해야합니다!
     @Value("${library.path}")

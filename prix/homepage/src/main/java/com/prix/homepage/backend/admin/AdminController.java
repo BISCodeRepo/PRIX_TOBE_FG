@@ -23,8 +23,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.PreparedStatement;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.prix.homepage.backend.basic.utils.PathUtil.ROOT_SW;
 
 @Controller
 @RequestMapping("/admin")
@@ -67,12 +71,10 @@ public class AdminController extends BaseController {
                                    @RequestParam("db_file") MultipartFile dbFile) {
         try {
             // 파일 저장 경로 설정. 윈도우용 임시 주석처리
-//            String root = PathUtil.ROOT_CONFIG;
-            String root = "D:\\";
+            String root = PathUtil.ROOT_CONFIG;
+//            String root = "D:\\";
             String originalFilename = dbFile.getOriginalFilename();
-//            String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
-            String dbPath = originalFilename;
-
+            String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
 
             // 파일 저장 처리
             if (!dbFile.isEmpty()) {
@@ -143,7 +145,8 @@ public class AdminController extends BaseController {
 
         try {
             // 파일 저장
-            String root = "D:\\"; // 파일 저장 경로
+            String root = PathUtil.ROOT_CONFIG;
+//            String root = "D:\\";
             String originalFilename = file.getOriginalFilename();
             String modFile = originalFilename != null ? originalFilename.replace('\\', '/') : "";
             String path = root + modFile;
@@ -236,6 +239,49 @@ public class AdminController extends BaseController {
         }
         return "";
     }
+
+
+    @PostMapping("/upload_software")
+    public String handleSoftwareUpload(@RequestParam("sftw_name") String sftwName,
+                                       @RequestParam("sftw_version") String sftwVersion,
+                                       @RequestParam("sftw_date") String sftwDate,
+                                       @RequestParam("sftw_file") MultipartFile sftwFile) {
+        try {
+//            String sftwRoot = "D:\\";
+            String sftwRoot = ROOT_SW;
+
+            // 기존 파일을 deprecated 폴더로 이동
+            File releaseDir = new File(sftwRoot + "release/");
+            for (File file : releaseDir.listFiles()) {
+                if (file.getName().startsWith(sftwName.toLowerCase())) {
+                    // 기존 파일을 deprecated 폴더로 이동
+                    file.renameTo(new File(sftwRoot + "deprecated/" + new Date().getTime() + "_" + file.getName()));
+                    break;
+                }
+            }
+
+            // 새로운 파일 저장
+            if (!sftwFile.isEmpty()) {
+                // 파일 이름 설정
+                String sftwFileName = sftwName.toLowerCase() + "_v" + sftwVersion + ".zip";
+                String filePath = sftwRoot + "release/" + sftwFileName;
+
+                // 파일 저장 처리
+                File dest = new File(filePath);
+                sftwFile.transferTo(dest);  // 파일 저장
+
+                // 데이터베이스에 삽입 (Mapper 호출)
+                adminMapper.insertSoftwareLog(sftwName, sftwDate, sftwVersion, sftwFileName);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";  // 에러 발생 시 처리
+        }
+
+        return "redirect:/admin/configuration";  // 성공 시 리다이렉트
+    }
+
 
     @PostMapping("/update_software_message")
     public String modifySoftwareMessages(

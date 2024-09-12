@@ -112,4 +112,10 @@ public interface AdminMapper {
     // Modification 로그 삽입
     @Insert("INSERT INTO px_modification_log (date, version, file) VALUES (#{modDate}, #{modVersion}, #{modFile})")
     void insertModificationLog(@Param("modDate") String modDate, @Param("modVersion") String modVersion, @Param("modFile") String modFile);
+
+    @Insert("INSERT INTO px_software_log (name, date, version, file) VALUES (#{name}, #{date}, #{version}, #{file})")
+    void insertSoftwareLog(@Param("name") String name,
+                           @Param("date") String date,
+                           @Param("version") String version,
+                           @Param("file") String file);
 }
