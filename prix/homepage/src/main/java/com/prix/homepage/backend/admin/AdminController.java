@@ -23,12 +23,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.prix.homepage.backend.basic.utils.PathUtil.ROOT_SW;
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW;
 
 @Controller
 @RequestMapping("/admin")
@@ -71,7 +70,7 @@ public class AdminController extends BaseController {
                                    @RequestParam("db_file") MultipartFile dbFile) {
         try {
             // 파일 저장 경로 설정. 윈도우용 임시 주석처리
-            String root = PathUtil.ROOT_CONFIG;
+            String root = PathUtil.PATH_CONFIG;
 //            String root = "D:\\";
             String originalFilename = dbFile.getOriginalFilename();
             String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
@@ -145,7 +144,7 @@ public class AdminController extends BaseController {
 
         try {
             // 파일 저장
-            String root = PathUtil.ROOT_CONFIG;
+            String root = PathUtil.PATH_CONFIG;
 //            String root = "D:\\";
             String originalFilename = file.getOriginalFilename();
             String modFile = originalFilename != null ? originalFilename.replace('\\', '/') : "";
@@ -248,7 +247,7 @@ public class AdminController extends BaseController {
                                        @RequestParam("sftw_file") MultipartFile sftwFile) {
         try {
 //            String sftwRoot = "D:\\";
-            String sftwRoot = ROOT_SW;
+            String sftwRoot = PATH_SW;
 
             // 기존 파일을 deprecated 폴더로 이동
             File releaseDir = new File(sftwRoot + "release/");
