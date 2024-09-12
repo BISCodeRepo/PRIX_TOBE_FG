@@ -285,7 +285,13 @@ public class ActgProcService {
                 } else {
                     System.out.println("logDir + processPath 파일이 존재하지 않습니다: " + logProcessPath);
                 }
-                String jarPath = "/Users/wook/Downloads/prix_test/ACTG_Search.jar";
+
+                String rootPath = Paths.get("").toAbsolutePath().toString();
+                System.out.println("Application Root Path: " + rootPath);
+
+
+                // jarPath ACTG_db 폴더에 있다고 가정
+                String jarPath = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_db/ACTG_Search.jar");
                 String[] command = {"/bin/bash", "-c",
                         "java -Xss2M -Xmx10G -jar " + jarPath + " " + logDir + xmlPath + " " + logDir +processPath};
                 Process process = runtime.exec(command);
