@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.download;
+package com.prix.homepage.backend.download.dto;
 
 import lombok.*;
 

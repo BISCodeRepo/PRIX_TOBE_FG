@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.download;
+package com.prix.homepage.backend.download.controller;
 
 import com.prix.homepage.frontend.controller.BaseController;
 import org.springframework.stereotype.Controller;

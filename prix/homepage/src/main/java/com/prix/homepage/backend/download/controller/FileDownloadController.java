@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.download;
+package com.prix.homepage.backend.download.controller;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
