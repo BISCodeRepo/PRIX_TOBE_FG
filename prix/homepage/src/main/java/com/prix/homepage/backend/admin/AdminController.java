@@ -40,7 +40,7 @@ public class AdminController extends BaseController {
     private final Mailer mailer;
 
     @Autowired
-    public AdminController(AdminService adminService, AdminMapper adminMapper, Mailer mailer) {
+    public AdminController(AdminMapper adminMapper, Mailer mailer) {
         this.adminMapper = adminMapper;
         this.mailer = mailer;
     }

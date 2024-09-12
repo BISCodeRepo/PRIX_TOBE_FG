@@ -16,7 +16,7 @@ public class Mailer {
 
 //    private static final String ownerEmail = "prix@hanyang.ac.kr";
     private static final String ownerEmail = "kfje979@gmail.com";
-
+//    private static final String ccEmail = "prix@hanyang.ac.kr";
     private static final String ccEmail = "kfje979@gmail.com";
 
     @Autowired
