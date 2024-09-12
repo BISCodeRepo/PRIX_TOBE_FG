@@ -14,6 +14,9 @@ public class PathUtil {
 //            "D:\\code\\GitHub\\PRIX_TOBE_FG2\\prix\\homepage\\src\\main\\resources\\static\\software_archive";
     "D:\\";
 
+    public final static String PATH_SW_RELEASE =
+            "D:\\release";
+
 
 
     //실제 위치로 수정해야합니다!

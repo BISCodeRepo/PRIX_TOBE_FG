@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW;
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW_RELEASE;
 
 @Controller
 @RequestMapping("/admin")
@@ -361,8 +362,10 @@ public class AdminController extends BaseController {
         String sig = "sig";
         String path = "path";
 
-        String swroot = "/usr/local/server/apache-tomcat-8.5.100/webapps/ROOT/download/software_archive/release";
-        String download_root = "https://prix.hanyang.ac.kr/download/software_archive/release";
+        String swroot = PATH_SW_RELEASE;
+//        String download_root = "https://prix.hanyang.ac.kr/download/software_archive/release";
+        String download_root = "http://localhost:8080/download/software";
+
 
         try {
             // 소프트웨어에 맞는 파일 검색
