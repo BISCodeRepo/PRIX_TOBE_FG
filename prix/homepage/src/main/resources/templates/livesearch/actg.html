@@ -15,11 +15,11 @@
                     <form name="search" method="post"  th:action="@{/livesearch/ACTG/Process}" enctype="multipart/form-data">
                         <tbody id="ac"><tr>
 
-                            <th><a href="help.jsp#NAME" class="thmenu align-right">User Name</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#NAME}" class="thmenu align-right">User Name</a></th>
                             <td><input name="user" type="text" size="60" th:value="${username}"></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#TIT" class="thmenu align-right">Mapping Title</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#TIT}" class="thmenu align-right">Mapping Title</a></th>
                             <td colspan="3"><input name="title" type="text" size="60"></td>
                         </tr>
 
@@ -28,12 +28,12 @@
                             <th colspan="4" class="align-center"><div class="align-center" style="margin: auto; width: 400px;"><b class="thmenu" style="cursor:default">Mapping Environment</b></div></th>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#PEP" class="thmenu align-right">Peptide List</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#PEP}" class="thmenu align-right">Peptide List</a></th>
                             <td colspan="3"><input id="filePeptide" name="peptideFile" type="file" size="45"> &nbsp; File size limit : 100KB</td>
                         </tr>
                         <tr>
                             <th>
-                                <a href="help.jsp#METHODS" class="thmenu align-right">Mapping Method</a> <br>
+                                <a th:href = "@{/livesearch/ACTG/Help#METHODS}" class="thmenu align-right">Mapping Method</a> <br>
                                 <span class="align-right">PV: Protein DB filtering / Variant splice graph mapping</span><br>
                                 <span class="align-right">PS: Protein DB filtering / Six-frame translation mapping</span><br>
                                 <span class="align-right">VO: Mapping variant splice graph only</span><br>
@@ -47,7 +47,7 @@
                             </select></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#IL" class="thmenu align-right">Isoleucine is equivalent to leucine</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#IL}" class="thmenu align-right">Isoleucine is equivalent to leucine</a></th>
                             <td colspan="3"><input id="IL" name="IL" type="checkbox" class="CHECK" value="yes"></td>
                         </tr>
                         </tbody>
@@ -58,14 +58,14 @@
                             <th colspan="4" class="align-center"><div class="align-center" style="margin: auto; width: 400px;"><b class="thmenu" style="cursor:default">Protein DB Filtering</b></div></th>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#PROTEIN" class="thmenu align-right">Protein DB</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#PROTEIN}" class="thmenu align-right">Protein DB</a></th>
                             <td colspan="3"><select name="proteinDB" onchange="changeDB()">
                                 <option value="swissprot_2016_07.fasta">Swissprot 2016-07</option>
                                 <option value="uniprot_2016_07.fasta">Uniprot 2016-07</option>
                             </select></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#SAV" class="thmenu align-right">Filter out single AA variations</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#SAV}" class="thmenu align-right">Filter out single AA variations</a></th>
                             <td colspan="3"><input id="SAV" name="SAV" type="checkbox" class="CHECK" value="yes"></td>
                         </tr>
                         </tbody>
@@ -76,7 +76,7 @@
                             <th colspan="4" class="align-center"><div class="align-center" style="margin: auto; width: 400px;"><b class="thmenu" style="cursor:default">Variant Splice Graph Mapping</b></div></th>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#VSG" class="thmenu align-right">Variant Splice Graph</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#VSG}" class="thmenu align-right">Variant Splice Graph</a></th>
                             <td colspan="3"><select name="variantSpliceGraphDB">
                                 <option value="GRCh38.Ensembl.83.ser">GRCh38, Ensembl Release 83</option>
                                 <option value="GRCh37.Ensembl.78.ser">GRCh37, Ensembl Release 78</option>
@@ -85,21 +85,21 @@
                             </select></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#VCF" class="thmenu align-right">Mutations (VCF) </a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#VCF}" class="thmenu align-right">Mutations (VCF) </a></th>
                             <td colspan="3">
                                 <div><input name="mutation" type="checkbox" class="CHECK" value="yes" onclick="mutationCheck()"></div>
                                 <div id="divMutation" style="display:none;"><input id="fileMutation" name="mutationFile" type="file" size="45"> File size limit : 20MB</div></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#ES" class="thmenu align-right">Exon Skipping </a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#ES}" class="thmenu align-right">Exon Skipping </a></th>
                             <td colspan="3"><input id="exonSkipping" name="exonSkipping" type="checkbox" class="CHECK" value="yes"></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#AAD" class="thmenu align-right">Alternative Acceptor &amp; Donor </a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#AAD}" class="thmenu align-right">Alternative Acceptor &amp; Donor </a></th>
                             <td colspan="3"><input id="altAD" name="altAD" type="checkbox" class="CHECK" value="yes"></td>
                         </tr>
                         <tr>
-                            <th><a href="help.jsp#INTRON" class="thmenu align-right">Intron retention</a></th>
+                            <th><a th:href = "@{/livesearch/ACTG/Help#INTRON}" class="thmenu align-right">Intron retention</a></th>
                             <td colspan="3"><input id="intron" name="intron" type="checkbox" class="CHECK" value="yes"> (it takes about 10 minutes)</td>
                         </tr>
 
@@ -109,7 +109,7 @@
                             <th colspan="4"><div align="center" style="margin: auto; width: 400px;" ><b class="thmenu" style="cursor:default">Six-frame Translation Mapping</b></div></th>
                         </tr>
                         <tr>
-                            <th><div align="right"><a href="help.jsp#SIX" class="thmenu">Reference genome</a> </div></th>
+                            <th><div align="right"><a th:href = "@{/livesearch/ACTG/Help#SIX}" class="thmenu">Reference genome</a> </div></th>
                             <td colspan="3"><select name="referenceGenome" onchange="changeDB()">
                                 <option value="GRCh38">GRCh38</option>
                                 <option value="GRCh37">GRCh37</option>

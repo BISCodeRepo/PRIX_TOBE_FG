@@ -23,10 +23,18 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class ActgResultService {
 
-    private final SearchLogMapper searchLogMapper;
-    private final UserService userService;
-    private final PathUtil pathUtil;
+    private final SearchLogMapper searchLogMapper; // 검색 로그 데이터를 조회하기 위한 매퍼
+    private final UserService userService; // 사용자 정보를 가져오기 위한 서비스
+    private final PathUtil pathUtil; // 파일 경로를 처리하는 유틸리티 클래스
 
+    /**
+     * 주어진 요청과 사용자 ID를 바탕으로 ACTG 결과를 처리하는 메서드.
+     * 검색 로그 및 결과 파일을 처리하고 DTO로 반환.
+     *
+     * @param request HttpServletRequest 객체, 클라이언트의 요청 정보를 포함
+     * @param id 사용자 ID
+     * @return ActgResultDto, 검색 결과 DTO
+     */
     public ActgResultDto processResult(HttpServletRequest request, Integer id) {
         final String logDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_log/");
         final String logDB = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_db/");

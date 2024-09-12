@@ -25,24 +25,34 @@ public class ActgProcService {
     private final PathUtil pathUtil;
     private final SearchLogMapper searchLogMapper;
 
+
+    /**
+     * ACTG 검색 프로세스를 처리하는 메서드.
+     * 주어진 파라미터와 파일들을 기반으로 프로세스를 실행하고 그 결과를 반환한다.
+     *
+     * @param id       사용자 ID
+     * @param request  HTTP 요청 객체
+     * @param params   요청 파라미터
+     * @param files    업로드된 파일 (페프티드 및 돌연변이 파일)
+     * @return ActgDto 검색 결과를 담고 있는 DTO
+     * @throws IOException 파일 처리 중 오류 발생 시 예외 발생
+     */
     public ActgDto process(String id, HttpServletRequest request, Map<String, String> params, MultipartFile[] files) throws IOException {
         ActgDto result = new ActgDto();
 
-        // 파라미터 및 변수 초기화 (기존 JSP 흐름 유지)
         String user = "";
         String title = params.get("title");
-        System.out.println("title: " + title);
 
-        // Environment 관련 변수 설정
+        // Environment
         String method = "";
         String peptideFile = "";
         String IL = "";
 
-        // Protein DB 관련 변수
+        // Protein DB
         String proteinDB = "";
         String SAV = "";
 
-        // Variant Splice Graph 관련 변수
+        // Variant Splice Graph DB
         String variantSpliceGraphDB = "";
         String mutation = "";
         String mutationFile = "";
@@ -50,7 +60,7 @@ public class ActgProcService {
         String altAD = "";
         String intron = "";
 
-        // Six-frame translation 관련 변수
+        // Six-frame translation
         String referenceGenome = "";
 
         String line = "";
@@ -59,13 +69,12 @@ public class ActgProcService {
         boolean failed = false;
         String output = "";
 
-
+        // 로그 및 데이터베이스 디렉토리 경로 설정
         final String logDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_log/");
         final String dbDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_db/");
         log.info("logDir = {}",logDir);
         log.info("dbDir = {}",dbDir);
 
-        // processName 파라미터 가져오기
         String processName = params.get("process");
         String processPath = logDir + processName;
         if (params.get("execute") == null) {
@@ -82,12 +91,10 @@ public class ActgProcService {
             String outputPath = logDir;
 
 
-            // 파라미터 처리
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 String name = entry.getKey();
                 String value = entry.getValue();
 
-                // 파라미터에 따른 처리
                 switch (name) {
                     case "user":
                         user = value;
@@ -133,13 +140,12 @@ public class ActgProcService {
                 }
             }
 
-            // 파일 처리 (파일을 처리하는 부분을 기존 로직과 동일하게 유지)
             for (MultipartFile file : files) {
                 if (file.isEmpty()) {
                     continue;
                 }
 
-                String fieldName = file.getName();  // 필드명 가져오기
+                String fieldName = file.getName();
                 if (fieldName.equals("peptideFile")) {
                     log.info("peptide");
                     peptideFile = "peptide_" + key + ".txt";
@@ -151,23 +157,18 @@ public class ActgProcService {
                         return result;
                     }
 
-                    // 파일 저장
-// 파일 저장
                     if (!file.isEmpty()) {
                         try {
-                            // 파일 경로에 해당하는 디렉터리가 없으면 생성
                             File noPeptideFile = new File(peptideFilePath);
                             File parentDir = noPeptideFile.getParentFile();
                             if (!parentDir.exists()) {
-                                parentDir.mkdirs();  // 상위 디렉토리 경로가 없으면 디렉토리 생성
+                                parentDir.mkdirs();
                             }
 
-                            // 파일이 없으면 파일 생성
                             if (!noPeptideFile.exists()) {
                                 noPeptideFile.createNewFile();
                             }
 
-                            // 파일에 데이터 쓰기
                             try (FileOutputStream fos = new FileOutputStream(peptideFilePath);
                                  OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
                                  InputStream is = file.getInputStream()) {
@@ -197,7 +198,6 @@ public class ActgProcService {
                         return result;
                     }
 
-                    // 파일 저장
                     try (FileOutputStream fos = new FileOutputStream(mutationFilePath);
                          InputStream is = file.getInputStream()) {
                         byte[] buffer = new byte[1024];
@@ -210,14 +210,13 @@ public class ActgProcService {
             }
 
             try {
-                // template.xml이라는 파일 필요 2024
                 FileReader FR = new FileReader(dbDir + "template.xml");
                 BufferedReader BR = new BufferedReader(FR);
 
                 File xmlFile = new File(logDir + xmlPath);
                 File parentDir = xmlFile.getParentFile();
                 if (parentDir != null && !parentDir.exists()) {
-                    parentDir.mkdirs();  // 상위 디렉토리 생성
+                    parentDir.mkdirs();
                 }
 
                 FileWriter FW = new FileWriter(logDir + xmlPath);
@@ -313,7 +312,6 @@ public class ActgProcService {
                             finished = true;
                         }
 
-                        // logDir 및 dbDir 치환
                         if (line.contains(logDir)) {
                             line = line.replace(logDir, "");
                         }
@@ -321,28 +319,25 @@ public class ActgProcService {
                             line = line.replace(dbDir, "");
                         }
 
-                        // 진행률 정보 추출
                         if (line.contains("%")) {
                             rate = line;
                         } else {
                             allWriter.append(line).append("\n");
                         }
 
-                        // 새로운 라인 처리
                         writer.getBuffer().setLength(0);
                     } else {
                         writer.append(character);
                     }
                 }
 
-                // 마지막 라인 처리
                 if (writer.getBuffer().length() > 0) {
                     line = writer.toString();
                 }
 
                 output = allWriter.toString();
 
-                if (finished) {// 모든 작업이 정상 종료
+                if (finished) {
                     String prixIndex = processPath.replace("process_" + id + "_", "");
                     prixIndex = prixIndex.replace(logDir, "");
                     prixIndex = prixIndex.replace(".proc", "");
@@ -364,12 +359,6 @@ public class ActgProcService {
                 }
 
             }
-
-
-
-            // XML 파일 생성 및 프로세스 실행 로직은 기존과 동일하게 유지
-
-            // 나머지 기존 로직 유지 (예: XML 생성 및 실행 등)
 
         }
 

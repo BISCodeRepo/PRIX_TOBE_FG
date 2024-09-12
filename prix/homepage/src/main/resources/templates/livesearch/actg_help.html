@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{partials/fragment :: head}"></head>
+<body>
+<header th:replace="~{partials/fragment :: header0}"></header>
+
+<main>
+    <div class="main-contents">
+        <div class="main-title">
+            <div class="title">
+                <h3 class="drakBR">HELP</h3>
+            </div>
+        </div>
+
+        <div class="main-contents no-padding">
+            <img src="/images/p_st1.GIF" width="4px" height="9px" />
+            <span class="drakBR">Search Parameter</span>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="NAME" class="drakBR">User Name</li>
+                <span>Put your name or id.</span>
+            </ul>
+            </p>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="TIT" class="drakBR">Mapping Title</li>
+                <span>Put title for the search. It will be printed at the top of result page. If the title is left blank, it will be named automatically.</span>
+            </ul>
+            </p>
+
+            <img src="/images/p_st1.GIF" width="4px" height="9px" />
+            <span class="drakBR">Mapping Environment (this option is applied to all kinds of mapping)</span>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="PEP" class="drakBR">Peptide List</li>
+                <span>Put a peptide list file. This format is followed below:</span>
+            </ul>
+            </p>
+
+            <p class="text-padding">
+                DFKLSDEETATILSFNR<br>
+                ISLSPEYVFSVSTFQELPSLEQK<br>
+                TLVTLPLLFLLPK<br>
+                FISGHTSELGNFR<br>
+                FQTIDIEPDIEALLSQGLSCA<br>
+                GETGPAGPPGAPGAPGAPGPVGPAGKSGDRGETGPAGPAGPVGPVGAR<br>
+                IIEDLGVHFLQYVLK<br>
+                KDEGEGAAGAGDHQDPSLGAGEAASK<br>
+                AAECSDFPVPSTEGTPIQGSK
+            </p>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="METHODS" class="drakBR">Supported mapping methods</li>
+                <span>PV: Mapping protein database first to filter out known peptides, and then mapping variant splice graph.<br></span>
+                <span>PS: Mapping protein database first to filter out known peptides, and then mapping six-frame translation database.<br></span>
+                <span>VO: Mapping variant splice graph only.<br></span>
+                <span>VO: Mapping six-frame translation database only.</span>
+            </ul>
+            </p>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="IL" class="drakBR">Isoleucine is equivalent to leucine</li>
+                <span>Identified peptides from tandem mass spectrometry do not recognize isoleucine and leucine.<br></span>
+                <span>This is because their masses are the same; therefore, this option assumes that isoleucines in a peptide can be interpreted as leucine, and vice versa.</span>
+            </ul>
+            </p>
+
+            <img src="/images/p_st1.GIF" width="4px" height="9px" />
+            <span class="drakBR">Protein Database Mapping</span>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="PROTEIN" class="drakBR">Supported protein database</li>
+                <span>To filter out known peptides, reference protein database mapping is useful.<br></span>
+                <span>This mapping is only for filtering out, not for mapping.</span>
+            </ul>
+            </p>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="SAV" class="drakBR">Single amino acid variations</li>
+                <span>When mapping peptides on a reference protein database, it can consider single amino acid variations (SAVs).<br></span>
+                <span>This option is useful for the sake of automatically detecting possible SAVs.</span>
+            </ul>
+            </p>
+
+            <img src="/images/p_st1.GIF" width="4px" height="9px" />
+            <span class="drakBR">Variant Splice Graph Mapping</span>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="VSG" class="drakBR">Variant Splice Graph</li>
+                <span>ACTG supports variants such as single exon skipping, splice junction variation, frame shift, and exon-extension (mapping on exon and intron both).<br></span>
+                <span>Variant splice graph is built from reference human genome and transcriptome models and this information is separated by comma, i.e., ReferenceGenomeVersion, TranscriptomeModelVersion.</span>
+            </ul>
+            </p>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="VCF" class="drakBR">Mutations</li>
+                <span>If a user wants to map mutations, they must provide mutation information formatted as VCF. The format is followed below:</span>
+            </ul>
+            </p>
+
+            <p class="text-padding">
+                1 32670862 . G A . PASS SOMATIC;VT=SNP GT:AD:BQ:DP:FA:SS 0:48,0:.:48:0.00:0 41 36 5 51 46 5 Somatic<br>
+                1 52553790 . C T . PASS SOMATIC;VT=SNP GT:AD:BQ:DP:FA:SS 0:22,0:.:22:0.00:0 90 90 0 11 8 3 Somatic<br>
+                1 75039014 . C A DP NT=ref;QSS=160;QSS_NT=160;SGT=CC->AC;SOMATIC;TQSS=2;TQSS_NT=2 DP:FDP:SDP:SUBDP:AU:CU:GU:TU 384:1:0:0:0,0:383,384:0,0:0,0 1 1 0 293 273 20 Somatic
+            </p>
+
+            <p class="text-padding">Each field must be delimited by a tab, and the number of fields must be at least 10.</p>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="ES" class="drakBR">Exon Skipping</li>
+                <span>It automatically detects single exon skipping variation if it turns on.</span>
+            </ul>
+            </p>
+
+            <p>
+                <ul class="content-indexes">
+                    <li id="AAD" class="drakBR">Alternative Acceptor & Donor</li>
+                    <span>It automatically detects splice junction varaition if it turns on.</span>
+                </ul>
+            </p>
+
+
+            <p>
+            <ul class="content-indexes">
+                <li id="INTRON" class="drakBR">Intron Mapping</li>
+                <span> It automatically detects exon-extension by mapping peptides on exon and intron both if it turns on.</span>
+            </ul>
+            </p>
+
+
+
+            <img src="/images/p_st1.GIF" width="4px" height="9px" />
+            <span class="drakBR">Six-frame Translation Mapping</span>
+
+            <p>
+            <ul class="content-indexes">
+                <li id="SIX" class="drakBR">Reference genome</li>
+                <span>Support two reference human genomes: GRCh37, GRCh38.</span>
+            </ul>
+            </p>
+        </div>
+    </div>
+</main>
+</body>
+
+<footer th:replace="~{partials/fragment :: footer}"></footer>
+</html>
