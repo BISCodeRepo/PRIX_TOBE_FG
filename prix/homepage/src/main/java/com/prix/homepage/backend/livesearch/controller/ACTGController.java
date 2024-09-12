@@ -148,7 +148,6 @@ public class ACTGController extends BaseController {
         ActgResultDto actgResultDto = actgResultService.processResult(request,id);
         log.info("actgResultDto ={}",actgResultDto);
         String fileIndex = actgResultDto.getIndex();
-        /* String resultFileDownloadPath = "C:/ACTG_db/ACTG_db/log/" + fileIndex + ".zip"; */
         String resultFileDownloadPath = "/livesearch/ACTG/Download?index=" + fileIndex;
 
         model.addAttribute("resultFileDownloadPath", resultFileDownloadPath);
