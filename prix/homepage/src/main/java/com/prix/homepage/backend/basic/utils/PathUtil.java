@@ -15,7 +15,7 @@ public class PathUtil {
     "D:\\";
 
     public final static String PATH_SW_RELEASE =
-            "D:\\release";
+            "D:\\release\\";
 
 
 
