@@ -43,19 +43,6 @@ public interface AdminMapper {
     @Select("SELECT date, version, file FROM px_modification_log")
     ModificationLog[] selectAllModificationLogs();
 
-    // 특정 메시지 가져오기
-    @Select("SELECT message FROM px_software_msg WHERE id = 'mode'")
-    String selectModaMessage();
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'dbond'")
-    String selectDbondMessage();
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'nextsearch'")
-    String selectNextSearchMessage();
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'signature'")
-    String selectSignatureMessage();
-
     // SearchLog 관련 메서드 추가
     @Select("SELECT l.title, l.date, " +
             "COALESCE(msData.name, '') as msFile, " +
@@ -96,9 +83,6 @@ public interface AdminMapper {
 //    mail
     @Select("SELECT message FROM px_software_msg WHERE id = #{softwareId}")
     String getMessageBySoftware(@Param("softwareId") String softwareId);
-
-    @Select("SELECT message FROM px_software_msg WHERE id = 'signature'")
-    String getSignature();
 
     @Update("UPDATE px_software_request SET state = #{state}, version = #{version}, senttime = NOW() WHERE id = #{requestId}")
     void updateRequestStateWithVersion(@Param("requestId") Integer requestId, @Param("state") int state, @Param("version") String version);

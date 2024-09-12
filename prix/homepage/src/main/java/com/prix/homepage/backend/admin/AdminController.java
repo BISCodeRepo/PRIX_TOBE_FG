@@ -45,10 +45,10 @@ public class AdminController extends BaseController {
         model.addAttribute("modificationLogs", modificationLogs);
 
         // Optional: 메시지들 추가
-        model.addAttribute("modaMessage", adminMapper.selectModaMessage());
-        model.addAttribute("dbondMessage", adminMapper.selectDbondMessage());
-        model.addAttribute("nextsearchMessage", adminMapper.selectNextSearchMessage());
-        model.addAttribute("signatureMessage", adminMapper.selectSignatureMessage());
+        model.addAttribute("modaMessage", adminMapper.getMessageBySoftware("mode"));
+        model.addAttribute("dbondMessage", adminMapper.getMessageBySoftware("dbond"));
+        model.addAttribute("nextsearchMessage", adminMapper.getMessageBySoftware("nextsearch"));
+        model.addAttribute("signatureMessage", adminMapper.getMessageBySoftware("signature"));
 
         return "admin/configuration";
     }
@@ -185,7 +185,7 @@ public class AdminController extends BaseController {
                 if (fileLowerCase.startsWith(software.toLowerCase())) {
                     // 파일이 없는 경우 (isFile == false), 링크 메시지를 가져옴
                     String message = adminMapper.getMessageBySoftware(software.toLowerCase() + "_link");
-                    String signature = adminMapper.getSignature();
+                    String signature = adminMapper.getMessageBySoftware("signature");
 
                     // 링크 경로 생성
                     String linkPath = download_root + "/" + file.getName();
