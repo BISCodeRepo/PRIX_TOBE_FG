@@ -358,10 +358,6 @@ public class AdminController extends BaseController {
         @RequestParam(name = "software", required = false) String software
         ) {
 
-        String sendMsg = "hello";
-        String sig = "sig";
-        String path = "path";
-
         String swroot = PATH_SW_RELEASE;
 //        String download_root = "https://prix.hanyang.ac.kr/download/software_archive/release";
         String download_root = "http://localhost:8080/download/software";
@@ -373,11 +369,10 @@ public class AdminController extends BaseController {
             for (File file : protDir.listFiles()) {
                 String fileLowerCase = file.getName().toLowerCase();
                 if (fileLowerCase.startsWith(software.toLowerCase())) {
-                    // 파일이 없는 경우 (isFile == false), 링크 메시지를 가져옴
                     String message = adminMapper.getMessageBySoftware(software.toLowerCase() + "_link");
                     String signature = adminMapper.getMessageBySoftware("signature");
 
-                    // 링크 경로 생성
+                    // 파일 이름 포함 링크 경로 생성
                     String linkPath = download_root + "/" + file.getName();
                     message = message.replace("<link>", linkPath);
 
@@ -391,8 +386,6 @@ public class AdminController extends BaseController {
             e.printStackTrace();
         }
 
-
-//        mailer.sendEmailToUser(name, email, software, sendMsg, sig, path);
         adminMapper.updateRequestState(id, 1); // 1 for accepted
         return "redirect:/admin/requestlog";
     }
