@@ -1,4 +1,4 @@
-package com.prix.homepage.backend.admin;
+package com.prix.homepage.backend.admin.mapper;
 
 import com.prix.homepage.backend.admin.entity.*;
 import com.prix.homepage.backend.account.domain.User;

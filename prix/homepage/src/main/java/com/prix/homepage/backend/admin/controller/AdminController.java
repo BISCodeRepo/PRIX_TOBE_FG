@@ -1,5 +1,6 @@
-package com.prix.homepage.backend.admin;
+package com.prix.homepage.backend.admin.controller;
 
+import com.prix.homepage.backend.admin.mapper.AdminMapper;
 import com.prix.homepage.backend.admin.entity.*;
 import com.prix.homepage.backend.account.domain.User;
 import com.prix.homepage.backend.basic.utils.Mailer;
