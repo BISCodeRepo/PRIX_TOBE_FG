@@ -92,4 +92,17 @@ public interface AdminMapper {
 
     @Delete("DELETE FROM px_software_request WHERE id = #{requestId}")
     void deleteRequestById(@Param("requestId") int requestId);
+
+//    mail
+    @Select("SELECT message FROM px_software_msg WHERE id = #{softwareId}")
+    String getMessageBySoftware(@Param("softwareId") String softwareId);
+
+    @Select("SELECT message FROM px_software_msg WHERE id = 'signature'")
+    String getSignature();
+
+    @Update("UPDATE px_software_request SET state = #{state}, version = #{version}, senttime = NOW() WHERE id = #{requestId}")
+    void updateRequestStateWithVersion(@Param("requestId") Integer requestId, @Param("state") int state, @Param("version") String version);
+
+
+
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -33,7 +34,7 @@ public class AdminController extends BaseController {
     @GetMapping("/configuration")
     public String configuration(Model model) {
 
-        Database[] database = adminService.selectAllFile();
+        Database[] database = adminMapper.selectAllFile();
         Enzyme[] enzyme = adminMapper.selectAllEnzyme();
         SoftwareLog[] softwareLogs = adminMapper.selectAllSoftwareLogs();
         ModificationLog[] modificationLogs = adminMapper.selectAllModificationLogs();
@@ -153,13 +154,39 @@ public class AdminController extends BaseController {
         @RequestParam(name = "software", required = false) String software
         ) {
 
-        final String sendMsg = "hello";
-        final String sig = "sig";
-        final String path = "path";
+        String sendMsg = "hello";
+        String sig = "sig";
+        String path = "path";
+
+        String swroot = "/usr/local/server/apache-tomcat-8.5.100/webapps/ROOT/download/software_archive/release";
+        String download_root = "https://prix.hanyang.ac.kr/download/software_archive/release";
+
+        try {
+            // 소프트웨어에 맞는 파일 검색
+            File protDir = new File(swroot);  // 소프트웨어 파일 루트 디렉토리
+            for (File file : protDir.listFiles()) {
+                String fileLowerCase = file.getName().toLowerCase();
+                if (fileLowerCase.startsWith(software.toLowerCase())) {
+                    // 파일이 없는 경우 (isFile == false), 링크 메시지를 가져옴
+                    String message = adminMapper.getMessageBySoftware(software.toLowerCase() + "_link");
+                    String signature = adminMapper.getSignature();
+
+                    // 링크 경로 생성
+                    String linkPath = download_root + "/" + file.getName();
+                    message = message.replace("<link>", linkPath);
+
+                    // 메일 전송 (파일 없이 링크만 포함)
+                    mailer.sendEmailToUser(name, email, software, message, signature, null);
+
+                    break;  // 파일을 찾았으므로 루프 종료
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-
-        mailer.sendEmailToUser(name, email, software, sendMsg, sig, path);
+//        mailer.sendEmailToUser(name, email, software, sendMsg, sig, path);
         adminMapper.updateRequestState(id, 1); // 1 for accepted
         return "redirect:/admin/requestlog";
     }

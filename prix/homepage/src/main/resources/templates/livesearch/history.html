@@ -45,7 +45,13 @@
               <th class="grayTH" style="width: 10%;">Engine</th>
             </tr>
             <tr th:each="log, iterStat : ${searchLogs}">
-              <td class="grayTD" style="width: 10%;"><a th:href="@{/modplus/result(file=${log.result})}" target="_blank" th:text="${iterStat.index + 1}"></a></td>
+<!--              <td class="grayTD" style="width: 10%;">-->
+<!--                <a th:href="@{${log.engine == 'dbond' ? '/dbond/result(file=' + log.result + ')' : '/actg/result(file=' + log.result + ')'}}"-->
+<!--                   target="_blank"-->
+<!--                   th:text="${iterStat.index + 1}">-->
+<!--                </a>-->
+<!--              </td>-->
+              <td class="grayTD" style="width: 10%;"><a th:href="@{/dbond/result(file=${log.result})}" target="_blank" th:text="${iterStat.index + 1}"></a></td>
               <td class="grayTD" style="width: 15%;" th:text="${log.userName}"></td>
               <td class="grayTD" style="width: 15%;" th:text="${#dates.format(log.date, 'yyyy.MM.dd')}"></td>
               <td class="grayTD" style="width: 25%;" th:text="${log.title != null ? log.title : '&nbsp;'}"></td>
