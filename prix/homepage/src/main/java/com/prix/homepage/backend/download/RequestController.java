@@ -46,6 +46,8 @@ public class RequestController {
         String instrument = requestForm.getInstrument();
 
         model.addAttribute("software", software);
+        model.addAttribute("email", email);
+
 
         if (software == null || software.equals("xxx")) {
             return "redirect:/download";
