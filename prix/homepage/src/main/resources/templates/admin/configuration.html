@@ -57,10 +57,11 @@
                             </tr>
                             <tr>
                                 <form method="post" th:action="@{/admin/upload}" enctype="multipart/form-data">
-                                    <td class="grayTD"><input name="db_name" type="text" size="40" /></td>
-                                    <td class="grayTD"><input name="db_file" type="file" size="40" /></td>
+                                    <td class="grayTD"><input name="db_name" type="text" size="40" required /></td>
+                                    <td class="grayTD"><input name="db_file" type="file" size="40" required /></td>
+                                    <td class="grayTD"></td>
                                     <td class="grayTD">
-                                        <div align="right"><input name="add_db" type="submit" class="btnSmall" value="Upload" /></div>
+                                        <div><input name="add_db" type="submit" class="btnSmall" value="Upload" /></div>
                                     </td>
                                 </form>
 
@@ -107,7 +108,7 @@
                             </tr>
                             <tr>
                                 <form method="post" th:action="@{/admin/add_enzyme}" th:object="${Enzyme}">
-                                    <td class="grayTD"><input name="name" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="name" type="text" class="input-width" required/></td>
                                     <td class="grayTD"><input name="nt_cleave" type="text" class="input-width" /></td>
                                     <td class="grayTD"><input name="ct_cleave" type="text" class="input-width" /></td>
                                     <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" add " /></td>
@@ -142,11 +143,11 @@
                                 </form>
                             </tr>
                             <tr>
-                                <form method="post" th:action="@{/admin/add_modification}" th:object="${Enzyme}">
-                                    <td class="grayTD"><input name="date" type="date" size="20" /></td>
-                                    <td class="grayTD"><input name="version" type="text" size="20" /></td>
-                                    <td class="grayTD"><input name="file" type="text" size="50" /></td>
-                                    <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" update " /></td>
+                                <form method="post" th:action="@{/admin/add_modification}" enctype="multipart/form-data">
+                                    <td class="grayTD"><input name="date" type="date" size="20" required /></td>
+                                    <td class="grayTD"><input name="version" type="text" size="20" required /></td>
+                                    <td class="grayTD"><input name="file" type="file" size="50" required /></td>
+                                    <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" upload " /></td>
                                 </form>
                             </tr>
                         </table>
@@ -179,7 +180,7 @@
                                 <td class="grayTD"></td>
                             </tr>
                             <tr>
-                                <form method="post" th:action="@{/admin/add_modification}" th:object="${Enzyme}">
+                                <form method="post" th:action="@{/admin/add_modification}">
                                     <td class="grayTD">
                                         <select name="name">
                                             <option value="">Select --</option>
@@ -188,9 +189,9 @@
                                             <option value="NextSearch">NextSearch</option>
                                         </select>
                                     </td>
-                                    <td class="grayTD"><input name="date" type="date" size="20" /></td>
-                                    <td class="grayTD"><input name="version" type="text" size="20" /></td>
-                                    <td class="grayTD"><input name="file" type="file" size="50" /></td>
+                                    <td class="grayTD"><input name="date" type="date" size="20" required/></td>
+                                    <td class="grayTD"><input name="version" type="text" size="20" required /></td>
+                                    <td class="grayTD"><input name="file" type="file" size="50" required /></td>
                                     <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" update " /></td>
                                 </form>
                             </tr>

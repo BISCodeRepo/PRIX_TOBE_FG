@@ -93,4 +93,23 @@ public interface AdminMapper {
     @Insert("INSERT INTO px_database (name, file, data_id) VALUES (#{dbName}, #{dbPath}, #{dataId})")
     void insertDatabaseFile(@Param("dbName") String dbName, @Param("dbPath") String dbPath, @Param("dataId") int dataId);
 
+    // classification 조회
+    @Select("SELECT id FROM px_classification WHERE class = #{classification}")
+    Integer getClassificationId(@Param("classification") String classification);
+
+    // 새로운 classification 삽입
+    @Insert("INSERT INTO px_classification (class) VALUES (#{classification})")
+    void insertClassification(@Param("classification") String classification);
+
+    // PTM 데이터 삽입
+    @Insert("INSERT INTO px_modification (name, fullname, class, mass_diff, avg_mass_diff, residue, position) "
+            + "VALUES (#{modName}, #{fullName}, #{classId}, #{md}, #{amd}, #{residue}, #{position})")
+    void insertPTM(@Param("modName") String modName, @Param("fullName") String fullName,
+                   @Param("classId") Integer classId, @Param("md") String md,
+                   @Param("amd") String amd, @Param("residue") String residue,
+                   @Param("position") String position);
+
+    // Modification 로그 삽입
+    @Insert("INSERT INTO px_modification_log (date, version, file) VALUES (#{modDate}, #{modVersion}, #{modFile})")
+    void insertModificationLog(@Param("modDate") String modDate, @Param("modVersion") String modVersion, @Param("modFile") String modFile);
 }

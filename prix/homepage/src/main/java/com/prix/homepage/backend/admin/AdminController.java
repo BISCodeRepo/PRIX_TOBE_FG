@@ -1,9 +1,9 @@
 package com.prix.homepage.backend.admin;
 
 import com.prix.homepage.backend.admin.entity.*;
-import com.prix.homepage.backend.admin.dto.UploadForm;
 import com.prix.homepage.backend.account.domain.User;
 import com.prix.homepage.backend.basic.utils.Mailer;
+import com.prix.homepage.backend.basic.utils.PathUtil;
 import com.prix.homepage.backend.basic.utils.PrixDataWriter;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +12,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -56,8 +66,8 @@ public class AdminController extends BaseController {
     public String handleFileUpload(@RequestParam("db_name") String dbName,
                                    @RequestParam("db_file") MultipartFile dbFile) {
         try {
-            // 파일 저장 경로 설정
-//            final String root = "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/";
+            // 파일 저장 경로 설정. 윈도우용 임시 주석처리
+//            String root = PathUtil.ROOT_CONFIG;
             String root = "D:\\";
             String originalFilename = dbFile.getOriginalFilename();
 //            String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
@@ -77,8 +87,8 @@ public class AdminController extends BaseController {
                 }
 
                 // 데이터베이스 처리
-//                int dataId = PrixDataWriter.write("fasta", dbPath, dbFile.getInputStream());
-                adminMapper.insertDatabaseFile(dbName, dbPath, 0);
+                int dataId = PrixDataWriter.write("fasta", dbPath, dbFile.getInputStream());
+                adminMapper.insertDatabaseFile(dbName, dbPath, dataId);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,6 +132,109 @@ public class AdminController extends BaseController {
         int userId = (int) model.getAttribute(SESSION_KEY_ID);
         adminMapper.insertEnzyme(userId, enzyme.getName(), enzyme.getNt_cleave(), enzyme.getCt_cleave());
         return "redirect:/admin/configuration";
+    }
+
+    @PostMapping("/add_modification")
+    public String addModification(@RequestParam("date") String modDate,
+                                  @RequestParam("version") String modVersion,
+                                  @RequestParam("file") MultipartFile file) {
+
+        FileInputStream fis = null;
+
+        try {
+            // 파일 저장
+            String root = "D:\\"; // 파일 저장 경로
+            String originalFilename = file.getOriginalFilename();
+            String modFile = originalFilename != null ? originalFilename.replace('\\', '/') : "";
+            String path = root + modFile;
+
+            File dest = new File(path);
+            file.transferTo(dest);  // 파일 저장
+
+            // 파일 저장 후, XML 파싱
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = docFactory.newDocumentBuilder();
+
+            fis = new FileInputStream(dest);  // FileInputStream 수동으로 열기
+            Document doc = builder.parse(fis);  // XML 파싱
+
+            // Classification 처리
+            HashMap<String, Integer> classMap = new HashMap<>();
+            NodeList classNodes = doc.getElementsByTagName("classificationRow");
+            for (int i = 0; i < classNodes.getLength(); i++) {
+                Node node = classNodes.item(i);
+                NamedNodeMap attributes = node.getAttributes();
+                Node classAttr = attributes.getNamedItem("classification");
+                String classification = classAttr.getNodeValue();
+
+                // 데이터베이스에서 classification 가져오기
+                Integer classId = adminMapper.getClassificationId(classification);
+                if (classId == null) {
+                    adminMapper.insertClassification(classification);
+                    classId = adminMapper.getClassificationId(classification);
+                }
+                classMap.put(classification, classId);
+            }
+
+            // PTM 처리
+            NodeList ptmNodes = doc.getElementsByTagName("PTM");
+            for (int i = 0; i < ptmNodes.getLength(); i++) {
+                Node ptmNode = ptmNodes.item(i);
+                NodeList ptmChildren = ptmNode.getChildNodes();
+
+                String modName = "", fullName = "", classi = "", md = "", amd = "", residue = "", position = "";
+
+                for (int j = 0; j < ptmChildren.getLength(); j++) {
+                    Node child = ptmChildren.item(j);
+                    String nodeName = child.getNodeName();
+
+                    // null 방지 처리 및 인코딩 처리
+                    if (nodeName.equals("name")) modName = getSafeString(child.getFirstChild());
+                    else if (nodeName.equals("fullName")) fullName = getSafeString(child.getFirstChild());
+                    else if (nodeName.equals("classification")) classi = getSafeString(child.getFirstChild());
+                    else if (nodeName.equals("massDifference")) md = getSafeString(child.getFirstChild());
+                    else if (nodeName.equals("avgMassDifference")) amd = getSafeString(child.getFirstChild());
+                    else if (nodeName.equals("residue")) residue = getSafeString(child.getFirstChild());
+                    else if (nodeName.equals("position")) position = getSafeString(child.getFirstChild());
+                }
+
+                // 데이터베이스에 PTM 정보 삽입
+                try {
+                    adminMapper.insertPTM(modName, fullName, classMap.get(classi), md, amd, residue, position);
+                } catch (Exception e) {
+                    e.printStackTrace();  // 오류 발생 시 오류 로그 출력
+                }
+            }
+
+            // 로그 기록 (modification log 테이블)
+            adminMapper.insertModificationLog(modDate, modVersion, modFile);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";  // 에러 발생 시 처리
+        } finally {
+            // FileInputStream 수동으로 닫기
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();  // 스트림을 닫는 중 오류가 발생할 경우 처리
+                }
+            }
+        }
+
+        return "redirect:/admin/configuration";
+    }
+
+    public static String getSafeString(Node node) {
+        try {
+            if (node != null) {
+                return new String(node.getNodeValue().getBytes("ISO-8859-1"), "UTF-8");
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @PostMapping("/update_software_message")
