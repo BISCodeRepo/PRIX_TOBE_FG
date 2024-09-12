@@ -9,8 +9,8 @@ import lombok.*;
 @Builder
 public class Enzyme {
     private int id;
-    private int userId;
+    private int user_id;
     private String name;
-    private String ntCleave;
-    private String ctCleave;
+    private String nt_cleave;
+    private String ct_cleave;
 }

@@ -90,10 +90,10 @@
                                         <input name="name" type="text" class="input-width" th:value="${e.name}" />
                                     </td>
                                     <td class="grayTD">
-                                        <input name="ntCleave" type="text" class="input-width" th:value="${e.ntCleave}" />
+                                        <input name="nt_cleave" type="text" class="input-width" th:value="${e.nt_cleave}" />
                                     </td>
                                     <td class="grayTD">
-                                        <input name="ctCleave" type="text" class="input-width" th:value="${e.ctCleave}" />
+                                        <input name="ct_cleave" type="text" class="input-width" th:value="${e.ct_cleave}" />
                                     </td>
                                     <td class="grayTD">
                                         <input name="action" type="submit" class="btnSmall" style="margin-right: 10px;" value=" edit name " />
@@ -106,8 +106,8 @@
                             <tr>
                                 <form method="post" th:action="@{/admin/add_enzyme}" th:object="${Enzyme}">
                                     <td class="grayTD"><input name="name" type="text" class="input-width" /></td>
-                                    <td class="grayTD"><input name="ntCleave" type="text" class="input-width" /></td>
-                                    <td class="grayTD"><input name="ctCleave" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="nt_cleave" type="text" class="input-width" /></td>
+                                    <td class="grayTD"><input name="ct_cleave" type="text" class="input-width" /></td>
                                     <td class="grayTD"><input name="action" type="submit" class="btnSmall" value=" add " /></td>
                                     <td class="grayTD"></td>
                                 </form>
@@ -201,7 +201,7 @@
             </table>
 
             <table class="table-width">
-                <form name="swmg1234" method="post" th:action="@{/manage?modify_swmsg=1}">
+                <form name="swmg1234" method="post" th:action="@{/admin/update_software_message}">
                     <tr>
                         <td class="grayTH" width="70">
                             <div style="text-align: right;">

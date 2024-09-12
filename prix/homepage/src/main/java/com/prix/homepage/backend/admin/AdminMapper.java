@@ -103,6 +103,7 @@ public interface AdminMapper {
     @Update("UPDATE px_software_request SET state = #{state}, version = #{version}, senttime = NOW() WHERE id = #{requestId}")
     void updateRequestStateWithVersion(@Param("requestId") Integer requestId, @Param("state") int state, @Param("version") String version);
 
-
+    @Update("UPDATE px_software_msg SET message = #{message} WHERE id = #{id}")
+    void updateSoftwareMessage(@Param("id") String id, @Param("message") String message);
 
 }

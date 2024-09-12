@@ -78,7 +78,7 @@ public class AdminController extends BaseController {
             @RequestParam("action") String action) {
 
         if (" edit name ".equals(action)) {
-            adminMapper.updateEnzyme(enzyme.getId(), enzyme.getName(), enzyme.getNtCleave(), enzyme.getCtCleave());
+            adminMapper.updateEnzyme(enzyme.getId(), enzyme.getName(), enzyme.getNt_cleave(), enzyme.getCt_cleave());
         } else if (" delete ".equals(action)) {
             adminMapper.deleteEnzyme(enzyme.getId());
         }
@@ -91,7 +91,23 @@ public class AdminController extends BaseController {
             Model model) {
 
         int userId = (int) model.getAttribute(SESSION_KEY_ID);
-        adminMapper.insertEnzyme(userId, enzyme.getName(), enzyme.getNtCleave(), enzyme.getCtCleave());
+        adminMapper.insertEnzyme(userId, enzyme.getName(), enzyme.getNt_cleave(), enzyme.getCt_cleave());
+        return "redirect:/admin/configuration";
+    }
+
+    @PostMapping("/update_software_message")
+    public String modifySoftwareMessages(
+            @RequestParam(name = "modamsg", required = false) String modaMessage,
+            @RequestParam(name = "dbondmsg", required = false) String dbondMessage,
+            @RequestParam(name = "nextmsg", required = false) String nextMessage,
+            @RequestParam(name = "signature", required = false) String signatureMessage
+    ) {
+        // 각 메시지를 이스케이프 처리한 후, 바로 Mapper를 통해 업데이트
+        adminMapper.updateSoftwareMessage("mode", modaMessage.replace("'", "\\'"));
+        adminMapper.updateSoftwareMessage("dbond", dbondMessage.replace("'", "\\'"));
+        adminMapper.updateSoftwareMessage("nextsearch", nextMessage.replace("'", "\\'"));
+        adminMapper.updateSoftwareMessage("signature", signatureMessage.replace("'", "\\'"));
+
         return "redirect:/admin/configuration";
     }
 
