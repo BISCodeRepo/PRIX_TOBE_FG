@@ -48,9 +48,12 @@ public class ACTGController extends BaseController {
     private final PathUtil pathUtil;
 
     /**
-     * GET 요청을 처리하여 ACTG 페이지를 반환하는 메서드.
-     * 로그인한 사용자의 ID를 기반으로 사용자 이름을 가져와서 모델에 추가한다.
-     * 만약 사용자가 로그인하지 않았다면 'anonymous'로 설정.
+     * ACTG 페이지 요청을 처리하는 메서드.
+     *
+     * @param model - 페이지에 전달할 데이터를 담는 객체
+     * @param request - 클라이언트 요청 정보
+     * @param id - 로그인한 사용자의 ID
+     * @return livesearch/actg 페이지로 이동
      */
     @GetMapping("/livesearch/ACTG")
     public String getACTG(Model model, HttpServletRequest request,
@@ -61,14 +64,19 @@ public class ACTGController extends BaseController {
         if (username == null) {
             username = "anonymous";
         }
-        model.addAttribute("username", username);
+        model.addAttribute("username", username); // username form 에 반영
 
         return "livesearch/actg";
     }
 
     /**
-     * GET 요청을 처리하여 ACTG 검색 프로세스를 처리하는 메서드.
-     * 검색을 처리하고 결과가 완료되면 결과 페이지로 리다이렉트한다.
+     * GET 요청을 통해 ACTG 검색 프로세스를 처리하는 메서드.
+     *
+     * @param model - 페이지에 전달할 데이터를 담는 객체
+     * @param id - 로그인한 사용자의 ID
+     * @param request - 클라이언트 요청 정보
+     * @param paramsMap - 각 요소 Map 형태로 전달
+     * @return 검색 완료 시 결과 페이지로 리다이렉트, 그렇지 않으면 처리 페이지 반환
      */
     @GetMapping("/livesearch/ACTG/Process")
     public String postACTG(Model model,
@@ -102,7 +110,15 @@ public class ACTGController extends BaseController {
 
 
     /**
-     * POST 요청을 처리하여 ACTG 검색 프로세스를 처리하는 메서드.
+     * POST 요청을 통해 ACTG 검색 프로세스를 처리하는 메서드.
+     *
+     * @param model - 페이지에 전달할 데이터를 담는 객체
+     * @param id - 로그인한 사용자의 ID
+     * @param request - 클라이언트 요청 정보
+     * @param paramsMap - 각 요소 Map 형태로 전달
+     * @param peptideFile - 업로드된 peptide 파일
+     * @param mutationFile - 업로드된 mutation 파일
+     * @return 검색 완료 시 처리 페이지 반환
      */
     @PostMapping("/livesearch/ACTG/Process")
     public String postACTG(Model model,
@@ -136,8 +152,13 @@ public class ACTGController extends BaseController {
     }
 
     /**
-     * GET 요청을 처리하여 ACTG 결과 페이지를 반환하는 메서드.
-     * 요청과 사용자 ID를 기반으로 결과 데이터를 처리하고 모델에 추가.
+     * ACTG 결과 페이지를 처리하는 메서드.
+     *
+     * @param id - 로그인한 사용자의 ID
+     * @param model - 페이지에 전달할 데이터를 담는 객체
+     * @param request - 클라이언트 요청 정보
+     * @param session - 세션 정보
+     * @return livesearch/actg_result 페이지로 이동
      */
     @GetMapping("/livesearch/ACTG/Result")
     public String ACTGResultPage(@LoginUserId Integer id,
@@ -157,7 +178,11 @@ public class ACTGController extends BaseController {
 
 
     /**
-     * 결과 페이지 .zip 파일을 다운로드하는 메서드.
+     * 결과 파일(.zip)을 다운로드하는 메서드.
+     *
+     * @param index - 다운로드할 파일의 인덱스
+     * @return 파일을 다운로드 가능한 ResponseEntity 객체
+     * @throws FileNotFoundException - 파일을 찾을 수 없을 때 예외 발생
      */
     @GetMapping("/livesearch/ACTG/Download")
     @ResponseBody
@@ -190,6 +215,8 @@ public class ACTGController extends BaseController {
 
     /**
      * ACTG 도움말 페이지를 반환하는 메서드.
+     *
+     * @return livesearch/actg_help 페이지로 이동
      */
     @GetMapping("/livesearch/ACTG/Help")
     public String showHelpPage() {
