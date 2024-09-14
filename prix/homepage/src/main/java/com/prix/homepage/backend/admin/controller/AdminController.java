@@ -28,8 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW;
-import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_SW_RELEASE;
+import static com.prix.homepage.backend.basic.utils.PathUtil.*;
 
 /**
  * ADMINISTRATION 기능
@@ -299,15 +298,13 @@ public class AdminController extends BaseController {
                                        @RequestParam("sftw_date") String sftwDate,
                                        @RequestParam("sftw_file") MultipartFile sftwFile) {
         try {
-//            String sftwRoot = "D:\\";
-            String sftwRoot = PATH_SW;
 
             // 기존 파일을 deprecated 폴더로 이동
-            File releaseDir = new File(sftwRoot + "release/");
+            File releaseDir = new File(PATH_SW_RELEASE);
             for (File file : releaseDir.listFiles()) {
                 if (file.getName().startsWith(sftwName.toLowerCase())) {
                     // 기존 파일을 deprecated 폴더로 이동
-                    file.renameTo(new File(sftwRoot + "deprecated/" + new Date().getTime() + "_" + file.getName()));
+                    file.renameTo(new File(PATH_SW_DEPRECATED + new Date().getTime() + "_" + file.getName()));
                     break;
                 }
             }
@@ -316,7 +313,7 @@ public class AdminController extends BaseController {
             if (!sftwFile.isEmpty()) {
                 // 파일 이름 설정
                 String sftwFileName = sftwName.toLowerCase() + "_v" + sftwVersion + ".zip";
-                String filePath = sftwRoot + "release/" + sftwFileName;
+                String filePath = PATH_SW_RELEASE + sftwFileName;
 
                 // 파일 저장 처리
                 File dest = new File(filePath);

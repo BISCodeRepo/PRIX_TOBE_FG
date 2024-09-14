@@ -14,10 +14,10 @@ public class PathUtil {
 
     public final static String PATH_CONFIG =
             BASE_PATH + "/config/";
-    public final static String PATH_SW =
-            BASE_PATH + "/software_archive";
     public final static String PATH_SW_RELEASE =
-            PATH_SW + "/release";
+            BASE_PATH + "/software_archive/release/";
+    public final static String PATH_SW_DEPRECATED =
+            BASE_PATH + "/software_archive/deprecated/";
 
 
 
