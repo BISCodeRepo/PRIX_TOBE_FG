@@ -19,6 +19,14 @@ public class PathUtil {
     public final static String PATH_SW_DEPRECATED =
             BASE_PATH + "/software_archive/deprecated/";
 
+    public final static String PATH_ACTG_DB =
+            BASE_PATH + "/ACTG_db/";
+
+    public final static String PATH_ACTG_LOG =
+            BASE_PATH + "/ACTG_log/";
+
+    public  final static String PATH_ACTG_SEARCH =
+            BASE_PATH + "/ACTG_SEARCH/";
 
 
     //실제 위치로 수정해야합니다!

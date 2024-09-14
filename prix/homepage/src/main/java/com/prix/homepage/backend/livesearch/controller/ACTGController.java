@@ -33,6 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_ACTG_LOG;
+
 
 @RequiredArgsConstructor
 @Slf4j
@@ -188,7 +190,7 @@ public class ACTGController extends BaseController {
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@RequestParam("index") String index) throws FileNotFoundException {
 
-        final String logDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_log/");
+        final String logDir = PATH_ACTG_LOG;
 
         String filePath = logDir + index + ".zip";
         File file = new File(filePath);

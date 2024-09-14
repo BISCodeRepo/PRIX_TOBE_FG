@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 
+import static com.prix.homepage.backend.basic.utils.PathUtil.*;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -70,8 +72,8 @@ public class ActgProcService {
         String output = "";
 
         // 로그 및 데이터베이스 디렉토리 경로 설정
-        final String logDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_log/");
-        final String dbDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_db/");
+        final String logDir = PATH_ACTG_LOG;
+        final String dbDir = PATH_ACTG_DB;
         log.info("logDir = {}",logDir);
         log.info("dbDir = {}",dbDir);
 
@@ -290,10 +292,20 @@ public class ActgProcService {
                 System.out.println("Application Root Path: " + rootPath);
 
 
-                // jarPath ACTG_db 폴더에 있다고 가정
-                String jarPath = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_db/ACTG_Search.jar");
-                String[] command = {"/bin/bash", "-c",
-                        "java -Xss2M -Xmx10G -jar " + jarPath + " " + logDir + xmlPath + " " + logDir +processPath};
+                String jarPath = PATH_ACTG_SEARCH + "ACTG_Search.jar";
+                String[] command;
+                // OS에 따라 command 다르게 구성
+                if(System.getProperty("os.name").toLowerCase().contains("win")){
+                    command = new String[] {
+                            "cmd.exe", "/C",
+                            "java -Xss2M -Xmx10G -jar \"" + jarPath + "\" \"" + logDir + xmlPath + "\" \"" + logDir + processPath + "\"
+                    };
+                } else {
+                    command = new String[]{
+                            "/bin/bash", "-c",
+                            "java -Xss2M -Xmx10G -jar " + jarPath + " " + logDir + xmlPath + " " + logDir + processPath
+                    };
+                }
                 Process process = runtime.exec(command);
             }
 

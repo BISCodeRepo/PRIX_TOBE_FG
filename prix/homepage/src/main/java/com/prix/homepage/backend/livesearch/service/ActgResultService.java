@@ -18,6 +18,9 @@ import lombok.AllArgsConstructor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_ACTG_DB;
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_ACTG_LOG;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -36,8 +39,8 @@ public class ActgResultService {
      * @return ActgResultDto, 검색 결과 DTO
      */
     public ActgResultDto processResult(HttpServletRequest request, Integer id) {
-        final String logDir = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_log/");
-        final String logDB = pathUtil.getGlobalDirectoryPath("/home/PRIX/ACTG_db/");
+        final String logDir = PATH_ACTG_LOG;
+        final String logDB = PATH_ACTG_DB;
 
         String userName = null;
         String title = null;
