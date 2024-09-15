@@ -28,6 +28,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_DBOND_PROCESS_DIR;
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_DBOND_PROESS_DB_DIR;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -104,8 +107,8 @@ public class DBondService {
         String output = "";
 
         if (params.get("execute") == null) {
-            final String dir = pathUtil.getGlobalDirectoryPath("/home/PRIX/data/");
-            final String dbDir = pathUtil.getGlobalDirectoryPath("/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/config/");
+            final String dir = PATH_DBOND_PROCESS_DIR;
+            final String dbDir = PATH_DBOND_PROESS_DB_DIR;
 
             log.info("dir = {}",dir);
             Date date = new Date();
@@ -356,8 +359,17 @@ public class DBondService {
                             pathUtil.getLibPath() + "\\xercesImpl.jar";
 
                     log.info("classpath = {}",classpath);
+                    String os = System.getProperty("os.name").toLowerCase();
+                    String[] command;
 
-                    String[] command = {"cmd.exe", "/c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
+                    if (os.contains("win")) {
+                        // Windows용 명령어
+                        command = new String[]{"cmd.exe", "/c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
+                    } else {
+                        // Linux/Unix용 명령어
+                        command = new String[]{"/bin/sh", "-c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
+                    }
+
                     Runtime.getRuntime().exec(command);
 
                 } catch (FileNotFoundException | UnsupportedEncodingException e) {

@@ -19,6 +19,7 @@ public class PathUtil {
     public final static String PATH_SW_DEPRECATED =
             BASE_PATH + "/software_archive/deprecated/";
 
+    //ACTG
     public final static String PATH_ACTG_DB =
             BASE_PATH + "/ACTG_db/";
 
@@ -28,7 +29,19 @@ public class PathUtil {
     public  final static String PATH_ACTG_SEARCH =
             BASE_PATH + "/ACTG_SEARCH/";
 
+    //DBOND
+    public final static String PATH_DBOND_PROCESS_DIR =
+            BASE_PATH + "/home/PRIX/data/";
+    public final static String PATH_DBOND_PROESS_DB_DIR =
+            BASE_PATH + "config";
 
+
+    //PRIX_DATA_WRITER
+    public final static String PATH_DATA_WRITER_LOG_DIR =
+            BASE_PATH + "/home/prix/log/";
+
+
+    //DBOND LIBRARY
     //실제 위치로 수정해야합니다!
     @Value("${library.path}")
     public void setLibraryPath(String libraryPath) {
