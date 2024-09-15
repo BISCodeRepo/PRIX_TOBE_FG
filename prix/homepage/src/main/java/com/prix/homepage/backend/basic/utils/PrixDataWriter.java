@@ -14,12 +14,14 @@ import java.io.PrintStream;
 import java.io.FileOutputStream;
 import java.util.Calendar;
 
+import static com.prix.homepage.backend.basic.utils.PathUtil.PATH_DATA_WRITER_LOG_DIR;
+
 @Slf4j
 @Component
 public class PrixDataWriter {
     //static String logdir = "E:\\PRIX\\logs\\db_error_";
 
-    static String logdir = PathUtil.getGlobalDirectoryPath("/home/prix/log/");
+    static String logdir = PATH_DATA_WRITER_LOG_DIR;
     
     static public int write(String type, String name, InputStream is) throws java.sql.SQLException, java.io.FileNotFoundException, java.io.UnsupportedEncodingException {
         Connection conn = PrixConnector.getConnection();

@@ -48,18 +48,18 @@ public class PathUtil {
         PathUtil.libraryPath = libraryPath;
     }
 
-    public static String getGlobalDirectoryPath(String path) {
-        String os = System.getProperty("os.name").toLowerCase();
-        String homeDir = System.getProperty("user.home");
-
-        if (os.contains("win")) {
-            path = path.replace("/home", homeDir).replace("/", "\\");
-        } else {
-            path = path.replace("/home", homeDir);
-        }
-
-        return path;
-    }
+//    public static String getGlobalDirectoryPath(String path) {
+//        String os = System.getProperty("os.name").toLowerCase();
+//        String homeDir = System.getProperty("user.home");
+//
+//        if (os.contains("win")) {
+//            path = path.replace("/home", homeDir).replace("/", "\\");
+//        } else {
+//            path = path.replace("/home", homeDir);
+//        }
+//
+//        return path;
+//    }
 
     public static String getLibPath(){
         return libraryPath;
