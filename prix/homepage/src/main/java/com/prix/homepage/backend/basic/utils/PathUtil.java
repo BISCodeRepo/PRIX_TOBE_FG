@@ -1,17 +1,19 @@
 package com.prix.homepage.backend.basic.utils;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PathUtil {
 
-    private static String libraryPath;
-
-//    실제 경로에 맞게 수정해야합니다.
+    // 로컬 경로로 수정 필요
+    private final static String LIBRARY_PATH =
+            "C:\\\\Users\\\\82108\\\\prix\\\\lib";
+    // 로컬 경로로 수정 필요
     public final static String BASE_PATH =
             "/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT";
 
+    //파생 경로들
+    //software
     public final static String PATH_CONFIG =
             BASE_PATH + "/config/";
     public final static String PATH_SW_RELEASE =
@@ -43,10 +45,10 @@ public class PathUtil {
 
     //DBOND LIBRARY
     //실제 위치로 수정해야합니다!
-    @Value("${library.path}")
-    public void setLibraryPath(String libraryPath) {
-        PathUtil.libraryPath = libraryPath;
-    }
+//    @Value("${library.path}")
+//    public void setLibraryPath(String libraryPath) {
+//        PathUtil.libraryPath = libraryPath;
+//    }
 
 //    public static String getGlobalDirectoryPath(String path) {
 //        String os = System.getProperty("os.name").toLowerCase();
@@ -62,6 +64,6 @@ public class PathUtil {
 //    }
 
     public static String getLibPath(){
-        return libraryPath;
+        return LIBRARY_PATH;
     }
 }
