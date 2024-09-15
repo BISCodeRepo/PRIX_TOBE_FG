@@ -298,7 +298,7 @@ public class ActgProcService {
                 if(System.getProperty("os.name").toLowerCase().contains("win")){
                     command = new String[] {
                             "cmd.exe", "/C",
-                            "java -Xss2M -Xmx10G -jar \"" + jarPath + "\" \"" + logDir + xmlPath + "\" \"" + logDir + processPath + "\"
+                            "java -Xss2M -Xmx10G -jar \"" + jarPath + "\" \"" + logDir + xmlPath + "\" \"" + logDir + processPath + "\""
                     };
                 } else {
                     command = new String[]{

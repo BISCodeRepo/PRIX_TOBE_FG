@@ -23,13 +23,13 @@ public class PathUtil {
 
     //ACTG
     public final static String PATH_ACTG_DB =
-            BASE_PATH + "/ACTG_db/";
+            BASE_PATH + "/home/PRIX/ACTG_db/";
 
     public final static String PATH_ACTG_LOG =
-            BASE_PATH + "/ACTG_log/";
+            BASE_PATH + "/home/PRIX/ACTG_log/";
 
     public  final static String PATH_ACTG_SEARCH =
-            BASE_PATH + "/ACTG_SEARCH/";
+            BASE_PATH + "/ACTG/";
 
     //DBOND
     public final static String PATH_DBOND_PROCESS_DIR =
