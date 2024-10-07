@@ -9,6 +9,8 @@ import com.prix.homepage.backend.basic.utils.PrixDataWriter;
 import com.prix.homepage.frontend.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.prix.homepage.backend.basic.utils.PathUtil.*;
 
@@ -87,8 +90,8 @@ public class AdminController extends BaseController {
                                    @RequestParam("db_file") MultipartFile dbFile) {
         try {
             // 파일 저장 경로 설정. 윈도우용 임시 주석처리
-            String root = PathUtil.PATH_CONFIG;
-//            String root = "D:\\";
+//            String root = PathUtil.PATH_CONFIG;
+            String root = "D:\\";
             String originalFilename = dbFile.getOriginalFilename();
             String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
 
@@ -296,7 +299,9 @@ public class AdminController extends BaseController {
     public String handleSoftwareUpload(@RequestParam("sftw_name") String sftwName,
                                        @RequestParam("sftw_version") String sftwVersion,
                                        @RequestParam("sftw_date") String sftwDate,
-                                       @RequestParam("sftw_file") MultipartFile sftwFile) {
+                                       @RequestParam("sftw_file") MultipartFile sftwFile,
+                                       Model model
+                                       ) {
         try {
 
             // 기존 파일을 deprecated 폴더로 이동
@@ -325,7 +330,9 @@ public class AdminController extends BaseController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";  // 에러 발생 시 처리
+//            return "error";  // 에러 발생 시 처리
+            model.addAttribute("errorMessage", e.getMessage());
+            return "admin/error";  // 에러 발생 시 에러 페이지로 이동
         }
 
         return "redirect:/admin/configuration";  // 성공 시 리다이렉트
