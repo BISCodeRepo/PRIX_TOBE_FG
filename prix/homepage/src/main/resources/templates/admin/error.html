@@ -3,11 +3,13 @@
 <head th:replace="~{partials/fragment :: head}">
     <script type="text/javascript">
         window.onload = function() {
-            // 타임리프에서 에러 메시지 출력
-            var errorMessage = /*[[${errorMessage}]]*/ 'null';
-            if (errorMessage && errorMessage !== 'null') {
-                console.error("Error: " + errorMessage);  // 콘솔에 출력
-                alert("Error: " + errorMessage);  // 사용자에게 알림창으로 오류 메시지 출력
+            // HTML 요소에서 에러 메시지를 읽어와 콘솔에 출력
+            var errorMessageElement = document.getElementById('error-message');
+            if (errorMessageElement) {
+                var errorMessage = errorMessageElement.value;
+                if (errorMessage && errorMessage.trim() !== '') {
+                    console.error("Error: " + errorMessage);  // 콘솔에 오류 메시지 출력
+                }
             }
         }
     </script>
@@ -19,15 +21,14 @@
         <div class="main-title">
             <div class="title">
                 <h3 class="darkBR">Error Page</h3>
-                <!-- 여기에 서버에서 전달된 에러 메시지 표시 -->
-                <p> 디버깅 용 임시 에러페이지입니다. </p>
-                <p th:text="${message}">에러 메시지가 여기에 표시됩니다.</p>
-                <p th:text="${error}"></p>
-                <pre th:text="${trace}"></pre> <!-- 스택 트레이스 출력 -->
             </div>
+            <p>운영서버 디버깅 용 임시 에러페이지입니다.</p>
+            <!-- 서버에서 전달된 에러 메시지를 숨겨진 텍스트 영역에 저장 -->
+            <textarea id="error-message" th:text="${errorMessage}" style="display:none;"></textarea>
+            <pre th:text="${stackTrace}">스택 트레이스가 여기에 표시됩니다.</pre>
         </div>
     </div>
 </main>
-<footer th:replace="~{partials/fragment :: footer}"></footer>
+<!--<footer th:replace="~{partials/fragment :: footer}"></footer>-->
 </body>
 </html>

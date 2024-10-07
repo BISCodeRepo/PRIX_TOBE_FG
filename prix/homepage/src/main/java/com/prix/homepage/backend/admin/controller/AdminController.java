@@ -22,10 +22,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -189,6 +186,8 @@ public class AdminController extends BaseController {
 
         try {
             // 파일 저장
+            initializeDirectories();
+
             String root = PathUtil.PATH_CONFIG;
 //            String root = "D:\\";
             String originalFilename = file.getOriginalFilename();
@@ -301,41 +300,69 @@ public class AdminController extends BaseController {
                                        @RequestParam("sftw_date") String sftwDate,
                                        @RequestParam("sftw_file") MultipartFile sftwFile,
                                        Model model
-                                       ) {
-        try {
+                                       ) throws Exception {
 
-            // 기존 파일을 deprecated 폴더로 이동
-            File releaseDir = new File(PATH_SW_RELEASE);
-            for (File file : releaseDir.listFiles()) {
-                if (file.getName().startsWith(sftwName.toLowerCase())) {
-                    // 기존 파일을 deprecated 폴더로 이동
-                    file.renameTo(new File(PATH_SW_DEPRECATED + new Date().getTime() + "_" + file.getName()));
-                    break;
-                }
+
+        initializeDirectories();
+
+        // 기존 파일을 deprecated 폴더로 이동
+        File releaseDir = new File(PATH_SW_RELEASE);
+        for (File file : releaseDir.listFiles()) {
+            if (file.getName().startsWith(sftwName.toLowerCase())) {
+                // 기존 파일을 deprecated 폴더로 이동
+                file.renameTo(new File(PATH_SW_DEPRECATED + new Date().getTime() + "_" + file.getName()));
+                break;
             }
+        }
 
-            // 새로운 파일 저장
-            if (!sftwFile.isEmpty()) {
-                // 파일 이름 설정
-                String sftwFileName = sftwName.toLowerCase() + "_v" + sftwVersion + ".zip";
-                String filePath = PATH_SW_RELEASE + sftwFileName;
+        // 새로운 파일 저장
+        if (!sftwFile.isEmpty()) {
+            // 파일 이름 설정
+            String sftwFileName = sftwName.toLowerCase() + "_v" + sftwVersion + ".zip";
+            String filePath = PATH_SW_RELEASE + sftwFileName;
 
-                // 파일 저장 처리
-                File dest = new File(filePath);
-                sftwFile.transferTo(dest);  // 파일 저장
+            // 파일 저장 처리
+            File dest = new File(filePath);
+            sftwFile.transferTo(dest);  // 파일 저장
 
-                // 데이터베이스에 삽입 (Mapper 호출)
-                adminMapper.insertSoftwareLog(sftwName, sftwDate, sftwVersion, sftwFileName);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-//            return "error";  // 에러 발생 시 처리
-            model.addAttribute("errorMessage", e.getMessage());
-            return "admin/error";  // 에러 발생 시 에러 페이지로 이동
+            // 데이터베이스에 삽입 (Mapper 호출)
+            adminMapper.insertSoftwareLog(sftwName, sftwDate, sftwVersion, sftwFileName);
         }
 
         return "redirect:/admin/configuration";  // 성공 시 리다이렉트
+    }
+
+    public void initializeDirectories() {
+        File releaseDir = new File(PATH_SW_RELEASE);
+        File deprecatedDir = new File(PATH_SW_DEPRECATED);
+        File configDir = new File(PATH_CONFIG);
+
+        // releaseDir 생성
+        if (!releaseDir.exists()) {
+            if (releaseDir.mkdirs()) {
+                System.out.println("Release directory created: " + PATH_SW_RELEASE);
+            } else {
+                System.err.println("Failed to create release directory: " + PATH_SW_RELEASE);
+            }
+        }
+
+        // deprecatedDir 생성
+        if (!deprecatedDir.exists()) {
+            if (deprecatedDir.mkdirs()) {
+                System.out.println("Deprecated directory created: " + PATH_SW_DEPRECATED);
+            } else {
+                System.err.println("Failed to create deprecated directory: " + PATH_SW_DEPRECATED);
+            }
+        }
+
+        // configDir 생성
+        if (!configDir.exists()) {
+            if (configDir.mkdirs()) {
+                System.out.println("config directory created: " + PATH_CONFIG);
+            } else {
+                System.err.println("Failed to create config directory: " + PATH_CONFIG);
+            }
+        }
     }
 
 
@@ -453,8 +480,11 @@ public class AdminController extends BaseController {
         ) {
 
         String swroot = PATH_SW_RELEASE;
+        String URL_BASE =
+                "http://166.104.110.37:8081/";
+
 //        String download_root = "https://prix.hanyang.ac.kr/download/software_archive/release";
-        String download_root = "http://localhost:8080/download/software";
+        String download_root =  URL_BASE + "download/software";
 
 
         try {
@@ -496,6 +526,15 @@ public class AdminController extends BaseController {
         adminMapper.deleteRequestById(id);
 
         return "redirect:/admin/requestlog";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleExceptions(Exception ex, Model model) {
+        model.addAttribute("errorMessage", ex.getMessage());
+        StringWriter sw = new StringWriter();
+        ex.printStackTrace(new PrintWriter(sw));
+        model.addAttribute("stackTrace", sw.toString());
+        return "admin/error";
     }
 
 }
