@@ -84,34 +84,32 @@ public class AdminController extends BaseController {
      */
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("db_name") String dbName,
-                                   @RequestParam("db_file") MultipartFile dbFile) {
-        try {
-            // 파일 저장 경로 설정. 윈도우용 임시 주석처리
-//            String root = PathUtil.PATH_CONFIG;
-            String root = "D:\\";
-            String originalFilename = dbFile.getOriginalFilename();
-            String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
+                                   @RequestParam("db_file") MultipartFile dbFile) throws Exception {
+        // 파일 저장 경로 설정. 윈도우용 임시 주석처리
+        String root = PathUtil.PATH_CONFIG;
+        String originalFilename = dbFile.getOriginalFilename();
+        String dbPath = originalFilename;
+        log.info(dbPath);
+//        String dbPath = originalFilename != null ? originalFilename.replace('\\', '/') : "";
 
-            // 파일 저장 처리
-            if (!dbFile.isEmpty()) {
-                String path = root + dbPath;
-                File dest = new File(path);
-                dbFile.transferTo(dest);  // 파일 저장
+        // 파일 저장 처리
+        if (!dbFile.isEmpty()) {
+            int dataId = PrixDataWriter.write("fasta", dbPath, dbFile.getInputStream());
 
-                // 데이터베이스에 삽입할 때 파일명에서 확장자를 제거하여 이름 설정
-                if (dbName == null || dbName.isEmpty()) {
-                    int last = dbPath.lastIndexOf('.');
-                    dbName = (last < 0) ? dbPath : dbPath.substring(0, last);
-                }
+            String path = root + dbPath;
+            File dest = new File(path);
+            dbFile.transferTo(dest);  // 파일 저장
 
-                // 데이터베이스 처리
-                int dataId = PrixDataWriter.write("fasta", dbPath, dbFile.getInputStream());
-                adminMapper.insertDatabaseFile(dbName, dbPath, dataId);
+            // 데이터베이스에 삽입할 때 파일명에서 확장자를 제거하여 이름 설정
+            if (dbName == null || dbName.isEmpty()) {
+                int last = dbPath.lastIndexOf('.');
+                dbName = (last < 0) ? dbPath : dbPath.substring(0, last);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";  // 에러 발생 시 처리
+
+            // 데이터베이스 처리
+            adminMapper.insertDatabaseFile(dbName, dbPath, dataId);
         }
+
 
         return "redirect:/admin/configuration";
     }
@@ -488,6 +486,8 @@ public class AdminController extends BaseController {
 
 
         try {
+
+            int find = 0;
             // 소프트웨어에 맞는 파일 검색
             File protDir = new File(swroot);  // 소프트웨어 파일 루트 디렉토리
             for (File file : protDir.listFiles()) {
@@ -502,15 +502,21 @@ public class AdminController extends BaseController {
 
                     // 메일 전송 (파일 없이 링크만 포함)
                     mailer.sendEmailToUser(name, email, software, message, signature, null);
-
+                    adminMapper.updateRequestState(id, 1); // 1 for accepted
+                    find = 1;
                     break;  // 파일을 찾았으므로 루프 종료
                 }
             }
+
+            if (find == 0) {
+                log.info("file not found");
+                return "redirect:/admin/requestlog";
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        adminMapper.updateRequestState(id, 1); // 1 for accepted
         return "redirect:/admin/requestlog";
     }
 
