@@ -353,13 +353,22 @@ public class DBondService {
 //                    String[] command = {"/bin/bash", "-c", String.format("%s%s %s > %s", "java -Xmx2000M -cp /usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/engine.jar:/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/jdom.jar:/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/jrap_StAX_v5.2.jar:/usr/local/server/apache-tomcat-8.0.14/webapps/ROOT/WEB-INF/lib/xercesImpl.jar prix.Prix_", engine, xmlPath, logPath) };
 //                    Runtime.getRuntime().exec(command);
 
-                    String classpath = pathUtil.getLibPath() + "\\engine.jar;" +
-                            pathUtil.getLibPath() + "\\jdom.jar;" +
-                            pathUtil.getLibPath() + "\\jrap_StAX_v5.2.jar;" +
-                            pathUtil.getLibPath() + "\\xercesImpl.jar";
-
-                    log.info("classpath = {}",classpath);
                     String os = System.getProperty("os.name").toLowerCase();
+                    String classpath;
+                    if (os.contains("win")) {
+                        classpath = pathUtil.getLibPath() + "\\engine.jar;" +
+                                pathUtil.getLibPath() + "\\jdom.jar;" +
+                                pathUtil.getLibPath() + "\\jrap_StAX_v5.2.jar;" +
+                                pathUtil.getLibPath() + "\\xercesImpl.jar";
+                    } else {
+                        classpath = pathUtil.getLibPath() + "/engine.jar:" +
+                                pathUtil.getLibPath() + "/jdom.jar:" +
+                                pathUtil.getLibPath() + "/jrap_StAX_v5.2.jar:" +
+                                pathUtil.getLibPath() + "/xercesImpl.jar";
+                    }
+
+                    log.info("classpath = {}", classpath);
+
                     String[] command;
 
                     if (os.contains("win")) {
@@ -367,10 +376,11 @@ public class DBondService {
                         command = new String[]{"cmd.exe", "/c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
                     } else {
                         // Linux/Unix용 명령어
-                        command = new String[]{"/bin/sh", "-c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
+                        command = new String[]{"/bin/bash", "-c", String.format("java -Xmx2000M -cp %s prix.Prix_%s %s > %s", classpath, engine, xmlPath, logPath)};
                     }
 
                     Runtime.getRuntime().exec(command);
+
 
                 } catch (FileNotFoundException | UnsupportedEncodingException e) {
                     e.printStackTrace();} catch (IOException e) {
