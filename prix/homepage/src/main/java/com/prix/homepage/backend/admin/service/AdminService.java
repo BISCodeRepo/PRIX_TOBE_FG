@@ -38,6 +38,9 @@ public class AdminService {
     }
 
     public void uploadDatabase(String dbName, MultipartFile dbFile) throws Exception {
+
+        initializeDirectories();
+
         // 파일 저장 경로 설정. 윈도우용 임시 주석처리
         String root = PathUtil.PATH_CONFIG;
         String originalFilename = dbFile.getOriginalFilename();
