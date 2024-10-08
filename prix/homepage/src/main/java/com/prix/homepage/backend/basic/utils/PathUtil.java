@@ -2,6 +2,8 @@ package com.prix.homepage.backend.basic.utils;
 
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+
 @Component
 public class PathUtil {
 
@@ -22,14 +24,15 @@ public class PathUtil {
             BASE_PATH + "/software_archive/deprecated/";
 
     //ACTG
+    static String homeDir = System.getProperty("user.home");
     public final static String PATH_ACTG_DB =
-            BASE_PATH + "/home/PRIX/ACTG_db/";
+            homeDir + File.separator + "PRIX" + File.separator + "ACTG_db" + File.separator;
 
     public final static String PATH_ACTG_LOG =
-            BASE_PATH + "/home/PRIX/ACTG_log/";
+            homeDir + File.separator + "PRIX" + File.separator + "ACTG_log" + File.separator;
 
     public  final static String PATH_ACTG_SEARCH =
-            BASE_PATH + "/ACTG/";
+            BASE_PATH + File.separator + "ACTG" + File.separator;
 
     //DBOND
     public final static String PATH_DBOND_PROCESS_DIR =
