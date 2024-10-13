@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{partials/fragment :: head}">
-    <script type="text/javascript">
-        window.onload = function() {
-            // HTML 요소에서 에러 메시지를 읽어와 콘솔에 출력
-            var errorMessageElement = document.getElementById('error-message');
-            if (errorMessageElement) {
-                var errorMessage = errorMessageElement.value;
-                if (errorMessage && errorMessage.trim() !== '') {
-                    console.error("Error: " + errorMessage);  // 콘솔에 오류 메시지 출력
-                }
-            }
-        }
-    </script>
 </head>
 <body>
 <header th:replace="~{partials/fragment :: header0}"></header>
@@ -22,10 +10,9 @@
             <div class="title">
                 <h3 class="darkBR">Error Page</h3>
             </div>
-            <p>운영서버 디버깅 용 임시 에러페이지입니다.</p>
-            <!-- 서버에서 전달된 에러 메시지를 숨겨진 텍스트 영역에 저장 -->
-            <textarea id="error-message" th:text="${errorMessage}" style="display:none;"></textarea>
-            <pre th:text="${stackTrace}">스택 트레이스가 여기에 표시됩니다.</pre>
+            <p>관리자 페이지 에러페이지입니다.</p>
+<!--            <textarea id="error-message" th:text="${errorMessage}" style="display:none;"></textarea>-->
+<!--            <pre th:text="${stackTrace}">스택 트레이스가 여기에 표시됩니다.</pre>-->
         </div>
     </div>
 </main>
