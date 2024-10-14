@@ -24,7 +24,7 @@ public class PathUtil {
             BASE_PATH + "/software_archive/deprecated/";
 
     //ACTG
-    static String homeDir = System.getProperty("user.home");
+    static String homeDir = "/home";
     public final static String PATH_ACTG_DB =
             homeDir + File.separator + "PRIX" + File.separator + "ACTG_db" + File.separator;
 
